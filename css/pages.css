@@ -1,0 +1,2723 @@
+/* ============================================================
+   pages.css — 各ページ固有のスタイル
+   TOP / MEMORY ALBUM / TIMELINE / MEMORY THEMES /
+   MEMORY OF SUMMER / MEMORY CROSSOVER / SECRET MEMORY
+   ============================================================ */
+
+/* ============================================================
+   TOP ページ
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   ヒーロー(サイトの入口)
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh; /* スマートフォンのアドレスバーを考慮 */
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* 画面下から立ちのぼる光 */
+.hero::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -45vh;
+  width: 130vw;
+  height: 90vh;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center,
+    rgba(77, 166, 255, 0.3) 0%,
+    rgba(20, 58, 107, 0.16) 35%,
+    transparent 68%);
+  pointer-events: none;
+  animation: hero-breathe 9s ease-in-out infinite;
+}
+
+@keyframes hero-breathe {
+  0%, 100% { opacity: 0.65; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 1;    transform: translateX(-50%) scale(1.08); }
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--space-xl);
+  /* カーソルに合わせて、台座とは逆向きにわずかに動く(奥行き) */
+  transform: translate3d(var(--px2, 0px), var(--py2, 0px), 0);
+  will-change: transform;
+}
+
+/* サイトのシンボル(キーブレードとハート) */
+.hero__emblem {
+  width: clamp(64px, 11vw, 104px);
+  margin: 0 auto var(--space-md);
+  color: var(--c-blue-bright);
+  filter: drop-shadow(0 0 16px rgba(154, 213, 255, 0.7))
+          drop-shadow(0 0 44px rgba(77, 166, 255, 0.4));
+  animation: fade-up 1.2s var(--ease-out) both,
+             emblem-glow 5s ease-in-out 1.2s infinite,
+             emblem-glint 8s ease-in-out 3s infinite;
+}
+
+/* ゆっくり明滅させて、光っているように見せる */
+@keyframes emblem-glow {
+  0%, 100% { opacity: 0.82; }
+  50%      { opacity: 1; }
+}
+
+/* キーブレードの部分だけ淡いゴールドにする */
+.hero__emblem-blades {
+  color: var(--c-gold);
+  opacity: 0.85;
+}
+
+/* 起動時、交差するキーブレードが光の線でスッと描かれる */
+.hero__emblem-blades path,
+.hero__emblem-blades circle {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  animation: blade-draw 1.5s var(--ease-out) 0.5s forwards;
+}
+
+@keyframes blade-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 数秒おきに、紋章の光がひときわ強くまたたく */
+@keyframes emblem-glint {
+  0%, 90%, 100% {
+    filter: drop-shadow(0 0 16px rgba(154, 213, 255, 0.7))
+            drop-shadow(0 0 44px rgba(77, 166, 255, 0.4));
+  }
+  94% {
+    filter: drop-shadow(0 0 28px rgba(210, 238, 255, 0.95))
+            drop-shadow(0 0 76px rgba(130, 200, 255, 0.6));
+  }
+}
+
+/* 上に添える小さな英字ラベル */
+.hero__eyebrow {
+  font-family: var(--font-en);
+  font-size: clamp(0.6rem, 1.6vw, 0.75rem);
+  letter-spacing: 0.55em;
+  color: var(--c-blue);
+  margin-bottom: var(--space-md);
+  animation: fade-up 1.2s var(--ease-out) 0.35s both;
+}
+
+/* メインタイトル ―― 光で描かれるように現れる */
+.hero__title {
+  font-family: var(--font-en);
+  font-size: clamp(2.2rem, 8vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: var(--c-white);
+  text-shadow: 0 0 40px rgba(154, 213, 255, 0.45),
+               0 0 120px rgba(77, 166, 255, 0.25);
+  animation: title-ignite 1.7s var(--ease-out) 0.55s both;
+}
+
+@keyframes title-ignite {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.5em;
+    filter: blur(14px);
+    text-shadow: 0 0 0 rgba(154, 213, 255, 0);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+    text-shadow: 0 0 64px rgba(214, 240, 255, 0.9),
+                 0 0 150px rgba(77, 166, 255, 0.55);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.04em;
+    filter: blur(0);
+    text-shadow: 0 0 40px rgba(154, 213, 255, 0.45),
+                 0 0 120px rgba(77, 166, 255, 0.25);
+  }
+}
+
+/* タイトル2行目を少し細く見せる */
+.hero__title span {
+  display: block;
+  font-size: 0.72em;
+  letter-spacing: 0.16em;
+  color: var(--c-blue-bright);
+  animation: fade-up 1s var(--ease-out) 1.5s both;
+}
+
+.hero__lead {
+  margin-top: var(--space-md);
+  font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+  letter-spacing: 0.24em;
+  color: var(--c-text);
+  animation: fade-up 1.4s var(--ease-out) 1.75s both;
+}
+
+.hero__actions {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+  animation: fade-up 1.4s var(--ease-out) 2s both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------------------------------
+   目覚めの園(ステーション・オブ・アウェイクニング)風の台座
+   背後で回転するステンドグラス。カーソルで奥行きが動く
+   ------------------------------------------------------------ */
+.hero__station {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(108vmin, 980px);
+  aspect-ratio: 1;
+  z-index: 1;
+  pointer-events: none;
+  transform: translate(calc(-50% + var(--px, 0px)), calc(-50% + var(--py, 0px)));
+  animation: station-in 1.8s var(--ease-out) both;
+  will-change: transform, filter;
+}
+
+@keyframes station-in {
+  from { opacity: 0; filter: blur(18px); }
+  to   { opacity: 1; filter: blur(0); }
+}
+
+/* 時計回り/反時計回りの単純な回転。台座のリングや施錠紋章など
+   サイト内の複数箇所から共通で参照する */
+@keyframes rotate-cw  { to { transform: rotate(360deg); } }
+@keyframes rotate-ccw { to { transform: rotate(-360deg); } }
+
+.hero__station > * {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border-radius: 50%;
+}
+
+/* 下から立ちのぼる発光 */
+.hero__station-glow {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 56%,
+    rgba(96, 172, 255, 0.30),
+    rgba(20, 58, 107, 0.12) 44%,
+    transparent 72%);
+  animation: station-breathe 8s ease-in-out infinite;
+}
+
+@keyframes station-breathe {
+  0%, 100% { opacity: 0.7;  transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+
+/* 12枚のステンドグラス(青と金が交互) */
+.hero__station-disc {
+  width: 76%;
+  height: 76%;
+  background: repeating-conic-gradient(from -90deg,
+    rgba(120, 190, 255, 0.34) 0deg 30deg,
+    rgba(230, 213, 163, 0.24) 30deg 60deg);
+  -webkit-mask: radial-gradient(circle,
+    #000 30%, rgba(0, 0, 0, 0.6) 60%, transparent 82%);
+          mask: radial-gradient(circle,
+    #000 30%, rgba(0, 0, 0, 0.6) 60%, transparent 82%);
+  filter: blur(0.5px) saturate(1.15);
+  opacity: 0.72;
+  animation: rotate-cw 120s linear infinite;
+}
+
+/* ステンドグラスを仕切る細い縁取り */
+.hero__station-seams {
+  width: 76%;
+  height: 76%;
+  background: repeating-conic-gradient(from -90deg,
+    transparent 0deg 29.2deg,
+    rgba(3, 6, 13, 0.5) 29.2deg 30.8deg);
+  -webkit-mask: radial-gradient(circle, #000 26%, transparent 80%);
+          mask: radial-gradient(circle, #000 26%, transparent 80%);
+  opacity: 0.55;
+  animation: rotate-cw 120s linear infinite;
+}
+
+.hero__station-ring {
+  border: 1px solid rgba(154, 213, 255, 0.22);
+  transform-origin: center;
+}
+.hero__station-ring--outer {
+  width: 96%;
+  height: 96%;
+  border-style: dashed;
+  animation: rotate-ccw 84s linear infinite;
+}
+.hero__station-ring--inner {
+  width: 42%;
+  height: 42%;
+  border-color: rgba(230, 213, 163, 0.32);
+  animation: rotate-cw 58s linear infinite;
+}
+
+/* 中心のハートと鍵穴 */
+.hero__station-core {
+  width: 17%;
+  height: 17%;
+  overflow: visible;
+  animation: station-core-pulse 4.5s ease-in-out infinite;
+}
+.hero__station-core .hero__station-heart {
+  fill: rgba(3, 6, 13, 0.55);
+  stroke: rgba(154, 213, 255, 0.85);
+  stroke-width: 3;
+}
+.hero__station-core circle,
+.hero__station-core path:not(.hero__station-heart) {
+  fill: rgba(154, 213, 255, 0.92);
+}
+
+@keyframes station-core-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 10px rgba(154, 213, 255, 0.5));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 24px rgba(184, 226, 255, 0.9));
+  }
+}
+
+/* ------------------------------------------------------------
+   コンセプト紹介セクション
+   ------------------------------------------------------------ */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* 引用のような大きな一文 */
+.statement {
+  max-width: 26em;
+  margin-inline: auto;
+  text-align: center;
+  font-size: clamp(1.1rem, 3.2vw, 1.75rem);
+  line-height: 2.1;
+  letter-spacing: 0.1em;
+  color: var(--c-white);
+}
+
+.statement em {
+  font-style: normal;
+  color: var(--c-blue-bright);
+  text-shadow: var(--glow-blue);
+}
+
+/* ------------------------------------------------------------
+   各ページへの導線カード
+   ------------------------------------------------------------ */
+.gateway-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.gateway {
+  position: relative;
+  display: block;
+  min-height: 260px;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  background: linear-gradient(165deg,
+    rgba(12, 26, 55, 0.6),
+    rgba(4, 9, 20, 0.75));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform var(--dur-mid) var(--ease-out),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.gateway:hover {
+  transform: translateY(-8px);
+  border-color: rgba(154, 213, 255, 0.5);
+  box-shadow: var(--glow-blue-lg);
+}
+
+/* カード上部に浮かぶ光の球 */
+.gateway__orb {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    rgba(154, 213, 255, 0.35),
+    rgba(20, 58, 107, 0.2) 45%,
+    transparent 70%);
+  transition: transform var(--dur-slow) var(--ease-out),
+              opacity var(--dur-slow) var(--ease-soft);
+  opacity: 0.75;
+}
+
+.gateway:hover .gateway__orb {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+.gateway__num {
+  position: absolute;
+  top: 1.5rem;
+  left: clamp(1.6rem, 3vw, 2.2rem);
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--c-blue);
+}
+
+.gateway__title {
+  position: relative;
+  font-family: var(--font-en);
+  font-size: 1.1rem;
+  letter-spacing: 0.16em;
+  color: var(--c-white);
+  margin-bottom: 0.6rem;
+}
+
+.gateway__text {
+  position: relative;
+  font-size: 0.86rem;
+  color: var(--c-text-dim);
+  line-height: 1.85;
+}
+
+.gateway__enter {
+  position: relative;
+  margin-top: var(--space-sm);
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  color: var(--c-blue-bright);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gateway__enter svg {
+  width: 13px;
+  height: 13px;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.gateway:hover .gateway__enter svg {
+  transform: translateX(6px);
+}
+
+/* 未解放のカード(SECRET MEMORY) */
+.gateway--locked {
+  border-color: rgba(230, 213, 163, 0.22);
+}
+
+.gateway--locked .gateway__orb {
+  background: radial-gradient(circle at 35% 35%,
+    rgba(230, 213, 163, 0.22),
+    transparent 70%);
+}
+
+.gateway--locked .gateway__num,
+.gateway--locked .gateway__enter {
+  color: var(--c-gold-dim);
+}
+
+.gateway--locked:hover {
+  border-color: rgba(230, 213, 163, 0.55);
+  box-shadow: 0 0 60px rgba(230, 213, 163, 0.2);
+}
+
+/* ============================================================
+   MEMORY ALBUM ページ
+   ============================================================ */
+
+/* ページ見出し(下層ページ共通の帯) */
+.page-head {
+  position: relative;
+  padding-block: var(--space-xl) var(--space-lg);
+  text-align: center;
+  overflow: hidden;
+}
+
+.page-head::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -30%;
+  width: 100vw;
+  height: 130%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center top,
+    rgba(77, 166, 255, 0.16),
+    transparent 62%);
+  pointer-events: none;
+}
+
+.page-head__title {
+  position: relative;
+  font-family: var(--font-en);
+  font-size: clamp(1.8rem, 6vw, 3.4rem);
+  letter-spacing: 0.14em;
+  color: var(--c-white);
+  text-shadow: 0 0 40px rgba(154, 213, 255, 0.4);
+}
+
+.page-head__lead {
+  position: relative;
+  margin-top: var(--space-sm);
+  font-size: 0.92rem;
+  letter-spacing: 0.1em;
+  color: var(--c-text-dim);
+}
+
+/* ------------------------------------------------------------
+   ページ内サブナビ(作品年表 / ワールド / キャラクター / 用語集)
+   ------------------------------------------------------------ */
+.section-nav {
+  position: relative;
+  margin-top: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.6rem;
+}
+
+.section-nav a {
+  position: relative;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  color: var(--c-text-dim);
+  padding-block: 0.3rem;
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+
+.section-nav a:hover {
+  color: var(--c-blue-bright);
+}
+
+/* ホバーで下線が伸びる */
+.section-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--c-blue-bright);
+  box-shadow: var(--glow-blue);
+  transform: scaleX(0);
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.section-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ------------------------------------------------------------
+   絞り込みフィルター
+   ------------------------------------------------------------ */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2.4rem;
+  margin-bottom: var(--space-lg);
+}
+
+.filter-btn {
+  padding: 0.5rem 1.3rem;
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--c-text-dim);
+  border: 1px solid rgba(154, 213, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(10, 22, 48, 0.35);
+  transition: color var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft),
+              box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.filter-btn:hover {
+  color: var(--c-white);
+  border-color: rgba(154, 213, 255, 0.45);
+}
+
+.filter-btn.is-active {
+  color: var(--c-white);
+  border-color: rgba(154, 213, 255, 0.7);
+  box-shadow: var(--glow-blue), inset 0 0 18px rgba(77, 166, 255, 0.15);
+}
+
+/* ------------------------------------------------------------
+   JS 描画前のプレースホルダー(初期チラつき対策)
+   中身が入った瞬間 :empty ではなくなり、自動で消える
+   ------------------------------------------------------------ */
+.timeline:empty,
+.world-grid:empty,
+.character-grid:empty,
+.crossover-grid:empty,
+.xscene-grid:empty,
+.glossary-list:empty,
+#theme-grid:empty,
+#roxas-slideshow:empty {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+}
+.timeline:empty::after,
+.world-grid:empty::after,
+.character-grid:empty::after,
+.crossover-grid:empty::after,
+.xscene-grid:empty::after,
+.glossary-list:empty::after,
+#theme-grid:empty::after,
+#roxas-slideshow:empty::after {
+  content: "読み込み中…";
+  font-family: var(--font-en);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  color: var(--c-text-dim);
+  animation: shim-pulse 1.5s ease-in-out infinite;
+}
+@keyframes shim-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 0.85; }
+}
+
+/* ------------------------------------------------------------
+   年表(タイムライン)
+   ------------------------------------------------------------ */
+.timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-left: 3.2rem;
+}
+
+/* 左端を貫く縦の光の線 */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(154, 213, 255, 0.45) 8%,
+    rgba(154, 213, 255, 0.45) 92%,
+    transparent);
+}
+
+.timeline__item {
+  position: relative;
+}
+
+/* 各項目の左に付く光の点 */
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -3.2rem;
+  top: 26px;
+  width: 9px;
+  height: 9px;
+  margin-left: 7px;
+  border-radius: 50%;
+  background: var(--c-blue-bright);
+  box-shadow: 0 0 14px rgba(154, 213, 255, 0.9);
+  transition: transform var(--dur-mid) var(--ease-out),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.timeline__item:hover::before {
+  transform: scale(1.6);
+  box-shadow: 0 0 24px rgba(154, 213, 255, 1);
+}
+
+/* 絞り込みで非表示にする */
+.timeline__item.is-filtered-out {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   作品カード
+   ------------------------------------------------------------ */
+.work-card {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  /* role="button" として扱うため、押せることを示す */
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: clamp(1.2rem, 3vw, 2rem);
+  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+  transition: transform var(--dur-mid) var(--ease-out),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.work-card:hover {
+  transform: translateX(8px);
+  border-color: rgba(154, 213, 255, 0.45);
+  box-shadow: var(--glow-blue-lg);
+}
+
+/* カードのビジュアル(画像素材の代わりに CSS と SVG で生成) */
+.work-card__visual {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  /* 作品ごとに --hue を変えて色味を出し分ける */
+  background:
+    radial-gradient(circle at 30% 25%,
+      hsla(var(--hue, 210), 85%, 62%, 0.4), transparent 60%),
+    radial-gradient(circle at 75% 80%,
+      hsla(calc(var(--hue, 210) + 40), 80%, 50%, 0.3), transparent 62%),
+    linear-gradient(160deg, #0a1630, #03060d);
+}
+
+/* ビジュアル内で光る紋章 */
+.work-card__emblem {
+  width: 46%;
+  color: hsla(var(--hue, 210), 90%, 82%, 0.9);
+  filter: drop-shadow(0 0 12px hsla(var(--hue, 210), 90%, 70%, 0.8));
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.work-card:hover .work-card__emblem {
+  transform: scale(1.12) rotate(6deg);
+}
+
+/* ビジュアル上を横切る光の帯 */
+.work-card__visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.9s var(--ease-out);
+}
+
+.work-card:hover .work-card__visual::after {
+  transform: translateX(100%);
+}
+
+/* カードの文字情報 */
+.work-card__year {
+  font-family: var(--font-en);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--c-blue);
+  line-height: 1;
+  margin-bottom: 0.7rem;
+}
+
+.work-card__title {
+  font-family: var(--font-en);
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  letter-spacing: 0.05em;
+  color: var(--c-white);
+  line-height: 1.4;
+  margin-bottom: 0.3rem;
+}
+
+.work-card__subtitle {
+  font-size: 0.83rem;
+  color: var(--c-gold);
+  margin-bottom: 0.8rem;
+}
+
+.work-card__desc {
+  font-size: 0.85rem;
+  color: var(--c-text-dim);
+  line-height: 1.85;
+  margin-bottom: 0.9rem;
+  /* 3行を超えたら省略 */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.work-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* 差し込まれたパッケージ画像 */
+.work-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.work-card:hover .work-card__image {
+  transform: scale(1.06);
+}
+
+/* ------------------------------------------------------------
+   ワールド一覧
+   ------------------------------------------------------------ */
+.world-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.world-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+  transition: transform var(--dur-mid) var(--ease-out),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.world-card:hover {
+  transform: translateY(-6px);
+  border-color: hsla(var(--hue, 210), 80%, 70%, 0.5);
+  box-shadow: 0 0 50px hsla(var(--hue, 210), 80%, 55%, 0.28);
+}
+
+/* ワールドを象徴する紋章の額 */
+.world-card__visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 70%,
+      hsla(var(--hue, 210), 85%, 60%, 0.34), transparent 62%),
+    linear-gradient(165deg, #0a1630, #03060d);
+  border-bottom: 1px solid hsla(var(--hue, 210), 70%, 65%, 0.18);
+}
+
+.world-card__emblem {
+  width: 42%;
+  color: hsla(var(--hue, 210), 90%, 84%, 0.92);
+  filter: drop-shadow(0 0 14px hsla(var(--hue, 210), 90%, 68%, 0.85));
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.world-card:hover .world-card__emblem {
+  transform: scale(1.1) translateY(-3px);
+}
+
+/* world.image が指定されているときの風景・ロゴ画像
+   ロゴ下の名前バーまで含めて全体を見せたいので contain。
+   四辺に少し余白を取り、額の縁で切れないようにする */
+.world-card__image {
+  width: 100%;
+  height: 100%;
+  padding: clamp(0.5rem, 2.5vw, 1.1rem);
+  object-fit: contain;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.world-card:hover .world-card__image {
+  transform: scale(1.06);
+}
+
+/* ゲーム内タイトルカードのスクリーンショット(.jpg)は元から画面いっぱいに
+   絵柄があるため、余白付きcontainだと黒帯や縁が浮いて見える。
+   額いっぱいに敷き詰め、下端だけ本文のパネル色へ滑らかに馴染ませる */
+.world-card__visual--photo {
+  background: linear-gradient(165deg, #0a1630, #03060d);
+}
+
+.world-card__image--photo {
+  padding: 0;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.world-card:hover .world-card__image--photo {
+  transform: scale(1.08);
+}
+
+.world-card__visual--photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(3, 6, 13, 0.9) 0%,
+    rgba(3, 6, 13, 0.15) 42%,
+    transparent 66%);
+  pointer-events: none;
+}
+
+/* 紋章の背後を横切る光 */
+.world-card__visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 58%);
+  transform: translateX(-100%);
+  transition: transform 0.9s var(--ease-out);
+}
+
+.world-card:hover .world-card__visual::after {
+  transform: translateX(100%);
+}
+
+.world-card__body {
+  padding: var(--space-sm) clamp(1.1rem, 2.4vw, 1.5rem) var(--space-md);
+}
+
+.world-card__en {
+  font-family: var(--font-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+  color: hsla(var(--hue, 210), 85%, 75%, 1);
+  margin-bottom: 0.35rem;
+}
+
+.world-card__name {
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  color: var(--c-white);
+  margin-bottom: 0.7rem;
+}
+
+.world-card__text {
+  font-size: 0.84rem;
+  line-height: 1.9;
+  color: var(--c-text-dim);
+}
+
+/* 登場作品タグの並び */
+.world-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.9rem;
+}
+
+/* ------------------------------------------------------------
+   キャラクター一覧
+   ------------------------------------------------------------ */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* グループの見出し(グリッドの全幅を使う) */
+.character-group-heading {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.2rem;
+  font-family: var(--font-en);
+  font-size: 0.82rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+.character-group-heading:first-child {
+  margin-top: 0;
+}
+
+.character-group-heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230, 213, 163, 0.35), transparent);
+}
+
+/* 絞り込みで非表示にする(作品年表の仕組みと共通) */
+.character-card.is-filtered-out,
+.character-group-heading.is-filtered-out {
+  display: none;
+}
+
+.character-card {
+  position: relative;
+  padding: var(--space-md) var(--space-sm);
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+  transition: transform var(--dur-mid) var(--ease-out),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.character-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(154, 213, 255, 0.45);
+  box-shadow: var(--glow-blue-lg);
+}
+
+/* キャラクターを象徴する光の輪 */
+.character-card__aura {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto var(--space-sm);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 35% 30%,
+      hsla(var(--hue, 210), 90%, 70%, 0.45), transparent 65%),
+    linear-gradient(160deg, rgba(10, 22, 48, 0.9), rgba(3, 6, 13, 0.9));
+  border: 1px solid hsla(var(--hue, 210), 80%, 70%, 0.35);
+  box-shadow: 0 0 26px hsla(var(--hue, 210), 85%, 60%, 0.3);
+  transition: box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.character-card:hover .character-card__aura {
+  box-shadow: 0 0 46px hsla(var(--hue, 210), 85%, 65%, 0.55);
+}
+
+.character-card__initial {
+  font-family: var(--font-en);
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+  color: hsla(var(--hue, 210), 90%, 88%, 1);
+  text-shadow: 0 0 16px hsla(var(--hue, 210), 90%, 70%, 0.9);
+}
+
+/* 差し込まれたキャラクター画像 */
+.character-card__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.character-card__aura:has(.character-card__image) {
+  overflow: hidden;
+  padding: 0;
+}
+
+/* 画像が無いときに表示する、そのキャラクターのテーマを表す紋章 */
+.character-card__sigil {
+  width: 46%;
+  color: hsla(var(--hue, 210), 90%, 84%, 0.95);
+  filter: drop-shadow(0 0 12px hsla(var(--hue, 210), 90%, 68%, 0.85));
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.character-card:hover .character-card__sigil {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.character-card__name {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--c-white);
+  margin-bottom: 0.2rem;
+}
+
+.character-card__en {
+  font-family: var(--font-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--c-blue);
+  margin-bottom: 0.7rem;
+}
+
+.character-card__role {
+  font-size: 0.78rem;
+  color: var(--c-text-dim);
+  line-height: 1.8;
+}
+
+/* 登場作品タグの並び */
+.character-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-top: 0.8rem;
+}
+
+/* ------------------------------------------------------------
+   登場作品バー(キャラ・ワールドがどの作品に出るか)
+   全12作品を発売順に固定表示し、登場作品だけ点灯させる。
+   位置が常に同じなのでカードを縦に見比べやすい。
+   ------------------------------------------------------------ */
+.appears {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  width: 100%;
+}
+
+.appears__cell {
+  font-family: "Cinzel", "Noto Sans JP", serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-align: center;
+  padding: 0.32rem 0.15rem;
+  border-radius: 5px;
+  border: 1px solid rgba(154, 213, 255, 0.12);
+  background: rgba(12, 24, 50, 0.35);
+  color: var(--c-text-dim);
+  opacity: 0.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+/* 登場している作品 */
+.appears__cell.is-in {
+  opacity: 1;
+}
+.appears__cell.is-in[data-cat="main"] {
+  color: var(--c-blue-bright);
+  border-color: rgba(154, 213, 255, 0.5);
+  background: rgba(77, 166, 255, 0.16);
+  box-shadow: inset 0 0 10px rgba(77, 166, 255, 0.12);
+}
+.appears__cell.is-in[data-cat="side"] {
+  color: var(--c-gold);
+  border-color: rgba(230, 213, 163, 0.42);
+  background: rgba(230, 213, 163, 0.12);
+}
+.appears__cell.is-in[data-cat="future"] {
+  color: var(--c-text);
+  border-color: rgba(154, 213, 255, 0.3);
+  background: rgba(12, 24, 50, 0.6);
+}
+
+/* カード種別ごとの土台調整 */
+.character-card__tags .appears {
+  max-width: 15rem;
+  margin-inline: auto;
+}
+.work-card__tags .appears,
+.world-card__tags .appears {
+  grid-template-columns: repeat(12, 1fr);
+}
+@media (max-width: 640px) {
+  .work-card__tags .appears,
+  .world-card__tags .appears {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* セクション先頭の凡例 */
+.appears-legend {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(154, 213, 255, 0.12);
+  font-size: 0.78rem;
+  line-height: 2.1;
+  color: var(--c-text-dim);
+}
+.appears-legend strong {
+  color: var(--c-text);
+}
+.appears-legend .appears__cell {
+  display: inline-block;
+  min-width: 2.2rem;
+  vertical-align: middle;
+  opacity: 1;
+  margin: 0 0.15rem;
+}
+
+/* ------------------------------------------------------------
+   MEMORY CROSSOVER(縁のある作品一覧)
+   ------------------------------------------------------------ */
+.crossover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+/* ジャンルの見出し(グリッド全幅) */
+.crossover-group-heading {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.4rem;
+  font-family: var(--font-en);
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+.crossover-group-heading:first-child {
+  margin-top: 0;
+}
+.crossover-group-heading span {
+  font-size: 0.72rem;
+  color: var(--c-text-dim);
+  letter-spacing: 0.1em;
+}
+.crossover-group-heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230, 213, 163, 0.35), transparent);
+}
+
+.crossover-card.is-filtered-out,
+.crossover-group-heading.is-filtered-out {
+  display: none;
+}
+
+.crossover-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: var(--space-md);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md, 14px);
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+}
+
+.crossover-card__origin {
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+}
+
+.crossover-card__title {
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: var(--c-white);
+}
+
+.crossover-card__stage,
+.crossover-card__guests {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--c-text);
+}
+.crossover-card__stage span,
+.crossover-card__guests span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--c-blue-bright);
+  margin-bottom: 0.1rem;
+}
+
+.crossover-card__note {
+  font-size: 0.82rem;
+  line-height: 1.85;
+  color: var(--c-text-dim);
+}
+
+.crossover-card__appears {
+  margin-top: auto;
+  padding-top: 0.6rem;
+}
+.crossover-card__appears .appears {
+  grid-template-columns: repeat(12, 1fr);
+}
+@media (max-width: 640px) {
+  .crossover-card__appears .appears {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* ------------------------------------------------------------
+   クロスオーバーの名場面(#crossover-scenes)
+   SECRET の「記憶に残る、場面」(.secret-scene)と同じ見た目で揃える
+   ------------------------------------------------------------ */
+.xscene-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.xscene-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.xscene-card__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md, 14px);
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  background: #070f21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.xscene-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.xscene-card.is-empty .xscene-card__frame {
+  border-style: dashed;
+  border-color: rgba(154, 213, 255, 0.28);
+}
+
+.xscene-card__ph {
+  padding: 1rem;
+  font-size: 0.72rem;
+  line-height: 1.9;
+  text-align: center;
+  color: var(--c-text-dim);
+}
+
+.xscene-card__ph code {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.68rem;
+  color: var(--c-blue-bright);
+  background: rgba(77, 166, 255, 0.12);
+  border-radius: 4px;
+}
+
+.xscene-card__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.xscene-card__work {
+  font-family: var(--font-en);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+.xscene-card__title {
+  font-size: 0.98rem;
+  color: var(--c-white);
+}
+
+.xscene-card__note {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--c-text-dim);
+}
+
+/* ------------------------------------------------------------
+   用語集
+   ------------------------------------------------------------ */
+.glossary-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  margin-top: var(--space-lg);
+  /* 隙間を線に見立てて、格子状の区切りを作る */
+  background: rgba(154, 213, 255, 0.12);
+  border: 1px solid rgba(154, 213, 255, 0.12);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.glossary-item {
+  position: relative;
+  padding: var(--space-md) clamp(1.2rem, 2.6vw, 1.8rem);
+  background: rgba(6, 13, 30, 0.72);
+  transition: background var(--dur-mid) var(--ease-soft);
+}
+
+.glossary-item:hover {
+  background: rgba(16, 34, 68, 0.8);
+}
+
+/* ホバー時に左端が光る */
+.glossary-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12%;
+  width: 2px;
+  height: 76%;
+  background: var(--c-blue-bright);
+  box-shadow: var(--glow-blue);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.glossary-item:hover::before {
+  transform: scaleY(1);
+}
+
+.glossary-item__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.9rem;
+  margin-bottom: 0.7rem;
+}
+
+.glossary-item__term {
+  font-size: 1.02rem;
+  letter-spacing: 0.08em;
+  color: var(--c-white);
+}
+
+.glossary-item__en {
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  color: var(--c-gold-dim);
+}
+
+.glossary-item__text {
+  font-size: 0.85rem;
+  line-height: 1.95;
+  color: var(--c-text-dim);
+}
+
+/* ============================================================
+   SECRET MEMORY ページ
+   ============================================================ */
+.secret {
+  position: relative;
+  min-height: calc(100vh - var(--header-height));
+  display: grid;
+  place-items: center;
+  padding-block: var(--space-xl);
+}
+
+/* ------------------------------------------------------------
+   未解放のとき(施錠状態)
+   ------------------------------------------------------------ */
+.secret-lock {
+  max-width: 560px;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-md);
+}
+
+/* 施錠された紋章 */
+.secret-lock__sigil {
+  width: min(46vmin, 240px);
+  color: rgba(230, 213, 163, 0.4);
+  filter: drop-shadow(0 0 18px rgba(230, 213, 163, 0.25));
+}
+
+.secret-lock__sigil .lock-ring {
+  transform-origin: center;
+  animation: rotate-cw 50s linear infinite;
+}
+
+.secret-lock__title {
+  font-family: var(--font-en);
+  font-size: clamp(1.4rem, 5vw, 2.4rem);
+  letter-spacing: 0.2em;
+  color: var(--c-gold-dim);
+}
+
+.secret-lock__text {
+  font-size: 0.92rem;
+  color: var(--c-text-dim);
+  line-height: 2;
+}
+
+.secret-lock__hint {
+  font-size: 0.82rem;
+  color: var(--c-text-dim);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px dashed rgba(230, 213, 163, 0.25);
+  border-radius: 12px;
+  background: rgba(120, 100, 55, 0.07);
+}
+
+/* ------------------------------------------------------------
+   解放されたとき
+   ------------------------------------------------------------ */
+.secret-content {
+  width: 100%;
+  display: grid;
+  gap: var(--space-lg);
+}
+
+/* 解放時に画面全体を包む光の演出 */
+.secret-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 750;
+  pointer-events: none;
+  background: radial-gradient(circle at center,
+    rgba(230, 213, 163, 0.85),
+    rgba(230, 213, 163, 0.25) 35%,
+    transparent 70%);
+  opacity: 0;
+}
+
+.secret-flash.is-firing {
+  animation: secret-flash 2.2s var(--ease-out) forwards;
+}
+
+@keyframes secret-flash {
+  0%   { opacity: 0;    transform: scale(0.2); }
+  25%  { opacity: 0.95; transform: scale(1); }
+  100% { opacity: 0;    transform: scale(1.6); }
+}
+
+/* 解放された記憶のパネル */
+.secret-panel {
+  position: relative;
+  padding: clamp(1.8rem, 4vw, 3rem);
+  border: 1px solid rgba(230, 213, 163, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(160deg,
+    rgba(30, 26, 14, 0.5),
+    rgba(6, 13, 30, 0.85));
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+}
+
+.secret-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  width: 76%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(230, 213, 163, 0.7),
+    transparent);
+}
+
+.secret-panel__label {
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  letter-spacing: 0.34em;
+  color: var(--c-gold-dim);
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.secret-panel__title {
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  letter-spacing: 0.08em;
+  color: var(--c-gold);
+  text-shadow: var(--glow-gold);
+  margin-bottom: var(--space-sm);
+}
+
+.secret-panel__text {
+  font-size: 0.92rem;
+  line-height: 2.1;
+  color: var(--c-text);
+}
+
+/* 集めた欠片の一覧表示 */
+.shard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.shard-cell {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem;
+  text-align: center;
+  border: 1px solid rgba(154, 213, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(10, 22, 48, 0.4);
+  transition: border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+/* 獲得済みの欠片 */
+.shard-cell.is-owned {
+  border-color: rgba(154, 213, 255, 0.5);
+  box-shadow: inset 0 0 24px rgba(77, 166, 255, 0.18);
+}
+
+.shard-cell__mark {
+  width: 15px;
+  height: 15px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: rgba(154, 213, 255, 0.12);
+}
+
+.shard-cell.is-owned .shard-cell__mark {
+  background: linear-gradient(135deg, #ffffff, var(--c-blue-bright));
+  box-shadow: 0 0 14px rgba(154, 213, 255, 0.9);
+}
+
+.shard-cell__name {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--c-text-dim);
+  line-height: 1.5;
+}
+
+.shard-cell.is-owned .shard-cell__name {
+  color: var(--c-text);
+}
+
+/* 記録をリセットするボタン */
+.reset-row {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+}
+
+.reset-btn {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--c-text-dim);
+  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(154, 213, 255, 0.14);
+  border-radius: 999px;
+  transition: color var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft);
+}
+
+.reset-btn:hover {
+  color: #ff9a9a;
+  border-color: rgba(255, 154, 154, 0.4);
+}
+
+/* --- 根幹の解説ブロック(見出し＋パネルをひとまとめに) --- */
+.secret-block {
+  display: grid;
+  gap: var(--space-md);
+}
+
+/* --- キャラクター相関図 --- */
+.relation-wrap {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.4rem;
+  /* スクロールできることが分かるよう端をぼかす */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+
+.relation-map {
+  display: block;
+  width: 100%;
+  min-width: 1080px;
+  height: auto;
+}
+
+/* 図の地色。halo とラベル背景もこれと同じ色で、線をスッと切る */
+.rmap-bg    { fill: #070f21; }
+.rmap-halo  { fill: #070f21; }
+
+.rmap-link {
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.rmap-link--bond   { stroke: rgba(154, 213, 255, 0.5); }
+.rmap-link--origin { stroke: rgba(230, 213, 163, 0.8);  stroke-dasharray: 7 5; }
+.rmap-link--clash  { stroke: rgba(255, 128, 128, 0.8);  stroke-dasharray: 2 6; stroke-width: 2; }
+.rmap-link--axis   { stroke: rgba(255, 128, 128, 0.95); stroke-dasharray: 2 7; stroke-width: 3; }
+
+.rmap-label-bg { fill: #070f21; }
+
+.rmap-label {
+  fill: var(--c-text);
+  font-family: var(--font-jp);
+  font-size: 12.5px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* 顔アイコン(丸)+ 下に名前 */
+.rmap-node__plate { fill: #0a1428; }
+
+.rmap-node__edge {
+  fill: none;
+  stroke-width: 2.5;
+}
+.rmap-node__edge.is-blank { fill: #0a1428; }
+
+.rmap-node--light .rmap-node__edge { stroke: var(--c-blue); }
+.rmap-node--dark  .rmap-node__edge { stroke: var(--c-gold); }
+
+.rmap-node.is-hub .rmap-node__edge { stroke-width: 4; }
+.rmap-node--light.is-hub { filter: drop-shadow(0 0 9px rgba(154, 213, 255, 0.55)); }
+.rmap-node--dark.is-hub  { filter: drop-shadow(0 0 9px rgba(230, 213, 163, 0.55)); }
+
+.rmap-node__ini {
+  fill: var(--c-white);
+  font-family: var(--font-en);
+  font-size: 20px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.rmap-node__labelbg {
+  fill: #070f21;
+  fill-opacity: 0.92;
+}
+
+.rmap-node__label {
+  fill: var(--c-white);
+  font-family: var(--font-jp);
+  font-size: 12.5px;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* 凡例 */
+.relation-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  font-size: 0.76rem;
+  color: var(--c-text-dim);
+}
+
+.relation-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.relation-legend .rl {
+  width: 26px;
+  flex-shrink: 0;
+  border-top: 2px solid;
+  position: relative;
+}
+
+/* origin / clash / axis の凡例には矢印の頭を添える */
+.relation-legend .rl--origin::after,
+.relation-legend .rl--clash::after,
+.relation-legend .rl--axis::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 4px solid transparent;
+  border-left-color: currentColor;
+  color: inherit;
+}
+
+.relation-legend .rl--bond   { border-color: rgba(154, 213, 255, 0.7); }
+.relation-legend .rl--origin { border-top-style: dashed; border-color: rgba(230, 213, 163, 0.85); color: rgba(230, 213, 163, 0.85); }
+.relation-legend .rl--clash  { border-top-style: dotted; border-color: rgba(255, 128, 128, 0.9); color: rgba(255, 128, 128, 0.9); }
+.relation-legend .rl--axis   { border-top-style: dotted; border-top-width: 3px; border-color: rgba(255, 128, 128, 1); color: rgba(255, 128, 128, 1); }
+
+/* 相関の要点(文章) */
+.relation-notes {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.relation-notes li {
+  display: grid;
+  gap: 0.2rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.relation-notes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  background: var(--c-gold);
+}
+
+.relation-notes strong {
+  color: var(--c-white);
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+.relation-notes span {
+  color: var(--c-text);
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+/* ------------------------------------------------------------
+   SECRET MEMORY ― 記憶に残る、場面(画像ギャラリー)
+   ------------------------------------------------------------ */
+.secret-scenes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-md);
+}
+
+.secret-scene {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.secret-scene__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md, 14px);
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  background: #070f21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secret-scene__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 画像がまだ無いとき */
+.secret-scene.is-empty .secret-scene__frame {
+  border-style: dashed;
+  border-color: rgba(154, 213, 255, 0.28);
+}
+
+.secret-scene__ph {
+  padding: 1rem;
+  font-size: 0.72rem;
+  line-height: 1.9;
+  text-align: center;
+  color: var(--c-text-dim);
+}
+
+.secret-scene__ph code {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.68rem;
+  color: var(--c-blue-bright);
+  background: rgba(77, 166, 255, 0.12);
+  border-radius: 4px;
+}
+
+.secret-scene__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.secret-scene__work {
+  font-family: var(--font-en);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+.secret-scene__title {
+  font-size: 0.98rem;
+  color: var(--c-white);
+}
+
+.secret-scene__note {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--c-text-dim);
+}
+
+/* ============================================================
+   レスポンシブ対応
+   ============================================================ */
+@media (max-width: 720px) {
+  /* 作品カードは縦積みに変更 */
+  .work-card {
+    grid-template-columns: 1fr;
+  }
+
+  .work-card__visual {
+    aspect-ratio: 16 / 7;
+  }
+
+  .work-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .timeline {
+    padding-left: 2.2rem;
+  }
+
+  .timeline::before {
+    left: 5px;
+  }
+
+  .timeline__item::before {
+    left: -2.2rem;
+    margin-left: 1px;
+    top: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .character-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   MEMORY THEMES ページ(代表曲の一覧と試聴)
+   ============================================================ */
+
+/* カードを並べるグリッド */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.6rem;
+}
+
+/* 1曲ぶんのカード */
+.theme-card {
+  --hue: 42; /* work が無い曲(シリーズ全作共通)は落ち着いた金色を既定にする */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.7rem 1.6rem 1.6rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+  transition: border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft),
+              transform var(--dur-mid) var(--ease-soft);
+}
+
+/* カード上端に、収録作品の色をひとすじ */
+.theme-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent, hsla(var(--hue), 80%, 65%, 0.9), transparent 85%);
+}
+
+.theme-card:hover {
+  border-color: hsla(var(--hue), 80%, 70%, 0.4);
+  box-shadow: 0 0 50px hsla(var(--hue), 80%, 55%, 0.22), var(--glow-blue-lg);
+  transform: translateY(-3px);
+}
+
+.theme-card.is-playing {
+  border-color: hsla(var(--hue), 85%, 72%, 0.65);
+  box-shadow: 0 0 60px hsla(var(--hue), 80%, 55%, 0.3), var(--glow-blue-lg);
+}
+
+/* 見出し行:番号 + タイトル */
+.theme-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+.theme-card__title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+/* 収録作品を示す小さなバッジ(short表記。作品ごとに色分け) */
+.theme-card__work {
+  flex-shrink: 0;
+  font-family: var(--font-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 0.16rem 0.55rem;
+  line-height: 1.5;
+  border-radius: 999px;
+  color: hsla(var(--hue), 90%, 84%, 1);
+  background: hsla(var(--hue), 80%, 55%, 0.16);
+  border: 1px solid hsla(var(--hue), 80%, 65%, 0.4);
+  white-space: nowrap;
+}
+
+.theme-card__work[data-series="1"] {
+  letter-spacing: 0.12em;
+}
+
+.theme-card__index {
+  font-family: var(--font-en);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--c-blue-dim);
+  flex-shrink: 0;
+}
+
+.theme-card__title {
+  font-family: var(--font-en);
+  font-size: 1.12rem;
+  letter-spacing: 0.06em;
+  color: var(--c-white);
+  line-height: 1.35;
+}
+
+.theme-card__reading {
+  margin-top: 0.2rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--c-text-dim);
+}
+
+/* メタ情報(作曲・作品・場面) */
+.theme-card__meta {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.theme-card__meta div {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.6rem;
+}
+
+.theme-card__meta dt {
+  color: var(--c-blue);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  padding-top: 0.15rem;
+}
+
+.theme-card__meta dd {
+  margin: 0;
+  color: var(--c-text);
+}
+
+.theme-card__note {
+  font-size: 0.86rem;
+  line-height: 1.85;
+  color: var(--c-text);
+}
+
+.theme-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+/* --- 試聴プレイヤー --- */
+.theme-card__player {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(154, 213, 255, 0.12);
+}
+
+.theme-card__play {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(154, 213, 255, 0.4);
+  border-radius: 50%;
+  color: var(--c-blue-bright);
+  background: rgba(12, 24, 50, 0.6);
+  transition: background var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft),
+              box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.theme-card__play svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-card__play:hover:not(:disabled) {
+  background: rgba(77, 166, 255, 0.2);
+  border-color: var(--c-blue-bright);
+  box-shadow: var(--glow-blue);
+}
+
+.theme-card__play:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.is-playing .theme-card__play {
+  background: rgba(77, 166, 255, 0.25);
+  border-color: var(--c-blue-bright);
+  box-shadow: var(--glow-blue);
+}
+
+/* シークバー(押せる帯) */
+.theme-card__seek {
+  flex: 1;
+  height: 6px;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: rgba(154, 213, 255, 0.16);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.theme-card__seek:focus-visible {
+  outline: 2px solid var(--c-blue-bright);
+  outline-offset: 3px;
+}
+
+.theme-card__seek-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--c-blue-dim), var(--c-blue-bright));
+  box-shadow: var(--glow-blue);
+  transition: width 0.18s linear;
+}
+
+.theme-card__time {
+  flex-shrink: 0;
+  min-width: 3.2em;
+  text-align: right;
+  font-family: var(--font-en);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--c-text-dim);
+}
+
+/* --- 各プラットフォームへのリンク行 --- */
+.theme-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(154, 213, 255, 0.12);
+}
+
+.theme-card__links-label {
+  font-family: var(--font-en);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-text-dim);
+  margin-right: 0.15rem;
+}
+
+.theme-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.32rem 0.7rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--c-blue-bright);
+  border: 1px solid rgba(154, 213, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(12, 24, 50, 0.5);
+  transition: color var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft),
+              background var(--dur-fast) var(--ease-soft),
+              box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.theme-card__link:hover,
+.theme-card__link:focus-visible {
+  color: var(--c-white);
+  border-color: var(--c-blue-bright);
+  background: rgba(77, 166, 255, 0.18);
+  box-shadow: var(--glow-blue);
+  outline: none;
+}
+
+.theme-card__link span {
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+@media (max-width: 560px) {
+  .theme-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-card {
+    padding: 1.3rem;
+  }
+}
+
+/* ============================================================
+   MEMORY OF SUMMER ページ(KINGDOM HEARTS II FINAL MIX 特集)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   このページだけの配色(トワイライトタウンの、沈みきらない夕景)
+   サイト共通の「青のアクセント」トークンをこのページの<body>だけで
+   暖色(夕焼けのオレンジ)に置き換える。section-label・区切り線・
+   ボタン・パネルの縁・発光効果など、これらのトークンを参照している
+   要素は全部まとめて色が変わる(個々のセレクタは一切触らない)。
+   参照:css/base.css の :root(元のトークン定義) ------------------ */
+body.page-summer {
+  --c-blue:        #ff9d5c;
+  --c-blue-bright: #ffcf9e;
+  --c-blue-dim:    #b5622b;
+  --c-blue-deep:   #6b3418;
+
+  --panel-border:  rgba(255, 199, 154, 0.22);
+
+  --glow-blue:     0 0 24px rgba(255, 157, 92, 0.45);
+  --glow-blue-lg:  0 0 60px rgba(255, 157, 92, 0.35);
+
+  /* 背景の光暈も、月明かりの青から夕焼けのオレンジへ */
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 105%, rgba(255, 157, 92, 0.22), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 15% 0%,  rgba(107, 52, 24, 0.4), transparent 65%),
+    radial-gradient(ellipse 60% 40% at 85% 10%, rgba(90, 40, 60, 0.32), transparent 65%);
+}
+
+/* カーソル追従の光も同じ暖色に(layout.cssの既定値を上書き) */
+body.page-summer #cursor-glow {
+  background: radial-gradient(circle,
+    rgba(255, 157, 92, 0.2) 0%,
+    rgba(255, 157, 92, 0.08) 35%,
+    transparent 68%);
+}
+
+/* CSS変数を参照していない、直書きの青(rgba(154,213,255,*) / rgba(77,166,255,*))は
+   トークンの上書きだけでは変わらないため、このページで実際に使われている
+   箇所だけ個別に暖色へ差し替える(区切り線・パネル・ボタン・カード・
+   スライドショーなど) */
+body.page-summer .divider {
+  background: linear-gradient(90deg, transparent, rgba(255, 199, 154, 0.35) 50%, transparent);
+}
+
+body.page-summer .panel::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 199, 154, 0.6), transparent);
+}
+
+body.page-summer .concept-card::after {
+  background: radial-gradient(circle, rgba(255, 157, 92, 0.22), transparent 70%);
+}
+
+body.page-summer .btn {
+  border-color: rgba(255, 199, 154, 0.35);
+}
+
+body.page-summer .btn::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 199, 154, 0.25), transparent);
+}
+
+body.page-summer .btn:hover {
+  border-color: rgba(255, 199, 154, 0.75);
+  box-shadow: var(--glow-blue), inset 0 0 22px rgba(255, 157, 92, 0.15);
+}
+
+body.page-summer .btn--primary {
+  background: linear-gradient(135deg, rgba(107, 52, 24, 0.75), rgba(181, 98, 43, 0.45));
+  border-color: rgba(255, 199, 154, 0.55);
+}
+
+body.page-summer ::selection {
+  background: rgba(255, 157, 92, 0.35);
+}
+
+body.page-summer .summer-quote {
+  text-shadow: 0 0 30px rgba(255, 199, 154, 0.35);
+}
+
+body.page-summer .more-list a {
+  border-bottom-color: rgba(255, 199, 154, 0.4);
+}
+
+body.page-summer .roxas-slide__ph code {
+  background: rgba(255, 157, 92, 0.12);
+}
+
+body.page-summer .roxas-slide[data-empty] .roxas-slide__frame {
+  border-color: rgba(255, 199, 154, 0.28);
+}
+
+body.page-summer .roxas-nav {
+  border-color: rgba(255, 199, 154, 0.3);
+}
+
+body.page-summer .roxas-nav:hover {
+  border-color: rgba(255, 199, 154, 0.6);
+}
+
+body.page-summer .roxas-dot {
+  border-color: rgba(255, 199, 154, 0.4);
+}
+
+/* ページ見出し背後の光暈と、見出し文字自体の発光 */
+body.page-summer .page-head::before {
+  background: radial-gradient(ellipse at center top, rgba(255, 157, 92, 0.18), transparent 62%);
+}
+
+body.page-summer .page-head__title {
+  text-shadow: 0 0 40px rgba(255, 199, 154, 0.4);
+}
+
+/* 見出しが現れるときの発光(layout.cssの title-focus)も暖色版に差し替える。
+   keyframes 自体はクラスで絞れないので、名前を変えた別の keyframes を用意し、
+   animation-name だけをこのページで上書きする(長さや速さは元のまま) */
+@keyframes title-focus-summer {
+  0% {
+    opacity: 0.3;
+    letter-spacing: 0.18em;
+    text-shadow: 0 0 0 rgba(255, 199, 154, 0);
+  }
+  55% {
+    text-shadow: 0 0 34px rgba(255, 214, 173, 0.7),
+                 0 0 90px rgba(255, 157, 92, 0.4);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.06em;
+    text-shadow: 0 0 22px rgba(255, 199, 154, 0.3);
+  }
+}
+
+body.page-summer .reveal.is-visible .section-title,
+body.page-summer .reveal.is-visible .page-head__title {
+  animation-name: title-focus-summer;
+}
+
+/* 「何かがおかしい」箇条書き */
+.omen-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.omen-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--c-text);
+}
+
+.omen-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  background: var(--c-blue-bright);
+  box-shadow: var(--glow-blue);
+}
+
+/* 名言の引用ブロック */
+.summer-quote {
+  margin: var(--space-md) 0;
+  padding: clamp(1.6rem, 5vw, 2.6rem);
+  border-left: 2px solid var(--c-gold-dim);
+  background: linear-gradient(90deg, rgba(230, 213, 163, 0.08), transparent 80%);
+  font-family: var(--font-jp);
+  font-size: clamp(1.3rem, 4.2vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--c-white);
+  text-shadow: 0 0 30px rgba(154, 213, 255, 0.35);
+}
+
+/* ネタバレ境界の一本線 */
+.spoiler-line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: var(--space-md) auto;
+  max-width: 46em;
+  color: var(--c-gold);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+}
+
+.spoiler-line::before,
+.spoiler-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 213, 163, 0.5), transparent);
+}
+
+.spoiler-line span {
+  flex-shrink: 0;
+}
+
+/* 本文段落(七日間の正体) */
+.prose {
+  max-width: 44em;
+  display: grid;
+  gap: 1.2rem;
+  font-size: 0.96rem;
+  line-height: 1.95;
+  color: var(--c-text);
+}
+
+.prose strong {
+  color: var(--c-white);
+  font-weight: 500;
+}
+
+/* もっと辿るなら の一覧 */
+.more-list {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 1.4rem;
+}
+
+.more-list li {
+  position: relative;
+  padding-left: 1.4rem;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: var(--c-text);
+}
+
+.more-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  background: var(--c-gold);
+}
+
+.more-list a {
+  color: var(--c-blue-bright);
+  border-bottom: 1px solid rgba(154, 213, 255, 0.4);
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+
+.more-list a:hover {
+  color: var(--c-white);
+}
+
+/* 参考リンクの控えめな表示 */
+.source-note {
+  max-width: 46em;
+  margin: 0 auto;
+  font-size: 0.76rem;
+  line-height: 1.9;
+  color: var(--c-text-dim);
+}
+
+.source-note a {
+  color: var(--c-text-dim);
+  border-bottom: 1px solid rgba(125, 143, 174, 0.4);
+}
+
+.source-note a:hover {
+  color: var(--c-blue-bright);
+  border-bottom-color: currentColor;
+}
+
+/* --- ロクサスの写真スライドショー --- */
+.roxas-slideshow {
+  position: relative;
+  max-width: 820px;
+  margin: var(--space-md) auto 0;
+}
+
+.roxas-slides {
+  position: relative;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md, 14px);
+  overflow: hidden;
+  background: #070f21;
+}
+
+.roxas-slide {
+  margin: 0;
+  display: none;
+}
+.roxas-slide.is-active {
+  display: block;
+  animation: roxas-fade 0.5s var(--ease-out, ease) both;
+}
+@keyframes roxas-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.roxas-slide__frame {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.roxas-slide__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.roxas-slide[data-empty] .roxas-slide__frame {
+  border: 1px dashed rgba(154, 213, 255, 0.28);
+  border-radius: inherit;
+}
+.roxas-slide__ph {
+  padding: 1rem;
+  font-size: 0.72rem;
+  line-height: 1.9;
+  text-align: center;
+  color: var(--c-text-dim);
+}
+.roxas-slide__ph code {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.68rem;
+  color: var(--c-blue-bright);
+  background: rgba(77, 166, 255, 0.12);
+  border-radius: 4px;
+}
+
+.roxas-slide__cap {
+  margin-top: 0.7rem;
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--c-text);
+  text-align: center;
+}
+
+/* 前後ボタン */
+.roxas-nav {
+  position: absolute;
+  top: calc(50% - 22px);
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--c-white);
+  background: rgba(3, 6, 13, 0.55);
+  border: 1px solid rgba(154, 213, 255, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft);
+}
+.roxas-nav:hover {
+  background: rgba(10, 22, 48, 0.85);
+  border-color: rgba(154, 213, 255, 0.6);
+}
+.roxas-nav svg { width: 22px; height: 22px; }
+.roxas-nav--prev { left: 10px; }
+.roxas-nav--next { right: 10px; }
+
+/* ドット */
+.roxas-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+.roxas-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(154, 213, 255, 0.4);
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease-soft),
+              transform var(--dur-fast) var(--ease-soft);
+}
+.roxas-dot.is-active {
+  background: var(--c-blue-bright);
+  border-color: var(--c-blue-bright);
+  transform: scale(1.25);
+}
+
+@media (max-width: 560px) {
+  .roxas-nav { width: 38px; height: 38px; }
+  .roxas-nav svg { width: 18px; height: 18px; }
+}
+
+/* ============================================================
+   TIMELINE ページ(発売日順 / 時系列順の表)
+   ============================================================ */
+.kh-table-wrap {
+  overflow-x: auto;
+  margin-top: var(--space-md);
+  padding-bottom: 0.3rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 2.5%, #000 97.5%, transparent);
+}
+
+.kh-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.kh-table th,
+.kh-table td {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid rgba(154, 213, 255, 0.14);
+}
+
+.kh-table thead th {
+  font-family: var(--font-en);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-blue);
+  border-bottom-color: rgba(154, 213, 255, 0.32);
+  white-space: nowrap;
+}
+
+.kh-table tbody tr {
+  transition: background var(--dur-fast) var(--ease-soft);
+}
+
+.kh-table tbody tr:hover {
+  background: hsla(var(--hue, 210), 80%, 60%, 0.07);
+}
+
+.kh-table__num {
+  width: 2.6rem;
+  text-align: center;
+  font-family: var(--font-en);
+  color: var(--c-gold);
+  /* 作品ごとの色を、行の左端にひとすじだけ差し込む */
+  box-shadow: inset 3px 0 0 hsla(var(--hue, 210), 75%, 58%, 0.65);
+}
+
+/* 作品名の前に添える short 表記のバッジ(I / CoM / II ... 作品ごとに色分け) */
+.kh-table__badge {
+  display: inline-block;
+  min-width: 2em;
+  margin-right: 0.6em;
+  padding: 0.1rem 0.45rem;
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  border-radius: 999px;
+  color: hsla(var(--hue, 210), 90%, 84%, 1);
+  background: hsla(var(--hue, 210), 80%, 55%, 0.16);
+  border: 1px solid hsla(var(--hue, 210), 80%, 65%, 0.4);
+}
+
+.kh-table__year {
+  white-space: nowrap;
+  font-family: var(--font-en);
+  letter-spacing: 0.04em;
+  color: var(--c-text-dim);
+}
+
+.kh-table__title {
+  color: var(--c-white);
+  font-weight: 500;
+}
+
+.kh-table__plat {
+  white-space: nowrap;
+  font-size: 0.82rem;
+  color: var(--c-text-dim);
+}
+
+.kh-table__era {
+  min-width: 16rem;
+  line-height: 1.65;
+  color: var(--c-text);
+}

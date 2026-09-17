@@ -1,0 +1,56 @@
+WORLDS — assets/worlds/(34)
+
+destiny-islands
+dive-to-the-heart
+traverse-town
+traverse-town-data
+hollow-bastion
+castle-oblivion
+twilight-town
+the-world-that-never-was
+land-of-departure
+keyblade-graveyard
+realm-of-darkness
+daybreak-town
+scala-ad-caelum
+quadratum
+wonderland
+olympus-coliseum
+deep-jungle
+agrabah
+monstro
+atlantica
+halloween-town
+neverland
+beast-s-castle
+100-acre-wood
+port-royal
+timeless-river
+space-paranoids
+pride-lands
+land-of-dragons
+san-fransokyo
+kingdom-of-corona
+arendelle
+the-caribbean
+toy-box
+monstropolis
+注意:beast-s-castle(アポストロフィはハイフン)、100-acre-wood(数字始まり)、traverse-town-data は DATA版。
+
+CHARACTERS — assets/characters/(50/うち sora・riku・kairi は配置済み)
+
+sora  riku  kairi                    ← 済
+xemnas  xigbar  xaldin  vexen  lexaeus  zexion  saix  axel  demyx
+luxord  marluxia  larxene  roxas  namine  xion
+master-eraqus  aqua  terra  ventus  vanitas  xehanort
+king-mickey  donald-duck  goofy  master-yen-sid
+maleficent  pete  hades
+alice  hercules  jack-skellington  ariel  beast  belle
+aladdin  jasmine  peter-pan  tinker-bell  winnie-the-pooh
+simba  mulan  elsa  rapunzel  baymax  woody  jack-sparrow
+注意:
+
+saix(SAÏX)・namine(NAMINÉ)…アクセントは無し
+king-mickey(mickey ではない)、donald-duck(donald ではない)
+Jack は2人 → jack-skellington と jack-sparrow
+master-eraqus / master-yen-sid は master- 付き

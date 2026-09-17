@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEMORY OF SUMMER | KINGDOM HEARTS — MEMORY</title>
+  <meta name="description" content="『KINGDOM HEARTS II FINAL MIX』の魅力を、プロローグで描かれる“ロクサスの七日間(夏休み)”を入口に紹介するページ。シリーズを知らない人にも。">
+
+  <!-- ファビコン & SNS 共有(OGP) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#03060d">
+  <link rel="canonical" href="roxas.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MEMORY OF SUMMER | KINGDOM HEARTS — MEMORY">
+  <meta property="og:description" content="『KINGDOM HEARTS II FINAL MIX』の魅力を、プロローグで描かれる“ロクサスの七日間(夏休み)”を入口に紹介するページ。シリーズを知らない人にも。">
+  <meta property="og:image" content="assets/IMG_4388.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="page-summer">
+
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+  <div id="cursor-glow" aria-hidden="true"></div>
+  <div id="page-transition" aria-hidden="true"></div>
+  <script>try{if(sessionStorage.getItem("kh-nav")==="1"){document.documentElement.classList.add("kh-arrive");setTimeout(function(){document.documentElement.classList.remove("kh-arrive")},1500);}}catch(e){}</script>
+
+  <!-- ============================================================
+       ヘッダー
+       ============================================================ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <!-- ハートに刻まれた鍵穴のマーク -->
+        <svg class="site-logo__mark" viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M60 104 C42 88 26 76 26 60 A17 17 0 0 1 60 52
+                   A17 17 0 0 1 94 60 C94 76 78 88 60 104Z"
+                fill="none" stroke="currentColor" stroke-width="7"/>
+          <circle cx="60" cy="66" r="8" fill="currentColor"/>
+          <path d="M55 72h10l3 16H52Z" fill="currentColor"/>
+        </svg>
+        KH MEMORY
+      </a>
+
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">TOP</a></li>
+          <li><a class="nav-link" href="album.html">ALBUM</a></li>
+          <li><a class="nav-link" href="timeline.html">TIMELINE</a></li>
+          <li><a class="nav-link" href="music.html">THEMES</a></li>
+          <li><a class="nav-link" href="roxas.html">SUMMER</a></li>
+          <li><a class="nav-link" href="crossover.html">CROSSOVER</a></li>
+          <li><a class="nav-link" href="secret.html" data-secret-link>SECRET</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <div class="memory-counter" title="集めた記憶の欠片">
+          <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2 22 12 12 22 2 12Z"/>
+          </svg>
+          <span data-memory-count>0 / 12</span>
+        </div>
+
+        <button class="audio-toggle" type="button" aria-pressed="false" aria-label="音声をオンにする">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5Z"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+            <path d="M19 5a10 10 0 0 1 0 14"/>
+            <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+              aria-expanded="false" aria-controls="global-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main id="main" class="site-main">
+
+    <!-- ページ見出し -->
+    <section class="page-head container">
+      <span class="section-label">Feature — KINGDOM HEARTS II FINAL MIX</span>
+      <h1 class="page-head__title">MEMORY OF SUMMER</h1>
+      <p class="page-head__lead">ロクサスの、七日間</p>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         つかみ:夏休み、あと七日
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container" id="prologue">
+      <div class="reveal">
+        <span class="section-label">Day 1</span>
+        <h2 class="section-title">夏休み、あと七日。</h2>
+        <p class="section-lead">
+          トワイライトタウン。陽が沈みきらない、ずっと夕方のままの街。
+          そこで暮らす少年 <strong>ロクサス</strong> の夏休みは、あと七日で終わります。
+          仲間のハイネ、ピンス、オレットと落書きを消して回り、
+          時計塔のてっぺんで <strong>シーソルトアイス</strong> を分け合う——
+          どこにでもある、最後の一週間のはずでした。
+        </p>
+      </div>
+
+      <div class="panel reveal" data-delay="1">
+        <p class="section-lead" style="margin-bottom:1.2rem;">
+          けれど、七日間のあいだ、小さな綻びが少しずつ増えていきます。
+        </p>
+        <ul class="omen-list">
+          <li>白くて、音のない化け物が、なぜかロクサスだけを狙って現れる。</li>
+          <li>ときどき、街の時間がぴたりと止まる。</li>
+          <li>見たこともない少年と、赤い髪の男が出てくる夢を、毎晩見る。</li>
+          <li>誰かが「ロクサス」と、自分の名前を呼んでいる気がする。</li>
+        </ul>
+        <p class="section-lead" style="margin-top:1.2rem;">
+          プレイヤーはこの七日間、シリーズの主人公ソラをまだ動かせません。
+          『KINGDOM HEARTS II』は、<strong>名前も知らない少年の、平凡で、少しずつ歪んでいく夏</strong>
+          から静かに幕を開けます。
+        </p>
+      </div>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- ------------------------------------------------------------
+         ロクサスの写真スライドショー
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container" id="gallery">
+      <div class="reveal">
+        <span class="section-label">Snapshots</span>
+        <h2 class="section-title">七日間の、ロクサス。</h2>
+        <p class="section-lead">
+          トワイライトタウンで過ごした、ありふれた——そして少しずつ歪んでいく日々の断片。
+        </p>
+      </div>
+
+      <div class="roxas-slideshow reveal" id="roxas-slideshow"
+           aria-roledescription="スライドショー" aria-label="ロクサスの写真"></div>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- ------------------------------------------------------------
+         名言
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container" id="line">
+      <div class="reveal">
+        <span class="section-label">The Line</span>
+        <h2 class="section-title">シリーズ屈指の、ひとこと。</h2>
+        <p class="section-lead">
+          七日目の終わり。すべてを知ったロクサスは、眠りについた少年ソラのカプセルの前に立ち、
+          静かにこう呟きます。
+        </p>
+      </div>
+
+      <blockquote class="summer-quote reveal" data-delay="1">
+        「俺の夏休み――&#8195;終わっちゃった」
+      </blockquote>
+
+      <div class="reveal" data-delay="2">
+        <p class="section-lead">
+          電撃オンラインはこの一言を <strong>「シリーズ屈指の名言」</strong> と評し、
+          「『キングダム ハーツ』はよく“ストーリーが泣ける”と言われるが、
+          その要因のひとつは間違いなくこのロクサスの夏休み」と書いています。
+          このとき流れているのは、彼のためだけに書かれたテーマ曲
+          <strong>「Roxas」</strong>。美しくも哀愁の漂うトワイライトタウンの音楽と、
+          シナリオと、この曲が一体になって——プレイヤーの涙腺を容赦なく刺激する、と。
+        </p>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         ネタバレ境界
+         ------------------------------------------------------------ -->
+    <section class="section--tight container">
+      <p class="spoiler-line reveal">
+        <span>ここから先は、ロクサスの七日間の「正体」に触れます</span>
+      </p>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         七日間の正体
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container" id="truth">
+      <div class="reveal">
+        <span class="section-label">The Truth</span>
+        <h2 class="section-title">その夏は、実在しない。</h2>
+        <p class="section-lead">
+          ロクサスが歩いた街も、隣で笑っていた仲間も、積み重ねてきたはずの思い出も、
+          すべては数日ぶんだけ用意された <strong>仮想のトワイライトタウン</strong> でした。
+        </p>
+      </div>
+
+      <div class="prose reveal" data-delay="1">
+        <p>
+          作ったのは、賢者アンセム——通称 <strong>ディズ</strong>。
+          目的は、長い眠りについた主人公ソラを目覚めさせることでした。
+          そのためには、ソラから分かたれて生まれた存在であるロクサスが、
+          ソラのもとへ「還る」必要があった。ディズは、ロクサスを留めておくための箱として、
+          この偽物の夏を用意したのです。
+        </p>
+        <p>
+          ロクサスは <strong>ノーバディ</strong>——心を失った者から生まれた、
+          本来は心を持たないはずの存在です。
+          それでも彼は、消えていく間際に、悔しさや寂しさや、
+          名前を呼びたい誰かへの想いのような感情を見せます。
+          「心が無い」という設定そのものへの、静かな反証として。
+        </p>
+        <p>
+          その先で目を覚ましたソラの物語は、書き換えられた記憶(『Re:Chain of Memories』)を辿り直し、
+          XIII機関との対立の中心へと進んでいきます。
+          ロクサスの七日間は、その長い旅の、いちばん静かな入口です。
+        </p>
+      </div>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- ------------------------------------------------------------
+         II FINAL MIX の魅力
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container" id="appeal">
+      <div class="reveal">
+        <span class="section-label">Why II FINAL MIX</span>
+        <h2 class="section-title">七日間の、その先にあるもの。</h2>
+        <p class="section-lead">
+          ロクサスの夏はプロローグにすぎません。
+          その扉の向こうには、シリーズでも屈指の完成度と言われる本編が広がっています。
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <article class="concept-card reveal" data-delay="1">
+          <span class="concept-card__en">STORY</span>
+          <h3 class="concept-card__title">物語のスケール</h3>
+          <p class="concept-card__text">
+            ダークシーカー編の折り返し地点。書き換えられた記憶、XIII機関、ノーバディ、
+            そしてロクサスとシオン——後の全作品へ伸びる伏線が、ここでいっきに動き出します。
+          </p>
+        </article>
+
+        <article class="concept-card reveal" data-delay="2">
+          <span class="concept-card__en">BATTLE</span>
+          <h3 class="concept-card__title">進化したアクション</h3>
+          <p class="concept-card__text">
+            状況に応じて発動する「リアクションコマンド」、仲間の力で姿を変える「ドライブフォーム」。
+            爽快さと戦略性を両立したバトルは、電撃オンライン評で
+            「いま遊んでもシリーズ全体でトップクラスの完成度」。
+          </p>
+        </article>
+
+        <article class="concept-card reveal" data-delay="3">
+          <span class="concept-card__en">FINAL MIX</span>
+          <h3 class="concept-card__title">追加された手応え</h3>
+          <p class="concept-card__text">
+            新ダンジョン「追憶の洞」、XIII機関の影(アブセント・シルエット)やデータ戦、
+            新フォーム「リミットフォーム」、追加カットシーン。そして——ムービー主体だった
+            ロクサスとの戦いが、「The Other Promise」を背負う本格的なボス戦として遊べるように。
+            高難度のクリティカルモードも本作から。
+          </p>
+        </article>
+
+        <article class="concept-card reveal" data-delay="4">
+          <span class="concept-card__en">MUSIC</span>
+          <h3 class="concept-card__title">泣きの半分は音楽</h3>
+          <p class="concept-card__text">
+            下村陽子によるスコア。ロクサスのテーマ「Roxas」、その短調アレンジ「The Other Promise」、
+            宇多田ヒカルの主題歌「Passion(英題 Sanctuary)」。
+            哀愁のトワイライトタウンBGM群も含め、この作品の“泣ける”をかたちづくっています。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         もっと辿るなら
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container" id="more">
+      <div class="panel reveal">
+        <span class="section-label">Keep Going</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">もっと辿るなら</h2>
+        <ul class="more-list">
+          <li>
+            <strong>遊ぶなら:</strong>
+            『KINGDOM HEARTS HD 1.5＋2.5 リミックス』に『II FINAL MIX』が収録されています(PS4 ほか)。
+            同じ集の映像作品『358/2 Days』では、ロクサスがXIII機関で過ごした日々が描かれ、
+            「『II FINAL MIX』では語られなかった重要なキャラクターが登場し、
+            ロクサスにより感情移入できる」(電撃オンライン)。
+          </li>
+          <li>
+            <strong>このサイトで:</strong>
+            <a href="music.html">MEMORY THEMES</a> の「The Other Promise」「Vector to the Heavens」、
+            <a href="album.html">MEMORY ALBUM</a> の「KINGDOM HEARTS II」。
+          </li>
+        </ul>
+
+        <div class="hero__actions" style="margin-top:2rem;">
+          <a href="music.html" class="btn btn--primary">
+            MEMORY THEMES へ
+            <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+          <a href="album.html" class="btn">MEMORY ALBUM へ</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         結び
+         ------------------------------------------------------------ -->
+    <section class="section container">
+      <p class="statement reveal">
+        偽物の夏だったとしても、<br>
+        <em>時計塔の上で分け合った あの味は、たしかにそこにあった。</em>
+      </p>
+    </section>
+
+    <!-- 参考にした記事 -->
+    <section class="section--tight container">
+      <p class="source-note reveal">
+        参考:
+        <a href="https://dengekionline.com/articles/91706/" target="_blank" rel="noopener noreferrer">
+          電撃オンライン「『キングダム ハーツII ファイナルミックス』でロクサスの切ない“夏休み”を見届けよう」</a>
+        /
+        <a href="https://wikiwiki.jp/kh_series/%E3%82%BB%E3%83%AA%E3%83%95/%E3%80%90%E4%BF%BA%E3%81%AE%E5%A4%8F%E4%BC%91%E3%81%BF%E2%80%95%E2%80%95%E3%80%80%E7%B5%82%E3%82%8F%E3%81%A3%E3%81%A1%E3%82%83%E3%81%A3%E3%81%9F%E3%80%91"
+           target="_blank" rel="noopener noreferrer">
+          KINGDOM HEARTS用語辞典 Wiki「俺の夏休み――終わっちゃった」</a>
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
+          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html">TOP</a>
+          <a href="album.html">MEMORY ALBUM</a>
+          <a href="timeline.html">TIMELINE</a>
+          <a href="music.html">MEMORY THEMES</a>
+          <a href="roxas.html">MEMORY OF SUMMER</a>
+          <a href="crossover.html">MEMORY CROSSOVER</a>
+          <a href="secret.html" data-secret-link>SECRET MEMORY</a>
+        </nav>
+      </div>
+
+      <p class="footer-copyright">
+        非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/memory.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/roxas.js"></script>
+</body>
+</html>

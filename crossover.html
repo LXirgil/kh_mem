@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEMORY CROSSOVER | KINGDOM HEARTS — MEMORY</title>
+  <meta name="description" content="キングダムハーツに登場する、ファイナルファンタジー・すばらしきこのせかい・ディズニー/ピクサー作品を一覧で見られるページ。">
+
+  <!-- ファビコン & SNS 共有(OGP) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#03060d">
+  <link rel="canonical" href="crossover.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MEMORY CROSSOVER | KINGDOM HEARTS — MEMORY">
+  <meta property="og:description" content="キングダムハーツに登場する、ファイナルファンタジー・すばらしきこのせかい・ディズニー/ピクサー作品を一覧で見られるページ。">
+  <meta property="og:image" content="assets/IMG_4388.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+  <div id="cursor-glow" aria-hidden="true"></div>
+  <div id="page-transition" aria-hidden="true"></div>
+  <script>try{if(sessionStorage.getItem("kh-nav")==="1"){document.documentElement.classList.add("kh-arrive");setTimeout(function(){document.documentElement.classList.remove("kh-arrive")},1500);}}catch(e){}</script>
+
+  <!-- ============================================================
+       ヘッダー
+       ============================================================ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <svg class="site-logo__mark" viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M60 104 C42 88 26 76 26 60 A17 17 0 0 1 60 52
+                   A17 17 0 0 1 94 60 C94 76 78 88 60 104Z"
+                fill="none" stroke="currentColor" stroke-width="7"/>
+          <circle cx="60" cy="66" r="8" fill="currentColor"/>
+          <path d="M55 72h10l3 16H52Z" fill="currentColor"/>
+        </svg>
+        KH MEMORY
+      </a>
+
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">TOP</a></li>
+          <li><a class="nav-link" href="album.html">ALBUM</a></li>
+          <li><a class="nav-link" href="timeline.html">TIMELINE</a></li>
+          <li><a class="nav-link" href="music.html">THEMES</a></li>
+          <li><a class="nav-link" href="roxas.html">SUMMER</a></li>
+          <li><a class="nav-link" href="crossover.html">CROSSOVER</a></li>
+          <li><a class="nav-link" href="secret.html" data-secret-link>SECRET</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <div class="memory-counter" title="集めた記憶の欠片">
+          <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2 22 12 12 22 2 12Z"/>
+          </svg>
+          <span data-memory-count>0 / 12</span>
+        </div>
+
+        <button class="audio-toggle" type="button" aria-pressed="false" aria-label="音声をオンにする">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5Z"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+            <path d="M19 5a10 10 0 0 1 0 14"/>
+            <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+              aria-expanded="false" aria-controls="global-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main id="main" class="site-main">
+
+    <!-- ページ見出し -->
+    <section class="page-head container">
+      <span class="section-label">Crossover</span>
+      <h1 class="page-head__title">MEMORY CROSSOVER</h1>
+      <p class="page-head__lead">キングダムハーツと縁のある作品たち</p>
+    </section>
+
+    <!-- 導入 -->
+    <section class="section section--tight container">
+      <div class="reveal">
+        <p class="section-lead">
+          キングダムハーツは、<strong>スクウェア・エニックスのゲーム</strong>と
+          <strong>ディズニー / ピクサーの物語</strong>が交わって生まれたシリーズです。
+          ファイナルファンタジーの英雄たち、『すばらしきこのせかい』の少年少女、
+          そして数多くのディズニー作品が、ひとつの「記憶」の中で出会います。
+          ここでは、その顔ぶれを作品ごとに一覧にしました。
+        </p>
+        <p class="appears-legend">
+          各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その作品の要素が登場する KINGDOM HEARTS タイトルを示します。
+          <i class="appears__cell is-in" data-cat="main">II</i>本編に登場
+          <i class="appears__cell is-in" data-cat="side">χ</i>外伝に登場
+          <i class="appears__cell">—</i>未登場。
+          記号にカーソルを合わせると作品名が出ます。
+        </p>
+      </div>
+
+      <!-- 絞り込み -->
+      <div class="filter-bar" id="crossover-filter-bar" role="group" aria-label="ジャンルの絞り込み">
+        <button class="filter-btn is-active" type="button" data-filter="all">ALL</button>
+        <button class="filter-btn" type="button" data-filter="ff">ファイナルファンタジー</button>
+        <button class="filter-btn" type="button" data-filter="twewy">すばらしきこのせかい</button>
+        <button class="filter-btn" type="button" data-filter="disney">ディズニー / ピクサー</button>
+        <button class="filter-btn" type="button" data-filter="disney-extra">短編・楽曲・召喚</button>
+      </div>
+
+      <div class="crossover-grid" id="crossover-grid"></div>
+
+      <!-- 絞り込み結果が0件のときの案内 -->
+      <p id="crossover-no-result" style="display:none; text-align:center; color:var(--c-text-dim); margin-top:2rem;">
+        該当する作品がありません。
+      </p>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- 補足 -->
+    <section class="section section--tight container">
+      <div class="panel reveal">
+        <span class="section-label">Notes</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">見るときの注意</h2>
+        <ul class="more-list">
+          <li>
+            <strong>「登場する場所」はワールド名(またはメニュー機能)</strong>です。
+            同じ作品が複数のキングダムハーツ作品にまたがって登場することもあります。
+          </li>
+          <li>
+            <strong>ファイナルファンタジー勢は「レイディアントガーデン復興委員会」</strong>として
+            一括りに動く場面が多く、出身タイトルはFFVII・FFVIII・FFXなどに分かれています。
+          </li>
+          <li>
+            <strong>権利や制作の都合で一作限りのワールドもあります</strong>(『ターザン』のディープジャングルなど)。
+          </li>
+          <li>
+            固有名詞はすべて各シリーズの実在のもの。イラストやロゴなどの画像素材は権利者(スクウェア・エニックス / ディズニー)に帰属するため、このサイトには含めていません。
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- クロスオーバーの名場面(専用ギャラリー) -->
+    <section class="section section--tight container">
+      <div class="reveal">
+        <span class="section-label">Crossover Moments</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">クロスオーバーの、名場面</h2>
+      </div>
+
+      <div class="xscene-grid" id="crossover-scenes"></div>
+    </section>
+
+    <!-- 次への導線 -->
+    <section class="section section--tight container">
+      <div class="panel reveal" style="display:grid; gap:1.6rem; justify-items:center; text-align:center;">
+        <span class="section-label">Keep Exploring</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">キャラクターをくわしく</h2>
+        <p class="section-lead" style="text-align:center;">
+          個々のキャラクターの紹介は MEMORY ALBUM に、シリーズ全体の流れは TIMELINE にあります。
+        </p>
+        <a href="album.html" class="btn btn--primary">
+          MEMORY ALBUM へ
+          <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
+          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html">TOP</a>
+          <a href="album.html">MEMORY ALBUM</a>
+          <a href="timeline.html">TIMELINE</a>
+          <a href="music.html">MEMORY THEMES</a>
+          <a href="roxas.html">MEMORY OF SUMMER</a>
+          <a href="crossover.html">MEMORY CROSSOVER</a>
+          <a href="secret.html" data-secret-link>SECRET MEMORY</a>
+        </nav>
+      </div>
+
+      <p class="footer-copyright">
+        非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/memory.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/crossover.js"></script>
+</body>
+</html>

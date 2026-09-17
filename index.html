@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KINGDOM HEARTS — MEMORY | 記憶を辿る、体験型Webサイト</title>
+  <meta name="description" content="キングダムハーツの世界観から着想を得たオリジナル体験型Webサイト。記憶の欠片を集めながら、シリーズの歩みを辿ります。">
+
+  <!-- ファビコン & SNS 共有(OGP) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#03060d">
+  <link rel="canonical" href="index.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KINGDOM HEARTS — MEMORY | 記憶を辿る、体験型Webサイト">
+  <meta property="og:description" content="キングダムハーツの世界観から着想を得たオリジナル体験型Webサイト。記憶の欠片を集めながら、シリーズの歩みを辿ります。">
+  <meta property="og:image" content="assets/IMG_4388.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Google Fonts:英字は Cinzel、日本語は Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- スタイルシート(役割ごとに分割) -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <!-- ============================================================
+       初回イントロ「ダイブ・トゥ・ザ・ハート」風ゲート
+       セッション中に一度だけ表示。中身は js/intro.js が生成する
+       ============================================================ -->
+  <div id="dive-gate" hidden></div>
+  <script>
+    (function () {
+      var seen;
+      try { seen = sessionStorage.getItem("kh-dive-seen") === "1"; } catch (e) { seen = false; }
+      if (seen) return;
+      var g = document.getElementById("dive-gate");
+      g.hidden = false;
+      document.documentElement.classList.add("dive-open");
+      /* 失敗時の安全策:intro.js が中身を作れなかったら本体を出す */
+      setTimeout(function () {
+        if (!g.hidden && !g.firstElementChild) {
+          g.hidden = true;
+          document.documentElement.classList.remove("dive-open");
+        }
+      }, 5000);
+    })();
+  </script>
+
+  <!-- 背景演出:光の粒子(Canvas)とカーソル追従の光 -->
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ページ遷移用のオーバーレイ -->
+  <div id="page-transition" aria-hidden="true"></div>
+  <script>try{if(sessionStorage.getItem("kh-nav")==="1"){document.documentElement.classList.add("kh-arrive");setTimeout(function(){document.documentElement.classList.remove("kh-arrive")},1500);}}catch(e){}</script>
+
+  <!-- ============================================================
+       ヘッダー
+       ============================================================ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <!-- ハートに刻まれた鍵穴のマーク -->
+        <svg class="site-logo__mark" viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M60 104 C42 88 26 76 26 60 A17 17 0 0 1 60 52
+                   A17 17 0 0 1 94 60 C94 76 78 88 60 104Z"
+                fill="none" stroke="currentColor" stroke-width="7"/>
+          <circle cx="60" cy="66" r="8" fill="currentColor"/>
+          <path d="M55 72h10l3 16H52Z" fill="currentColor"/>
+        </svg>
+        KH MEMORY
+      </a>
+
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">TOP</a></li>
+          <li><a class="nav-link" href="album.html">ALBUM</a></li>
+          <li><a class="nav-link" href="timeline.html">TIMELINE</a></li>
+          <li><a class="nav-link" href="music.html">THEMES</a></li>
+          <li><a class="nav-link" href="roxas.html">SUMMER</a></li>
+          <li><a class="nav-link" href="crossover.html">CROSSOVER</a></li>
+          <li><a class="nav-link" href="secret.html" data-secret-link>SECRET</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <!-- 集めた記憶の欠片の数 -->
+        <div class="memory-counter" title="集めた記憶の欠片">
+          <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2 22 12 12 22 2 12Z"/>
+          </svg>
+          <span data-memory-count>0 / 12</span>
+        </div>
+
+        <!-- 音声の ON / OFF -->
+        <button class="audio-toggle" type="button" aria-pressed="false" aria-label="音声をオンにする">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5Z"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+            <path d="M19 5a10 10 0 0 1 0 14"/>
+            <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- スマートフォン用メニューボタン -->
+      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+              aria-expanded="false" aria-controls="global-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main id="main" class="site-main is-fullbleed">
+
+    <!-- ------------------------------------------------------------
+         ヒーロー:サイトの入口
+         ------------------------------------------------------------ -->
+    <section class="hero">
+      <!-- 目覚めの園:背後で回転するステンドグラスの台座 -->
+      <div class="hero__station" aria-hidden="true">
+        <div class="hero__station-glow"></div>
+        <div class="hero__station-disc"></div>
+        <div class="hero__station-seams"></div>
+        <div class="hero__station-ring hero__station-ring--outer"></div>
+        <div class="hero__station-ring hero__station-ring--inner"></div>
+        <svg class="hero__station-core" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="hero__station-heart"
+                d="M60 104 C42 88 26 76 26 60 A17 17 0 0 1 60 52
+                   A17 17 0 0 1 94 60 C94 76 78 88 60 104Z"/>
+          <circle cx="60" cy="64" r="7"/>
+          <path d="M56 70h8l3 15H53Z"/>
+        </svg>
+      </div>
+
+      <div class="hero__inner container">
+        <!-- サイトのシンボル:交差するキーブレードと、ハートに刻まれた鍵穴 -->
+        <svg class="hero__emblem" viewBox="0 0 120 120" aria-hidden="true">
+          <!-- 背後で交差する2本のキーブレード -->
+          <g class="hero__emblem-blades" fill="none" stroke="currentColor"
+             stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <g>
+              <path d="M24 100 92 26"/>
+              <circle cx="19" cy="105" r="6"/>
+              <path d="M92 26h10v10M84 34l8 8"/>
+              <path d="M76 34 84 42"/>
+            </g>
+            <g transform="scale(-1 1) translate(-120 0)">
+              <path d="M24 100 92 26"/>
+              <circle cx="19" cy="105" r="6"/>
+              <path d="M92 26h10v10M84 34l8 8"/>
+              <path d="M76 34 84 42"/>
+            </g>
+          </g>
+
+          <!-- 手前のハートと鍵穴 -->
+          <path d="M60 104 C42 88 26 76 26 60 A17 17 0 0 1 60 52
+                   A17 17 0 0 1 94 60 C94 76 78 88 60 104Z"
+                fill="rgba(3,6,13,0.85)" stroke="currentColor" stroke-width="3.4"/>
+          <circle cx="60" cy="66" r="7.5" fill="currentColor"/>
+          <path d="M56 72h8l3 14H53Z" fill="currentColor"/>
+        </svg>
+
+        <p class="hero__eyebrow">AN INTERACTIVE TRIBUTE</p>
+
+        <h1 class="hero__title">
+          KINGDOM HEARTS
+          <span>— MEMORY —</span>
+        </h1>
+
+        <p class="hero__lead">記憶を辿る、光と闇の旅へ</p>
+
+        <div class="hero__actions">
+          <a href="#gateway" class="btn btn--primary">
+            記憶を辿りはじめる
+            <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
+          <a href="album.html" class="btn">アルバムを見る</a>
+        </div>
+      </div>
+
+      <!-- 記憶の欠片 その1(紋章の左上にひっそりと配置) -->
+      <div class="fragment" data-fragment="f01"
+           style="position:absolute; left:12%; top:26%;">
+        <div class="fragment__shard"></div>
+      </div>
+
+      <!-- スクロールを促す表示 -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span>SCROLL</span>
+        <span class="scroll-hint__line"></span>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         コンセプト:このサイトについて
+         ------------------------------------------------------------ -->
+    <section class="section container" id="concept">
+      <div class="reveal">
+        <span class="section-label">Concept</span>
+        <h2 class="section-title">読むサイトではなく、<br>辿るサイトへ。</h2>
+        <p class="section-lead">
+          このサイトは、キングダムハーツシリーズの世界観から着想を得たオリジナルの体験型Webサイトです。
+          情報をただ並べるのではなく、訪れた人が自分の手で光を見つけ、記憶を集めながら
+          シリーズの歩みを辿っていく——そんな体験そのものを設計しました。
+          <!-- 記憶の欠片 その4(導入文の余韻に紛れさせる) -->
+          <span class="fragment" data-fragment="f04">
+            <span class="fragment__shard"></span>
+          </span>
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <!-- 柱1:心 -->
+        <article class="concept-card reveal" data-delay="1">
+          <svg class="concept-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20.5S3.5 15 3.5 9.2A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.5 2.8c0 5.8-8.5 11.3-8.5 11.3Z"/>
+            <circle cx="12" cy="10" r="2"/>
+          </svg>
+          <span class="concept-card__en">HEART</span>
+          <h3 class="concept-card__title">こころ</h3>
+          <p class="concept-card__text">
+            シリーズが一貫して描いてきたのは「心のつながり」でした。
+            そのテーマを、画面に触れたときの反応や光の揺らぎとして表現しています。
+          </p>
+        </article>
+
+        <!-- 柱2:記憶 -->
+        <article class="concept-card reveal" data-delay="2">
+          <svg class="concept-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3 21 12l-9 9-9-9Z"/>
+            <path d="M12 7.5 16.5 12 12 16.5 7.5 12Z"/>
+          </svg>
+          <span class="concept-card__en">MEMORY</span>
+          <h3 class="concept-card__title">記憶</h3>
+          <p class="concept-card__text">
+            サイトの各所には「記憶の欠片」が隠されています。
+            集めた記録はブラウザに保存され、次に訪れたときも引き継がれます。
+            <!-- 記憶の欠片 その5(欠片そのものを説明する文の中に) -->
+            <span class="fragment" data-fragment="f05">
+              <span class="fragment__shard"></span>
+            </span>
+          </p>
+        </article>
+
+        <!-- 柱3:光と闇 -->
+        <article class="concept-card reveal" data-delay="3">
+          <svg class="concept-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor" stroke="none" opacity="0.55"/>
+          </svg>
+          <span class="concept-card__en">LIGHT &amp; DARK</span>
+          <h3 class="concept-card__title">光と闇</h3>
+          <p class="concept-card__text">
+            深い闇を背景に、青白い光だけを頼りに進む構成です。
+            余白と暗さを活かすことで、ひとつひとつの光が意味を持ちます。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- ------------------------------------------------------------
+         印象的な一文
+         ------------------------------------------------------------ -->
+    <section class="section container">
+      <p class="statement reveal">
+        記憶は 薄れても、<br>
+        <em>つながりは 消えない。</em>
+        <!-- 記憶の欠片 その2(文章の余韻に紛れさせる) -->
+        <span class="fragment" data-fragment="f02">
+          <span class="fragment__shard"></span>
+        </span>
+      </p>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         各ページへの導線
+         ------------------------------------------------------------ -->
+    <section class="section container" id="gateway">
+      <div class="reveal">
+        <span class="section-label">Explore</span>
+        <h2 class="section-title">六つの扉</h2>
+        <p class="section-lead">
+          それぞれの扉が、異なる記憶へと通じています。順に辿っても、気になるところから開いても構いません。
+          <!-- 記憶の欠片 その6(扉を選ぶ前に、そっと置く) -->
+          <span class="fragment" data-fragment="f06">
+            <span class="fragment__shard"></span>
+          </span>
+        </p>
+      </div>
+
+      <div class="gateway-grid">
+        <!-- 扉1:MEMORY ALBUM -->
+        <a href="album.html" class="gateway reveal" data-delay="1">
+          <span class="gateway__orb" aria-hidden="true"></span>
+          <span class="gateway__num">01</span>
+          <h3 class="gateway__title">MEMORY ALBUM</h3>
+          <p class="gateway__text">
+            シリーズ各作品を年代順に辿る記録の間。
+            作品とキャラクターの記憶がここに収められています。
+          </p>
+          <span class="gateway__enter">
+            ENTER
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- 扉2:TIMELINE -->
+        <a href="timeline.html" class="gateway reveal" data-delay="2">
+          <span class="gateway__orb" aria-hidden="true"></span>
+          <span class="gateway__num">02</span>
+          <h3 class="gateway__title">TIMELINE</h3>
+          <p class="gateway__text">
+            全作品を「発売日順」と「物語内の時系列順」の
+            2つの表で整理。ずれた時間軸を見渡せます。
+          </p>
+          <span class="gateway__enter">
+            ENTER
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- 扉3:MEMORY THEMES -->
+        <a href="music.html" class="gateway reveal" data-delay="3">
+          <span class="gateway__orb" aria-hidden="true"></span>
+          <span class="gateway__num">03</span>
+          <h3 class="gateway__title">MEMORY THEMES</h3>
+          <p class="gateway__text">
+            シリーズを彩ってきた代表曲の紹介。
+            曲名・作曲・流れる場面を辿り、各配信サービスへ。
+          </p>
+          <span class="gateway__enter">
+            ENTER
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- 扉4:MEMORY OF SUMMER -->
+        <a href="roxas.html" class="gateway reveal" data-delay="4">
+          <span class="gateway__orb" aria-hidden="true"></span>
+          <span class="gateway__num">04</span>
+          <h3 class="gateway__title">MEMORY OF SUMMER</h3>
+          <p class="gateway__text">
+            『KINGDOM HEARTS II FINAL MIX』特集。
+            ロクサスの七日間から、作品の魅力を辿ります。
+          </p>
+          <span class="gateway__enter">
+            ENTER
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- 扉5:MEMORY CROSSOVER -->
+        <a href="crossover.html" class="gateway reveal" data-delay="1">
+          <span class="gateway__orb" aria-hidden="true"></span>
+          <span class="gateway__num">05</span>
+          <h3 class="gateway__title">MEMORY CROSSOVER</h3>
+          <p class="gateway__text">
+            ファイナルファンタジー、すばらしきこのせかい、
+            ディズニー——KHと縁のある作品の一覧。
+          </p>
+          <span class="gateway__enter">
+            ENTER
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>
+
+        <!-- 扉6:SECRET MEMORY(条件を満たすまで施錠) -->
+        <a href="secret.html" class="gateway gateway--locked reveal" data-delay="2" data-secret-gateway>
+          <span class="gateway__orb" aria-hidden="true"></span>
+          <span class="gateway__num" data-secret-status>LOCKED</span>
+          <h3 class="gateway__title">SECRET MEMORY</h3>
+          <p class="gateway__text">
+            記憶の欠片をあと<strong class="gold-text" data-memory-remaining>8</strong>個集めると開かれる、
+            隠された記録。まだ語られていない言葉が眠っています。
+          </p>
+          <span class="gateway__enter">
+            ENTER
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         記憶の欠片についての案内
+         ------------------------------------------------------------ -->
+    <section class="section section--tight container">
+      <div class="panel reveal">
+        <span class="section-label">Collect</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">記憶の欠片を集める</h2>
+        <p class="section-lead" style="margin-bottom:2rem;">
+          サイトのあちこちに、青白く光る小さな欠片が隠れています。
+          見つけてクリックすると集めることができ、
+          <strong data-memory-remaining>8</strong>個以上集めると SECRET MEMORY が開かれます。
+          <!-- 記憶の欠片 その3(説明文のすぐ横に配置) -->
+          <span class="fragment" data-fragment="f03">
+            <span class="fragment__shard"></span>
+          </span>
+        </p>
+
+        <!-- 進捗バー -->
+        <div class="progress">
+          <div class="progress__head">
+            <span>MEMORY FRAGMENTS</span>
+            <span class="progress__value" data-memory-value>0 / 12</span>
+          </div>
+          <div class="progress__track">
+            <div class="progress__bar" data-memory-bar></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
+          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html">TOP</a>
+          <a href="album.html">MEMORY ALBUM</a>
+          <a href="timeline.html">TIMELINE</a>
+          <a href="music.html">MEMORY THEMES</a>
+          <a href="roxas.html">MEMORY OF SUMMER</a>
+          <a href="crossover.html">MEMORY CROSSOVER</a>
+          <a href="secret.html" data-secret-link>SECRET MEMORY</a>
+        </nav>
+      </div>
+
+      <p class="footer-copyright">
+        非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       スクリプト(依存順に読み込む)
+       ============================================================ -->
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/memory.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/intro.js"></script>
+</body>
+</html>

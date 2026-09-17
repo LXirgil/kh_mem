@@ -1,0 +1,969 @@
+/* ============================================================
+   components.css — 繰り返し使う部品
+   ボタン / ガラスパネル / カード / モーダル / 記憶の欠片 /
+   進捗バー / 通知トースト
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. ボタン
+   ------------------------------------------------------------ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-en);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--c-white);
+  border: 1px solid rgba(154, 213, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(10, 22, 48, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  transition: color var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft),
+              transform var(--dur-fast) var(--ease-soft);
+}
+
+/* ホバー時に内側を光が横切る */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(154, 213, 255, 0.25),
+    transparent);
+  transform: translateX(-100%);
+  transition: transform 0.7s var(--ease-out);
+}
+
+.btn:hover::before {
+  transform: translateX(100%);
+}
+
+.btn:hover {
+  border-color: rgba(154, 213, 255, 0.75);
+  box-shadow: var(--glow-blue), inset 0 0 22px rgba(77, 166, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* 主要ボタン(青く強く光る) */
+.btn--primary {
+  background: linear-gradient(135deg,
+    rgba(20, 58, 107, 0.75),
+    rgba(42, 107, 181, 0.45));
+  border-color: rgba(154, 213, 255, 0.55);
+  box-shadow: var(--glow-blue);
+}
+
+/* ゴールドのボタン(SECRET MEMORY 用) */
+.btn--gold {
+  color: var(--c-gold);
+  border-color: rgba(230, 213, 163, 0.45);
+}
+
+.btn--gold:hover {
+  border-color: rgba(230, 213, 163, 0.9);
+  box-shadow: var(--glow-gold), inset 0 0 22px rgba(230, 213, 163, 0.12);
+}
+
+.btn--gold::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(230, 213, 163, 0.28),
+    transparent);
+}
+
+/* 操作できない状態 */
+.btn:disabled,
+.btn.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn:disabled::before,
+.btn.is-disabled::before {
+  display: none;
+}
+
+/* ボタン内の矢印 */
+.btn__arrow {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(5px);
+}
+
+/* ------------------------------------------------------------
+   2. ガラス風パネル
+   ------------------------------------------------------------ */
+.panel {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+}
+
+/* パネル上端に走る細い光のライン */
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  width: 76%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(154, 213, 255, 0.6),
+    transparent);
+}
+
+/* ------------------------------------------------------------
+   3. コンセプトカード(TOP ページの3つの柱など)
+   ------------------------------------------------------------ */
+.concept-card {
+  position: relative;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border: 1px solid var(--panel-border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(var(--panel-blur));
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  overflow: hidden;
+  transition: transform var(--dur-mid) var(--ease-out),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.concept-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(154, 213, 255, 0.45);
+  box-shadow: var(--glow-blue-lg);
+}
+
+/* カード背面でぼんやり光る円 */
+.concept-card::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  bottom: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(77, 166, 255, 0.22), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-soft);
+}
+
+.concept-card:hover::after {
+  opacity: 1;
+}
+
+.concept-card__icon {
+  width: 42px;
+  height: 42px;
+  margin-bottom: var(--space-sm);
+  color: var(--c-blue-bright);
+  filter: drop-shadow(0 0 10px rgba(77, 166, 255, 0.7));
+}
+
+.concept-card__title {
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+
+.concept-card__en {
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--c-blue);
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.concept-card__text {
+  font-size: 0.9rem;
+  color: var(--c-text);
+}
+
+/* ------------------------------------------------------------
+   4. 記憶の欠片(収集アイテム)
+   サイト内に隠されていて、クリックで集められる
+   ------------------------------------------------------------ */
+.fragment {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+  /* ふわふわと漂う */
+  animation: fragment-float 4.5s ease-in-out infinite;
+  transition: transform var(--dur-fast) var(--ease-soft);
+}
+
+@keyframes fragment-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.fragment:hover {
+  transform: scale(1.35);
+}
+
+/* 欠片本体(ひし形の光) */
+.fragment__shard {
+  width: 13px;
+  height: 13px;
+  background: linear-gradient(135deg, #ffffff, var(--c-blue-bright));
+  box-shadow: 0 0 14px rgba(154, 213, 255, 0.95),
+              0 0 34px rgba(77, 166, 255, 0.6);
+  transform: rotate(45deg);
+  border-radius: 2px;
+  transition: box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.fragment:hover .fragment__shard {
+  box-shadow: 0 0 22px rgba(255, 255, 255, 1),
+              0 0 55px rgba(154, 213, 255, 0.85);
+}
+
+/* 欠片の周囲に広がる波紋 */
+.fragment::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(154, 213, 255, 0.5);
+  animation: fragment-ripple 2.6s ease-out infinite;
+}
+
+@keyframes fragment-ripple {
+  0%   { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+/* 収集済みの欠片は消える(取得アニメーションのあと非表示) */
+.fragment.is-collected {
+  animation: fragment-absorb 0.75s var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+@keyframes fragment-absorb {
+  0%   { transform: scale(1.5); opacity: 1; }
+  60%  { transform: scale(0.3) translateY(-30px); opacity: 0.9; }
+  100% { transform: scale(0) translateY(-70px); opacity: 0; }
+}
+
+/* 収集済みの欠片は次回以降そもそも描画しない */
+.fragment.is-hidden {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   5. 記憶の進捗バー
+   ------------------------------------------------------------ */
+.progress {
+  width: 100%;
+  max-width: 480px;
+}
+
+.progress__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--c-text-dim);
+}
+
+.progress__value {
+  color: var(--c-blue-bright);
+  font-size: 0.95rem;
+}
+
+.progress__track {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(154, 213, 255, 0.12);
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--c-blue-dim), var(--c-blue-bright));
+  box-shadow: 0 0 14px rgba(154, 213, 255, 0.8);
+  transition: width 1.1s var(--ease-out);
+}
+
+/* 条件を満たしたら金色に変わる */
+.progress__bar.is-complete {
+  background: linear-gradient(90deg, var(--c-gold-dim), var(--c-gold));
+  box-shadow: 0 0 16px rgba(230, 213, 163, 0.85);
+}
+
+/* ------------------------------------------------------------
+   6. モーダル(作品・キャラクターの詳細表示)
+   ------------------------------------------------------------ */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: grid;
+  place-items: center;
+  padding: var(--space-sm);
+  background: rgba(3, 6, 13, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-mid) var(--ease-soft),
+              visibility var(--dur-mid);
+}
+
+.modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal__dialog {
+  position: relative;
+  width: min(760px, 100%);
+  max-height: min(84vh, 780px);
+  overflow-y: auto;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  border: 1px solid rgba(154, 213, 255, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(160deg,
+    rgba(10, 22, 48, 0.95),
+    rgba(6, 13, 30, 0.97));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7),
+              var(--glow-blue-lg);
+  transform: translateY(26px) scale(0.97);
+  opacity: 0;
+  transition: transform var(--dur-mid) var(--ease-out),
+              opacity var(--dur-mid) var(--ease-soft);
+}
+
+.modal.is-open .modal__dialog {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* モーダル上端の光のライン */
+.modal__dialog::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(154, 213, 255, 0.75),
+    transparent);
+}
+
+.modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(154, 213, 255, 0.2);
+  color: var(--c-text-dim);
+  transition: color var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft),
+              transform var(--dur-fast) var(--ease-soft);
+}
+
+.modal__close:hover {
+  color: var(--c-white);
+  border-color: rgba(154, 213, 255, 0.6);
+  transform: rotate(90deg);
+}
+
+.modal__close svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* モーダル内部の書式 */
+.modal__label {
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  color: var(--c-blue);
+  display: block;
+  margin-bottom: 0.7rem;
+}
+
+.modal__title {
+  font-family: var(--font-en);
+  font-size: clamp(1.3rem, 3.4vw, 1.9rem);
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  margin-bottom: 0.4rem;
+}
+
+.modal__subtitle {
+  font-size: 0.92rem;
+  color: var(--c-gold);
+  margin-bottom: var(--space-md);
+}
+
+.modal__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.modal__body p + p {
+  margin-top: 1rem;
+}
+
+.modal__section-title {
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--c-white);
+  margin: var(--space-md) 0 0.8rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--c-blue);
+}
+
+/* 登場作品タグの並び(キャラクター詳細) */
+.modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--space-md);
+}
+
+/* 主題歌の表示 */
+.modal__music {
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--c-gold);
+  text-shadow: var(--glow-gold);
+}
+
+/* モーダル内に隠した記憶の欠片の置き場所 */
+.modal__shard {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-md);
+}
+
+/* ------------------------------------------------------------
+   6-b. 記憶の欠片の確認ビュー(ヘッダーのカウンターから開くモーダル)
+   ------------------------------------------------------------ */
+.memory-log__list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1.4rem 0 1.2rem;
+}
+
+.memory-log__item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  background: rgba(10, 22, 48, 0.4);
+}
+
+.memory-log__item.is-found {
+  border-color: rgba(154, 213, 255, 0.35);
+}
+
+.memory-log__mark {
+  flex-shrink: 0;
+  width: 11px;
+  height: 11px;
+  transform: rotate(45deg);
+  border: 1px solid rgba(154, 213, 255, 0.5);
+}
+
+.memory-log__item.is-found .memory-log__mark {
+  background: var(--c-blue-bright);
+  border-color: var(--c-blue-bright);
+  box-shadow: 0 0 7px rgba(154, 213, 255, 0.85);
+}
+
+/* 解放ラインを超えたら、見つけた欠片は金色 */
+.memory-log__item.is-gold .memory-log__mark {
+  background: var(--c-gold);
+  border-color: var(--c-gold);
+  box-shadow: 0 0 7px rgba(230, 213, 163, 0.85);
+}
+
+.memory-log__name {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--c-text);
+}
+
+.memory-log__item:not(.is-found) .memory-log__name {
+  color: var(--c-text-dim);
+  letter-spacing: 0.16em;
+}
+
+.memory-log__page {
+  flex-shrink: 0;
+  font-family: var(--font-en);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--c-text-dim);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+}
+
+.memory-log__note {
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: var(--c-text-dim);
+}
+
+/* カウンター自体をボタンとして扱う見た目 */
+.memory-counter[role="button"] {
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-soft),
+              box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.memory-counter[role="button"]:hover,
+.memory-counter[role="button"]:focus-visible {
+  border-color: rgba(154, 213, 255, 0.5);
+  box-shadow: var(--glow-blue);
+  outline: none;
+}
+
+/* ------------------------------------------------------------
+   7. タグ・バッジ
+   ------------------------------------------------------------ */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--c-blue-bright);
+  border: 1px solid rgba(154, 213, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(20, 58, 107, 0.3);
+  white-space: nowrap;
+}
+
+.tag--gold {
+  color: var(--c-gold);
+  border-color: rgba(230, 213, 163, 0.32);
+  background: rgba(120, 100, 55, 0.18);
+}
+
+/* 登場作品などの補足メタ情報向けの、ひとまわり小さいタグ */
+.tag--work {
+  padding: 0.18rem 0.6rem;
+  font-size: 0.62rem;
+  color: var(--c-text-dim);
+  border-color: rgba(154, 213, 255, 0.16);
+  background: rgba(12, 24, 50, 0.4);
+}
+
+/* ------------------------------------------------------------
+   8. 通知トースト(欠片獲得・解放のお知らせ)
+   ------------------------------------------------------------ */
+.toast-area {
+  position: fixed;
+  left: 50%;
+  bottom: 2.2rem;
+  transform: translateX(-50%);
+  z-index: 850;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid rgba(154, 213, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(10, 22, 48, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--glow-blue), 0 12px 40px rgba(0, 0, 0, 0.6);
+  font-size: 0.83rem;
+  letter-spacing: 0.06em;
+  color: var(--c-white);
+  white-space: nowrap;
+  animation: toast-in 0.5s var(--ease-out) both;
+}
+
+/* 消えるとき(JavaScript が is-out を付ける) */
+.toast.is-out {
+  animation: toast-out 0.45s var(--ease-soft) both;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-14px); }
+}
+
+/* 解放通知はゴールドで表示 */
+.toast--gold {
+  border-color: rgba(230, 213, 163, 0.5);
+  box-shadow: var(--glow-gold), 0 12px 40px rgba(0, 0, 0, 0.6);
+  color: var(--c-gold);
+}
+
+.toast__icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+/* ------------------------------------------------------------
+   9. スクロールを促すインジケーター
+   ------------------------------------------------------------ */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 2.5rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.34em;
+  color: var(--c-text-dim);
+  animation: hint-fade 3s ease-in-out infinite;
+}
+
+.scroll-hint__line {
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(180deg, rgba(154, 213, 255, 0.7), transparent);
+}
+
+@keyframes hint-fade {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .toast {
+    font-size: 0.75rem;
+    padding: 0.7rem 1.1rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .toast-area {
+    width: calc(100% - 2rem);
+  }
+}
+
+/* ------------------------------------------------------------
+   9. トップへ戻るボタン(main.js が body に差し込む)
+   ------------------------------------------------------------ */
+.to-top {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-blue-bright);
+  background: rgba(10, 22, 48, 0.7);
+  border: 1px solid rgba(154, 213, 255, 0.35);
+  border-radius: 50%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.25s var(--ease-soft),
+              visibility 0.25s var(--ease-soft),
+              transform 0.25s var(--ease-soft),
+              border-color 0.2s var(--ease-soft);
+}
+.to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.to-top:hover {
+  border-color: rgba(154, 213, 255, 0.7);
+  box-shadow: var(--glow-blue);
+}
+.to-top svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* 右下ガター装飾がある広い画面では少し内側へ寄せる */
+@media (min-width: 1320px) {
+  .to-top {
+    right: clamp(2rem, 5vw, 4rem);
+  }
+}
+
+/* ============================================================
+   10. 初回イントロ「ダイブ・トゥ・ザ・ハート」風ゲート(index.html)
+   ============================================================ */
+html.dive-open,
+html.dive-open body {
+  overflow: hidden;
+}
+
+#dive-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vh, 3rem);
+  padding: 2rem;
+  background: var(--c-void);
+  overflow: hidden;
+  animation: dive-in 0.6s var(--ease-out) both;
+}
+#dive-gate[hidden] { display: none; }
+
+/* 奥で脈打つ光 */
+#dive-gate::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle at 50% 46%,
+    rgba(77, 166, 255, 0.18), transparent 55%);
+  animation: dive-heartbeat 2.4s ease-in-out infinite;
+}
+
+#dive-gate.is-diving {
+  animation: dive-out 0.75s var(--ease-out) forwards;
+}
+
+/* --- 足場 --- */
+.dive-gate__stage {
+  position: relative;
+  width: clamp(240px, 58vw, 500px);
+  aspect-ratio: 1;
+  cursor: pointer;
+  outline: none;
+}
+.dive-gate__stage:focus-visible {
+  outline: 2px solid var(--c-blue-bright);
+  outline-offset: 18px;
+  border-radius: 50%;
+}
+
+.dive-plat {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.6));
+  animation: dive-rise 1.1s var(--ease-out) 0.3s both;
+}
+.dive-plat__rot {
+  transform-origin: 180px 180px;
+  animation: plat-spin 90s linear infinite;
+}
+
+.dive-wedge {
+  opacity: 0;
+  animation: dive-wedge 0.55s ease-out forwards;
+  animation-delay: calc(1s + var(--i) * 0.07s);
+}
+.dive-ring {
+  opacity: 0;
+  animation: dive-fade 1s ease-out 0.9s forwards;
+}
+.dive-blades path {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  filter: drop-shadow(0 0 8px rgba(154, 213, 255, 0.9));
+  animation: dive-blade 1s var(--ease-out) 1.7s forwards;
+}
+.dive-blades circle {
+  opacity: 0;
+  animation: dive-fade 0.5s ease-out 2.35s forwards;
+}
+.dive-core {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: dive-core-in 0.7s var(--ease-out) 1.95s forwards;
+}
+
+/* 触れることを促す輪 */
+.dive-gate__pulse {
+  position: absolute;
+  inset: -6%;
+  border: 1px solid rgba(154, 213, 255, 0.5);
+  border-radius: 50%;
+  opacity: 0;
+  animation: dive-pulse 2.4s ease-out 2.6s infinite;
+}
+
+/* --- テキスト --- */
+.dive-gate__text {
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  animation: dive-textup 0.9s var(--ease-out) 2.2s both;
+}
+.dive-gate__eyebrow {
+  display: block;
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.34em;
+  color: var(--c-gold-dim);
+}
+.dive-gate__title {
+  margin: 0.8rem 0 1.5rem;
+  font-family: var(--font-jp);
+  font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--c-white);
+  text-shadow: 0 0 30px rgba(154, 213, 255, 0.5);
+}
+.dive-gate__enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 2rem;
+  font-family: var(--font-en);
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  color: var(--c-white);
+  border: 1px solid rgba(154, 213, 255, 0.55);
+  border-radius: 999px;
+  background: rgba(20, 58, 107, 0.35);
+  box-shadow: var(--glow-blue);
+  transition: border-color 0.2s var(--ease-soft),
+              background 0.2s var(--ease-soft),
+              transform 0.2s var(--ease-soft);
+}
+.dive-gate__enter svg { width: 18px; height: 18px; }
+.dive-gate__enter:hover {
+  border-color: var(--c-blue-bright);
+  background: rgba(20, 58, 107, 0.6);
+  transform: translateY(-2px);
+}
+
+.dive-gate__skip {
+  position: absolute;
+  top: clamp(1rem, 4vh, 2rem);
+  right: clamp(1rem, 4vw, 2.4rem);
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--c-text-dim);
+  transition: color 0.2s var(--ease-soft);
+}
+.dive-gate__skip:hover { color: var(--c-white); }
+
+/* --- キーフレーム --- */
+@keyframes dive-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dive-out  {
+  from { opacity: 1; }
+  40%  { opacity: 1; filter: brightness(2.4); }
+  to   { opacity: 0; visibility: hidden; filter: brightness(3); }
+}
+@keyframes dive-heartbeat {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.06); }
+}
+@keyframes dive-rise {
+  from { opacity: 0; transform: translateY(46px) scale(0.82); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes dive-wedge {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes dive-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dive-blade { to { stroke-dashoffset: 0; } }
+@keyframes dive-core-in {
+  from { opacity: 0; transform: scale(0.55); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes dive-textup {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes dive-pulse {
+  0%   { opacity: 0.5; transform: scale(0.94); }
+  70%  { opacity: 0;   transform: scale(1.12); }
+  100% { opacity: 0;   transform: scale(1.12); }
+}
+@keyframes plat-spin { to { transform: rotate(360deg); } }
+
+/* 動きを減らす設定:全部見えた状態で静止 */
+#dive-gate.is-reduced,
+#dive-gate.is-reduced * {
+  animation: none !important;
+}
+#dive-gate.is-reduced .dive-plat,
+#dive-gate.is-reduced .dive-wedge,
+#dive-gate.is-reduced .dive-ring,
+#dive-gate.is-reduced .dive-blades circle,
+#dive-gate.is-reduced .dive-core,
+#dive-gate.is-reduced .dive-gate__text {
+  opacity: 1;
+  transform: none;
+}
+#dive-gate.is-reduced .dive-blades path { stroke-dashoffset: 0; }
+
+@media (max-width: 560px) {
+  .dive-gate__title { letter-spacing: 0.08em; }
+}

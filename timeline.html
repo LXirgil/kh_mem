@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIMELINE | KINGDOM HEARTS — MEMORY</title>
+  <meta name="description" content="キングダムハーツシリーズを「発売日順」と「物語内の時系列順」の両方の表で整理したページ。">
+
+  <!-- ファビコン & SNS 共有(OGP) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#03060d">
+  <link rel="canonical" href="timeline.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TIMELINE | KINGDOM HEARTS — MEMORY">
+  <meta property="og:description" content="キングダムハーツシリーズを「発売日順」と「物語内の時系列順」の両方の表で整理したページ。">
+  <meta property="og:image" content="assets/IMG_4388.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">本文へスキップ</a>
+
+  <canvas id="particle-field" aria-hidden="true"></canvas>
+  <div id="cursor-glow" aria-hidden="true"></div>
+  <div id="page-transition" aria-hidden="true"></div>
+  <script>try{if(sessionStorage.getItem("kh-nav")==="1"){document.documentElement.classList.add("kh-arrive");setTimeout(function(){document.documentElement.classList.remove("kh-arrive")},1500);}}catch(e){}</script>
+
+  <!-- ============================================================
+       ヘッダー
+       ============================================================ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-logo">
+        <svg class="site-logo__mark" viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M60 104 C42 88 26 76 26 60 A17 17 0 0 1 60 52
+                   A17 17 0 0 1 94 60 C94 76 78 88 60 104Z"
+                fill="none" stroke="currentColor" stroke-width="7"/>
+          <circle cx="60" cy="66" r="8" fill="currentColor"/>
+          <path d="M55 72h10l3 16H52Z" fill="currentColor"/>
+        </svg>
+        KH MEMORY
+      </a>
+
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="index.html">TOP</a></li>
+          <li><a class="nav-link" href="album.html">ALBUM</a></li>
+          <li><a class="nav-link" href="timeline.html">TIMELINE</a></li>
+          <li><a class="nav-link" href="music.html">THEMES</a></li>
+          <li><a class="nav-link" href="roxas.html">SUMMER</a></li>
+          <li><a class="nav-link" href="crossover.html">CROSSOVER</a></li>
+          <li><a class="nav-link" href="secret.html" data-secret-link>SECRET</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <div class="memory-counter" title="集めた記憶の欠片">
+          <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2 22 12 12 22 2 12Z"/>
+          </svg>
+          <span data-memory-count>0 / 12</span>
+        </div>
+
+        <button class="audio-toggle" type="button" aria-pressed="false" aria-label="音声をオンにする">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5Z"/>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+            <path d="M19 5a10 10 0 0 1 0 14"/>
+            <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+              aria-expanded="false" aria-controls="global-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       メインコンテンツ
+       ============================================================ -->
+  <main id="main" class="site-main">
+
+    <!-- ページ見出し -->
+    <section class="page-head container">
+      <span class="section-label">Timeline</span>
+      <h1 class="page-head__title">TIMELINE</h1>
+      <p class="page-head__lead">発売日順と、物語の時系列順</p>
+    </section>
+
+    <!-- 導入 -->
+    <section class="section section--tight container">
+      <div class="reveal">
+        <p class="section-lead">
+          キングダムハーツは、<strong>発売された順番</strong>と<strong>物語の中で起きた順番</strong>が
+          大きくずれています。作品ごとに時代を行き来しながら、少しずつ全体像が見えてくる構成です。
+          初めて追うなら発売日順が基本。物語のつながりを整理したいときは時系列順が役に立ちます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 発売日順 -->
+    <section class="section section--tight container" id="release">
+      <div class="reveal">
+        <span class="section-label">Release Order</span>
+        <h2 class="section-title">発売日順</h2>
+        <p class="section-lead">
+          真相が段階的に明かされていく、シリーズが想定している“出会う順番”です。
+        </p>
+      </div>
+
+      <div class="kh-table-wrap reveal">
+        <table class="kh-table">
+          <thead>
+            <tr>
+              <th class="kh-table__num">#</th>
+              <th>発売</th>
+              <th>タイトル</th>
+              <th>機種</th>
+              <th>物語のどこを描くか</th>
+            </tr>
+          </thead>
+          <tbody id="release-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- 時系列順 -->
+    <section class="section section--tight container" id="chrono">
+      <div class="reveal">
+        <span class="section-label">Chronological Order</span>
+        <h2 class="section-title">物語内の時系列順</h2>
+        <p class="section-lead">
+          作中の出来事を古い順に並べ替えたものです(番号は時系列上の順番)。
+        </p>
+      </div>
+
+      <div class="kh-table-wrap reveal">
+        <table class="kh-table">
+          <thead>
+            <tr>
+              <th class="kh-table__num">順</th>
+              <th>タイトル</th>
+              <th>物語のどこを描くか</th>
+              <th>発売</th>
+            </tr>
+          </thead>
+          <tbody id="chrono-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="divider container">
+
+    <!-- 補足 -->
+    <section class="section section--tight container">
+      <div class="panel reveal">
+        <span class="section-label">Notes</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">読むときの注意</h2>
+        <ul class="more-list">
+          <li>
+            <strong>CHAIN OF MEMORIES と 358/2 DAYS は同じ時期の出来事。</strong>
+            片方はソラ、もう片方はロクサスの視点で、並行して進みます。
+          </li>
+          <li>
+            <strong>0.2 -A FRAGMENTARY PASSAGE- は BbS の直後から始まり</strong>、
+            終盤でそのまま『III』の直前へと繋がります。表では便宜上 BbS の次に置いています。
+          </li>
+          <li>
+            <strong>χ SERIES は複数タイトルの総称</strong>です ――
+            <code>χ[chi]</code>(2013・ブラウザ)、<code>Unchained χ</code>／<code>Union χ[Cross]</code>(スマホ)、
+            そしてマスター・ゼアノートの若き日を描く <code>Dark Road</code>。
+          </li>
+          <li>
+            <strong>多くはHDコレクションに収録</strong>されています ――
+            『1.5 ReMIX』『2.5 ReMIX』『2.8 Final Chapter Prologue』(のちに『1.5＋2.5 ReMIX』へ統合)。
+            『III』は単体(のちに追加DLC『Re Mind』)。
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 次への導線 -->
+    <section class="section section--tight container">
+      <div class="panel reveal" style="display:grid; gap:1.6rem; justify-items:center; text-align:center;">
+        <span class="section-label">Keep Exploring</span>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">各作品をくわしく</h2>
+        <p class="section-lead" style="text-align:center;">
+          年表・あらすじ・キーワードは MEMORY ALBUM に、シリーズの根幹と相関図は SECRET MEMORY にあります。
+        </p>
+        <a href="album.html" class="btn btn--primary">
+          MEMORY ALBUM へ
+          <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       フッター
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
+          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+        </div>
+
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          <a href="index.html">TOP</a>
+          <a href="album.html">MEMORY ALBUM</a>
+          <a href="timeline.html">TIMELINE</a>
+          <a href="music.html">MEMORY THEMES</a>
+          <a href="roxas.html">MEMORY OF SUMMER</a>
+          <a href="crossover.html">MEMORY CROSSOVER</a>
+          <a href="secret.html" data-secret-link>SECRET MEMORY</a>
+        </nav>
+      </div>
+
+      <p class="footer-copyright">
+        非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/memory.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/timeline.js"></script>
+</body>
+</html>

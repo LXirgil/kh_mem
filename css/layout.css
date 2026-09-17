@@ -1,0 +1,869 @@
+/* ============================================================
+   layout.css — サイト共通の骨組み
+   ヘッダー / ナビ / フッター / 背景演出 / ページ遷移 / スクロール演出
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 背景演出レイヤー
+   本文より奥(z-index: 0 未満)に固定配置する
+   ------------------------------------------------------------ */
+
+/* いちばん奥:キングダムハーツ/ディズニーのアイコン柄(assets/IMG_4388.png)を
+   うっすら敷く。明るさは opacity で調整(数値を上げるほど目立つ) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background: url("../assets/IMG_4388.png") center center / cover no-repeat;
+  opacity: 0.09;
+  /* 中央をやや残し、周辺へ溶かして“うっすら”感を出す */
+  -webkit-mask-image: radial-gradient(ellipse 120% 120% at 50% 38%, #000 42%, transparent 100%);
+          mask-image: radial-gradient(ellipse 120% 120% at 50% 38%, #000 42%, transparent 100%);
+}
+
+/* 光の粒子を描画するキャンバス(JavaScript から描画) */
+#particle-field {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* カーソル位置に追従する光のエフェクト */
+#cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 420px;
+  height: 420px;
+  margin: -210px 0 0 -210px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(77, 166, 255, 0.18) 0%,
+    rgba(77, 166, 255, 0.07) 35%,
+    transparent 68%);
+  opacity: 0;
+  transition: opacity var(--dur-mid) var(--ease-soft);
+  will-change: transform;
+}
+
+/* マウスが画面内にある間だけ表示(JavaScript が付け外しする) */
+#cursor-glow.is-active {
+  opacity: 1;
+}
+
+/* タッチ端末ではカーソル光は不要 */
+@media (hover: none) {
+  #cursor-glow {
+    display: none;
+  }
+}
+
+/* 背景をゆっくり漂うモチーフ(王冠・キーブレード・鍵穴など)。
+   要素は JavaScript(effects.js)が生成する */
+.drift-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.drift-motif {
+  position: absolute;
+  bottom: -80px;
+  will-change: transform, opacity;
+}
+
+.drift-motif svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* ------------------------------------------------------------
+   1-b. サイドの装飾フレーム(HUD 風。effects.js が生成)
+   左右のガターに縦レールを通す。左はページ名、右は欠片12個。
+   余白が十分にある幅でだけ表示する
+   ------------------------------------------------------------ */
+.side-frame {
+  position: fixed;
+  top: calc(var(--header-height) + 3vh);
+  bottom: 3vh;
+  width: 34px;
+  z-index: 40;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.side-frame--left  { left:  clamp(0.9rem, 2.2vw, 2.6rem); }
+.side-frame--right { right: clamp(0.9rem, 2.2vw, 2.6rem); }
+
+/* 縦のレール線 */
+.side-frame__rail {
+  position: relative;
+  flex: 1;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent,
+    rgba(154, 213, 255, 0.26) 12%,
+    rgba(154, 213, 255, 0.26) 88%,
+    transparent);
+}
+
+/* レール上をゆっくり降りていく光点 */
+.side-frame__spark {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 3px;
+  margin-left: -1.5px;
+  border-radius: 50%;
+  background: var(--c-blue-bright);
+  box-shadow: 0 0 8px 1px rgba(154, 213, 255, 0.9);
+  animation: side-spark 7s linear infinite;
+}
+
+@keyframes side-spark {
+  0%   { top: 0;    opacity: 0; }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* 目盛り */
+.side-frame__tick {
+  position: absolute;
+  left: 50%;
+  width: 7px;
+  height: 1px;
+  margin-left: -3.5px;
+  background: rgba(154, 213, 255, 0.32);
+}
+
+/* 3・7の位置に置く、ゆっくり回る菱形グリフ */
+.side-frame__glyph {
+  position: absolute;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border: 1px solid rgba(154, 213, 255, 0.5);
+  animation: side-glyph-spin 14s linear infinite;
+}
+
+@keyframes side-glyph-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* 縦組みのページ名(左) */
+.side-frame__label {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: var(--font-en);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: rgba(154, 213, 255, 0.5);
+}
+
+/* 端のキャップ(菱形) */
+.side-frame__cap {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  transform: rotate(45deg);
+  border: 1px solid rgba(154, 213, 255, 0.45);
+}
+
+.side-frame__cap--filled {
+  background: rgba(154, 213, 255, 0.18);
+}
+
+/* 右:記憶の欠片 12個の縦一列 */
+.side-frame__fragments {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.side-frame__dot {
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  border: 1px solid rgba(154, 213, 255, 0.4);
+  transition: background var(--dur-mid) var(--ease-soft),
+              border-color var(--dur-mid) var(--ease-soft),
+              box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+.side-frame__dot.is-collected {
+  background: var(--c-blue-bright);
+  border-color: var(--c-blue-bright);
+  box-shadow: 0 0 7px rgba(154, 213, 255, 0.85);
+}
+
+/* 解放ラインを超えたら、集めた分を金色に切り替える */
+.side-frame__fragments.is-complete .side-frame__dot.is-collected {
+  background: var(--c-gold);
+  border-color: var(--c-gold);
+  box-shadow: 0 0 8px rgba(230, 213, 163, 0.85);
+}
+
+/* 余白が足りない画面では出さない */
+@media (max-width: 1240px) {
+  .side-frame {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   2. ヘッダー
+   ------------------------------------------------------------ */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  /* 下端だけ淡く光らせる */
+  border-bottom: 1px solid rgba(154, 213, 255, 0.1);
+  background: linear-gradient(180deg,
+    rgba(3, 6, 13, 0.92),
+    rgba(3, 6, 13, 0.6) 70%,
+    transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background var(--dur-mid) var(--ease-soft);
+}
+
+.header-inner {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 3vw, 2rem);
+}
+
+/* サイトロゴ */
+.site-logo {
+  font-family: var(--font-en);
+  font-size: 0.9rem;
+  letter-spacing: 0.22em;
+  color: var(--c-white);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: text-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.site-logo:hover {
+  text-shadow: 0 0 20px rgba(154, 213, 255, 0.8);
+}
+
+/* ロゴ横の小さな鍵穴マーク */
+.site-logo__mark {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--c-blue-bright);
+  filter: drop-shadow(0 0 7px rgba(154, 213, 255, 0.85));
+  animation: logo-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes logo-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+/* ------------------------------------------------------------
+   3. グローバルナビゲーション
+   ------------------------------------------------------------ */
+.global-nav {
+  margin-left: auto;
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: clamp(0.55rem, 1.5vw, 1.5rem);
+}
+
+.nav-link {
+  position: relative;
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--c-text-dim);
+  padding-block: 0.4rem;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+
+.nav-link:hover {
+  color: var(--c-white);
+}
+
+/* ホバー・選択中に下線が伸びる */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--c-blue-bright);
+  box-shadow: var(--glow-blue);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--dur-mid) var(--ease-out);
+}
+
+.nav-link:hover::after,
+.nav-link.is-current::after {
+  transform: scaleX(1);
+}
+
+.nav-link.is-current {
+  color: var(--c-white);
+}
+
+/* 未解放の SECRET MEMORY は鍵アイコン付きで暗く表示 */
+.nav-link.is-locked {
+  color: rgba(125, 143, 174, 0.5);
+}
+
+.nav-link.is-locked::before {
+  content: "\1F512"; /* 南京錠の絵文字 */
+  font-size: 0.7em;
+  margin-right: 0.35em;
+  opacity: 0.7;
+}
+
+/* 解放済みの SECRET MEMORY は金色で光る */
+.nav-link.is-unlocked {
+  color: var(--c-gold);
+  text-shadow: var(--glow-gold);
+}
+
+.nav-link.is-unlocked::after {
+  background: var(--c-gold);
+  box-shadow: var(--glow-gold);
+}
+
+/* ------------------------------------------------------------
+   4. ヘッダー右側のツール群(記憶カウンタ・音声切り替え)
+   ------------------------------------------------------------ */
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-left: clamp(0.75rem, 2vw, 1.6rem);
+}
+
+/* 記憶の欠片カウンタ */
+.memory-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--c-blue-bright);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(154, 213, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(10, 22, 48, 0.5);
+  transition: box-shadow var(--dur-mid) var(--ease-soft);
+}
+
+/* 欠片を獲得した瞬間に光る(JavaScript が一時的に付ける) */
+.memory-counter.is-gained {
+  animation: counter-flash 0.9s var(--ease-out);
+}
+
+@keyframes counter-flash {
+  0%   { box-shadow: 0 0 0 0 rgba(154, 213, 255, 0.7); }
+  100% { box-shadow: 0 0 0 18px rgba(154, 213, 255, 0); }
+}
+
+.memory-counter__icon {
+  width: 12px;
+  height: 12px;
+  color: var(--c-blue-bright);
+  filter: drop-shadow(0 0 5px rgba(154, 213, 255, 0.9));
+}
+
+/* 音声の ON / OFF 切り替えボタン */
+.audio-toggle {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(154, 213, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(10, 22, 48, 0.5);
+  color: var(--c-text-dim);
+  transition: color var(--dur-fast) var(--ease-soft),
+              border-color var(--dur-fast) var(--ease-soft),
+              box-shadow var(--dur-fast) var(--ease-soft);
+}
+
+.audio-toggle:hover {
+  color: var(--c-white);
+  border-color: rgba(154, 213, 255, 0.5);
+  box-shadow: var(--glow-blue);
+}
+
+/* 音が有効なときは青く光らせる */
+.audio-toggle.is-on {
+  color: var(--c-blue-bright);
+  border-color: rgba(154, 213, 255, 0.45);
+}
+
+.audio-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 音声が OFF のときは斜線を表示 */
+.audio-toggle .icon-off-slash {
+  display: block;
+}
+
+.audio-toggle.is-on .icon-off-slash {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   5. ハンバーガーメニュー(スマートフォン用)
+   ------------------------------------------------------------ */
+.nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  z-index: 120;
+  /* 他のツールボタンと揃えた、はっきり見える枠付きボタンにする */
+  border: 1px solid rgba(154, 213, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(10, 22, 48, 0.6);
+}
+
+.nav-toggle span {
+  position: absolute;
+  left: 11px;
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--c-white);
+  box-shadow: 0 0 4px rgba(154, 213, 255, 0.6);
+  transition: transform var(--dur-mid) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-soft);
+}
+
+.nav-toggle span:nth-child(1) { top: 14px; }
+.nav-toggle span:nth-child(2) { top: 19px; }
+.nav-toggle span:nth-child(3) { top: 24px; }
+
+/* 開いているときは × 印に変形 */
+.nav-toggle.is-open span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.nav-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.is-open span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* ------------------------------------------------------------
+   6. メインコンテンツ領域
+   ------------------------------------------------------------ */
+.site-main {
+  position: relative;
+  z-index: 1;
+  /* 固定ヘッダーの分だけ本文を下げる */
+  padding-top: var(--header-height);
+}
+
+/* ヒーローなど画面いっぱいに見せたいページでは余白を打ち消す */
+.site-main.is-fullbleed {
+  padding-top: 0;
+}
+
+/* 一般的なセクションの上下余白 */
+.section {
+  padding-block: var(--space-xl);
+}
+
+.section--tight {
+  padding-block: var(--space-lg);
+}
+
+/* ------------------------------------------------------------
+   7. フッター
+   ------------------------------------------------------------ */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-lg) var(--space-md);
+  border-top: 1px solid rgba(154, 213, 255, 0.1);
+  background: linear-gradient(180deg, transparent, rgba(3, 6, 13, 0.85));
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer-title {
+  font-family: var(--font-en);
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  color: var(--c-white);
+  margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  color: var(--c-text-dim);
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-nav a {
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--c-text-dim);
+  transition: color var(--dur-fast) var(--ease-soft);
+}
+
+.footer-nav a:hover {
+  color: var(--c-blue-bright);
+}
+
+.footer-copyright {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(154, 213, 255, 0.07);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: rgba(125, 143, 174, 0.7);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------
+   8. ページ遷移アニメーション用オーバーレイ
+   リンククリック時に光が広がって画面を覆う
+   ------------------------------------------------------------ */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+  background: var(--c-void);
+  opacity: 0;
+  transition: opacity 0.55s var(--ease-soft);
+}
+
+/* 退場時(次のページへ移動する直前) */
+#page-transition.is-leaving {
+  opacity: 1;
+}
+
+/* オーバーレイ中央で広がる光の輪 */
+#page-transition::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(154, 213, 255, 0.9), transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+}
+
+#page-transition.is-leaving::after {
+  animation: transition-burst 0.55s var(--ease-out) forwards;
+}
+
+@keyframes transition-burst {
+  0%   { transform: scale(0);  opacity: 0.9; }
+  100% { transform: scale(90); opacity: 0; }
+}
+
+/* 遷移の一瞬、中央に鍵穴が浮かんで閉じる(ワールドを封じる演出) */
+#page-transition::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 132px;
+  height: 160px;
+  transform: translate(-50%, -50%) scale(0.2) rotate(-24deg);
+  opacity: 0;
+  background: center / contain no-repeat
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20120'%3E%3Ccircle%20cx='50'%20cy='38'%20r='16'%20fill='none'%20stroke='%239ad5ff'%20stroke-width='7'/%3E%3Cpath%20d='M43%2053h14l6%2042H37Z'%20fill='%239ad5ff'/%3E%3C/svg%3E");
+  filter: drop-shadow(0 0 18px rgba(154, 213, 255, 0.9));
+}
+
+#page-transition.is-leaving::before {
+  animation: transition-keyhole 0.55s var(--ease-out) forwards;
+}
+
+@keyframes transition-keyhole {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(-24deg); }
+  45%  { opacity: 1; transform: translate(-50%, -50%) scale(1)   rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4) rotate(6deg); }
+}
+
+/* 到着時:サイト内リンクから来たら鍵穴が開くように暗幕が晴れる。
+   effects.js が走る前でも暗幕が出ているよう、head 直後インラインで
+   html.kh-arrive を付けてある */
+html.kh-arrive #page-transition {
+  opacity: 1;
+}
+#page-transition.is-arriving {
+  animation: transition-arrive 0.7s var(--ease-out) forwards;
+}
+#page-transition.is-arriving::before {
+  animation: transition-keyhole-open 0.7s var(--ease-out) forwards;
+}
+@keyframes transition-arrive {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes transition-keyhole-open {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(0.9) rotate(4deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.2) rotate(-6deg); }
+}
+
+/* ページ読み込み直後のフェードイン */
+.site-main,
+.site-footer {
+  animation: page-fade-in 0.9s var(--ease-out) both;
+}
+
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------------------------------
+   9. スクロール連動アニメーション
+   IntersectionObserver で .is-visible が付いたら現れる
+   ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px) scale(0.985);
+  filter: blur(7px);
+  transition: opacity 1s var(--ease-out),
+              transform 1s var(--ease-out),
+              filter 1s var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+/* 横からの出現 */
+.reveal--left  { transform: translateX(-44px) scale(0.985); }
+.reveal--right { transform: translateX(44px) scale(0.985); }
+
+.reveal--left.is-visible,
+.reveal--right.is-visible {
+  transform: none;
+}
+
+/* 連続する要素を少しずつ遅らせて表示する(時間差演出) */
+.reveal[data-delay="1"] { transition-delay: 0.12s; }
+.reveal[data-delay="2"] { transition-delay: 0.24s; }
+.reveal[data-delay="3"] { transition-delay: 0.36s; }
+.reveal[data-delay="4"] { transition-delay: 0.48s; }
+.reveal[data-delay="5"] { transition-delay: 0.60s; }
+.reveal[data-delay="6"] { transition-delay: 0.72s; }
+.reveal[data-delay="7"] { transition-delay: 0.84s; }
+.reveal[data-delay="8"] { transition-delay: 0.96s; }
+
+/* ------------------------------------------------------------
+   9b. 見出しの登場演出(全ページ共通・追加のみ)
+   .reveal が可視化されたとき、ラベルに下線が引かれ、
+   見出しが「焦点を結ぶ」ように現れる
+   ------------------------------------------------------------ */
+.section-label {
+  position: relative;
+  padding-bottom: 0.55rem;
+}
+.section-label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--c-blue-bright), transparent);
+  transform-origin: left center;
+}
+.reveal:not(.is-visible) .section-label::after {
+  transform: scaleX(0);
+}
+.reveal.is-visible .section-label::after {
+  transition: transform 0.7s var(--ease-out) 0.28s;
+  transform: scaleX(1);
+}
+
+.reveal.is-visible .section-title,
+.reveal.is-visible .page-head__title {
+  animation: title-focus 1s var(--ease-out) 0.15s both;
+}
+@keyframes title-focus {
+  0% {
+    opacity: 0.3;
+    letter-spacing: 0.18em;
+    text-shadow: 0 0 0 rgba(154, 213, 255, 0);
+  }
+  55% {
+    text-shadow: 0 0 34px rgba(184, 226, 255, 0.7),
+                 0 0 90px rgba(77, 166, 255, 0.4);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.06em;
+    text-shadow: 0 0 22px rgba(154, 213, 255, 0.3);
+  }
+}
+
+/* ------------------------------------------------------------
+   10. レスポンシブ対応
+   ------------------------------------------------------------ */
+/* ナビ項目が増えたため、横に収まらない幅ではハンバーガーへ早めに切り替える */
+@media (max-width: 1120px) {
+  :root {
+    --space-xl:  4.5rem;
+    --space-2xl: 6.5rem;
+  }
+
+  /* ナビはオーバーレイになるため、ツール群を右端に寄せる */
+  .header-tools {
+    margin-left: auto;
+  }
+
+  .nav-toggle {
+    display: block;
+    margin-left: 0.4rem;
+  }
+
+  /* ナビは画面を覆うオーバーレイに切り替える。
+     親の .site-header が backdrop-filter を持つため position:fixed の基準が
+     ヘッダー枠になってしまう。inset ではなくビューポート単位で全画面に広げる */
+  .global-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    z-index: 90;
+    display: flex;
+    /* ブラー非対応でも読めるよう、ほぼ不透明の暗幕にする */
+    background: rgba(3, 6, 13, 0.985);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transition: opacity var(--dur-mid) var(--ease-soft),
+                visibility var(--dur-mid);
+  }
+
+  .global-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+    /* margin:auto で上下左右の中央に置く。はみ出す高さのときは
+       auto が 0 になり、global-nav 側の縦スクロールで全項目に届く */
+    margin: auto;
+    /* ヘッダー/閉じるボタンと重ならないよう上下に余白を確保 */
+    padding-block: 4.5rem;
+  }
+
+  /* リンクをはっきり大きく・読みやすく */
+  .nav-link {
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    color: var(--c-white);
+    padding: 0.7rem 1.4rem;
+  }
+
+  /* タッチでは hover が無いので、現在ページの下線は常に出す */
+  .nav-link.is-current {
+    color: var(--c-blue-bright);
+  }
+
+  .nav-link.is-current::after {
+    transform: scaleX(1);
+  }
+
+  /* 未解放の SECRET も文字は読める明るさにする(鍵アイコンは残す) */
+  .nav-link.is-locked {
+    color: rgba(195, 210, 234, 0.6);
+  }
+}
+
+@media (max-width: 560px) {
+  .memory-counter {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.68rem;
+  }
+
+  .site-logo {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+}
