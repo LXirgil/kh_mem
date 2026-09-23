@@ -452,9 +452,6 @@
     const timeline = document.getElementById("timeline");
     if (!timeline) return;
 
-    /* 途中に混ぜ込む記憶の欠片(キーは「この番号の作品の後」の意味) */
-    const hiddenFragments = { 3: "f08" };
-
     WORKS.forEach((work, index) => {
       /* --- 年表の1項目 --- */
       const item = document.createElement("div");
@@ -497,19 +494,6 @@
 
       item.appendChild(card);
       timeline.appendChild(item);
-
-      /* --- 指定位置に記憶の欠片をそっと置く --- */
-      if (hiddenFragments[index]) {
-        const wrap = document.createElement("div");
-        wrap.style.cssText =
-          "display:flex; justify-content:flex-end; padding-right:8%;";
-        wrap.innerHTML = `
-          <div class="fragment" data-fragment="${hiddenFragments[index]}">
-            <div class="fragment__shard"></div>
-          </div>
-        `;
-        timeline.appendChild(wrap);
-      }
     });
   }
 
@@ -831,16 +815,6 @@
 
   /* キャラクターの詳細 */
   function buildCharacterDetail(chara) {
-    /* 最後のキャラクターの詳細に記憶の欠片を隠しておく */
-    const isLast = CHARACTERS[CHARACTERS.length - 1] === chara;
-    const secretShard = isLast
-      ? `<div class="modal__shard">
-           <div class="fragment" data-fragment="f10">
-             <div class="fragment__shard"></div>
-           </div>
-         </div>`
-      : "";
-
     return `
       <span class="modal__label">${escapeHtml(chara.en)}</span>
       <h2 class="modal__title" id="modal-title">${escapeHtml(chara.name)}</h2>
@@ -851,8 +825,6 @@
       </div>
 
       <div class="modal__tags">${worksTagsHtml(chara.works)}</div>
-
-      ${secretShard}
     `;
   }
 

@@ -237,18 +237,18 @@ const MEMORY_CONFIG = {
 
   /* 欠片の一覧。id は HTML の data-fragment 属性と対応させる */
   fragments: [
-    { id: "f01", page: "TOP",     name: "デスティニーアイランドの潮騒" },
-    { id: "f02", page: "TOP",     name: "パオプの実" },
-    { id: "f03", page: "TOP",     name: "扉の在り処" },
-    { id: "f04", page: "TOP",     name: "ダイブ・トゥ・ザ・ハート" },
-    { id: "f05", page: "TOP",     name: "呼びかける声" },
-    { id: "f06", page: "TOP",     name: "キーブレードの継承" },
-    { id: "f07", page: "ALBUM",   name: "最初の冒険" },
-    { id: "f08", page: "ALBUM",   name: "忘却の城の記憶" },
-    { id: "f09", page: "ALBUM",   name: "失われた名前" },
-    { id: "f10", page: "ALBUM",   name: "シーソルトアイスの味" },
-    { id: "f11", page: "ALBUM",   name: "還る場所" },
-    { id: "f12", page: "SECRET",  name: "こころのかたち" }
+    { id: "f01", page: "TOP",       name: "デスティニーアイランドの潮騒" },
+    { id: "f02", page: "TOP",       name: "パオプの実" },
+    { id: "f03", page: "TIMELINE",  name: "扉の在り処" },
+    { id: "f04", page: "THEMES",    name: "ダイブ・トゥ・ザ・ハート" },
+    { id: "f05", page: "CROSSOVER", name: "縁のはじまり" },
+    { id: "f06", page: "TOP",       name: "キーブレードの継承" },
+    { id: "f07", page: "ALBUM",     name: "最初の冒険" },
+    { id: "f08", page: "TIMELINE",  name: "忘却の城の記憶" },
+    { id: "f09", page: "ALBUM",     name: "失われた名前" },
+    { id: "f10", page: "THEMES",    name: "シーソルトアイスの味" },
+    { id: "f11", page: "ALBUM",     name: "還る場所" },
+    { id: "f12", page: "SECRET",    name: "こころのかたち" }
   ]
 };
 

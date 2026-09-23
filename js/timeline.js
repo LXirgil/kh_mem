@@ -28,6 +28,11 @@
     return `<span class="kh-table__badge" style="--hue:${w.hue}">${esc(w.short)}</span>`;
   }
 
+  /* 記憶の欠片 その2(発売日順表、4作目の行にそっと紛れさせる) */
+  const FRAGMENT_F08 =
+    '<span class="fragment" data-fragment="f08" style="margin-left:0.5em;">' +
+    '<span class="fragment__shard"></span></span>';
+
   /* --- 発売日順(WORKS の並びそのまま) --- */
   function releaseRows() {
     return WORKS.map(
@@ -37,7 +42,7 @@
           <td class="kh-table__year">${esc(yearLabel(w))}</td>
           <td class="kh-table__title">${badge(w)}${esc(w.title)}</td>
           <td class="kh-table__plat">${esc(w.platform || "")}</td>
-          <td class="kh-table__era">${esc(eraOf(w.id).era)}</td>
+          <td class="kh-table__era">${esc(eraOf(w.id).era)}${i === 3 ? FRAGMENT_F08 : ""}</td>
         </tr>`
     ).join("");
   }
@@ -65,5 +70,11 @@
     const chr = document.getElementById("chrono-body");
     if (rel) rel.innerHTML = releaseRows();
     if (chr) chr.innerHTML = chronoRows();
+
+    /* 表を組み立てたあとに追加された欠片(f03/f08)を有効化する */
+    if (typeof Effects !== "undefined" && Effects.refreshScrollReveal) {
+      Effects.refreshScrollReveal();
+    }
+    if (typeof MemorySystem !== "undefined") MemorySystem.refresh();
   });
 })();

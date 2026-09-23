@@ -119,6 +119,18 @@
          </div>`
       : "";
 
+    /* 最後の曲のカードにだけ記憶の欠片を隠しておく */
+    const isLastTrack =
+      typeof THEME_TRACKS !== "undefined" &&
+      THEME_TRACKS[THEME_TRACKS.length - 1] === track;
+    const secretShard = isLastTrack
+      ? `<div class="theme-card__shard">
+           <div class="fragment" data-fragment="f10">
+             <div class="fragment__shard"></div>
+           </div>
+         </div>`
+      : "";
+
     article.innerHTML = `
       <div class="theme-card__head">
         <span class="theme-card__index">${String(index + 1).padStart(2, "0")}</span>
@@ -143,6 +155,7 @@
 
       ${buildPlatformLinks(track)}
       ${playerHtml}
+      ${secretShard}
     `;
 
     return article;
@@ -326,5 +339,7 @@
     /* 後から作った .reveal 要素にスクロール演出を適用する
        (Effects は data.js などと同じく先に読み込まれている前提) */
     Effects.refreshScrollReveal();
+    /* カードの中に紛れ込ませた記憶の欠片(f04/f10)を有効化する */
+    if (typeof MemorySystem !== "undefined") MemorySystem.refresh();
   });
 })();

@@ -144,11 +144,22 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
 
 - 全12個。`MEMORY_CONFIG.fragments`(`js/data.js`)で定義。`unlockThreshold`(既定8)以上で SECRET MEMORY が解放
 - HTML側は `data-fragment="f01"` を持つ要素を置くだけ。クリック処理は `MemorySystem` が自動で割り当てる
-- 配置場所:f01〜f06 = TOP(ヒーロー・コンセプト・六つの扉などに分散配置)、
-  f07〜f11 = ALBUM(f07は見出しの余白、f08は作品年表の4枚目のカードの下、f09は
-  CHAIN OF MEMORIESの詳細モーダル内、f10は最後のキャラクターの詳細モーダル内、f11はキャラ一覧の下)、f12 = SECRET
+- 配置場所(全7ページ中6ページに分散。SUMMER=roxas.htmlはスライドショー体験を
+  阻害しないため対象外):
+  - TOP = f01・f02(ヒーロー・コンセプト文の余韻)、f06(六つの扉の直前)。計3個
+  - ALBUM = f07(見出しの余白)、f09(CHAIN OF MEMORIESの詳細モーダル内)、
+    f11(キャラ一覧の下)。計3個
+  - TIMELINE = f03(導入文の余韻)、f08(発売日順表・4作目の行)。計2個
+  - MEMORY THEMES = f04(導入文の余韻)、f10(最後の曲カードの中)。計2個
+  - MEMORY CROSSOVER = f05(導入文の余韻)。計1個
+  - SECRET = f12(解放後のページ本体)。計1個
+- `js/main.js` の `initMemoryLog()` がヘッダーの記憶カウンターから開くモーダルに、
+  `MEMORY_CONFIG.fragments` から自動集計した「ページ別の個数」ヒント(例:
+  「TOP 3個 ・ MEMORY ALBUM 3個 ・ …」)を表示する。ページや個数を変更しても
+  この文言は自動で追従するため、手動でのメンテナンスは不要
 - 保存キーは `kh-memory-progress`。音声設定は `kh-audio-enabled`、解放済み記録は `kh-secret-seen`
-- **モーダルなど後からDOMに追加した欠片は `MemorySystem.refresh()` を呼ばないと有効になりません**
+- **モーダルやカード一覧など後からDOMに追加した欠片は `MemorySystem.refresh()` を呼ばないと有効になりません**
+  (`js/timeline.js`・`js/music.js` は表・カードを組み立てた直後にこれを呼んでいる)
 
 ### 素材についての方針
 

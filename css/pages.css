@@ -2091,6 +2091,13 @@
   margin-top: auto;
 }
 
+/* 最後の曲のカードにだけ隠れている記憶の欠片(.modal__shard と同じ考え方) */
+.theme-card__shard {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.6rem;
+}
+
 /* --- 試聴プレイヤー --- */
 .theme-card__player {
   display: flex;

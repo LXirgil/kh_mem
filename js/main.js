@@ -242,8 +242,27 @@
     const PAGE_HINT = {
       TOP: "TOP",
       ALBUM: "MEMORY ALBUM",
+      TIMELINE: "TIMELINE",
+      THEMES: "MEMORY THEMES",
+      CROSSOVER: "MEMORY CROSSOVER",
       SECRET: "SECRET MEMORY"
     };
+
+    /* ページごとの欠片の総数(例:「TOP 3個」)を、fragments のデータから毎回集計する */
+    function pageCountSummary() {
+      const counts = {};
+      const order = [];
+      MEMORY_CONFIG.fragments.forEach((f) => {
+        if (!(f.page in counts)) {
+          counts[f.page] = 0;
+          order.push(f.page);
+        }
+        counts[f.page] += 1;
+      });
+      return order
+        .map((page) => (PAGE_HINT[page] || page) + " " + counts[page] + "個")
+        .join(" ・ ");
+    }
 
     /* モーダルの器(既存の .modal コンポーネントの見た目を流用) */
     const modal = document.createElement("div");
@@ -300,7 +319,7 @@
         '<h2 class="modal__title" id="memory-log-title">記憶の欠片</h2>' +
         '<p class="modal__subtitle">' + count + " / " + total + " ―― " + status + "</p>" +
         '<ul class="memory-log__list">' + rows + "</ul>" +
-        '<p class="memory-log__note">欠片は TOP・MEMORY ALBUM・SECRET MEMORY に隠れています。' +
+        '<p class="memory-log__note">' + pageCountSummary() + "<br>" +
         "作品やキャラクターの詳細を開いた先にも、まだ見ぬ光があるかもしれません。</p>";
     }
 
