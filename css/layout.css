@@ -381,6 +381,7 @@ body::before {
 .memory-counter {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   gap: 0.45rem;
   font-family: var(--font-en);
   font-size: 0.75rem;
@@ -390,6 +391,7 @@ body::before {
   border: 1px solid rgba(154, 213, 255, 0.22);
   border-radius: 999px;
   background: rgba(10, 22, 48, 0.5);
+  white-space: nowrap;
   transition: box-shadow var(--dur-mid) var(--ease-soft);
 }
 
