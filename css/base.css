@@ -59,18 +59,18 @@ img, svg {
   --c-blue-dim:    #2a6bb5;
   --c-blue-deep:   #143a6b;
 
-  /* ホワイト・テキスト */
-  --c-white:       #eef4ff;
-  --c-text:        #c3d2ea;
-  --c-text-dim:    #7d8fae;
+  /* ホワイト・テキスト(視認性向上のため、通常より明るめに調整) */
+  --c-white:       #f5f9ff;
+  --c-text:        #dbe6fa;
+  --c-text-dim:    #a8bede;
 
   /* 淡いゴールド(アクセント) */
   --c-gold:        #e6d5a3;
-  --c-gold-dim:    #b39a63;
+  --c-gold-dim:    #c9b077;
 
-  /* ガラス風パネル */
-  --panel-bg:      rgba(12, 24, 50, 0.45);
-  --panel-border:  rgba(154, 213, 255, 0.18);
+  /* ガラス風パネル(明度・境界線をやや強めて文字の背景コントラストを確保) */
+  --panel-bg:      rgba(16, 30, 58, 0.58);
+  --panel-border:  rgba(174, 219, 255, 0.28);
   --panel-blur:    16px;
 
   /* 発光エフェクト */
@@ -115,7 +115,7 @@ html {
 body {
   min-height: 100vh;
   font-family: var(--font-jp);
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.9;
   color: var(--c-text);
   background-color: var(--c-void);
@@ -164,7 +164,7 @@ h1, h2, h3 {
 .section-lead {
   max-width: 42em;
   color: var(--c-text);
-  font-size: 0.98rem;
+  font-size: 1.06rem;
 }
 
 /* 光る文字 */

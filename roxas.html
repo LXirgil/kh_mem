@@ -28,7 +28,7 @@
 </head>
 <body class="page-summer">
 
-  <a class="skip-link" href="#main">本文へスキップ</a>
+  <a class="skip-link" href="#main" data-i18n="common.skipLink">本文へスキップ</a>
 
   <canvas id="particle-field" aria-hidden="true"></canvas>
   <div id="cursor-glow" aria-hidden="true"></div>
@@ -52,7 +52,7 @@
         KH MEMORY
       </a>
 
-      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション" data-i18n-attr="aria-label:common.nav.label">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html">TOP</a></li>
           <li><a class="nav-link" href="album.html">ALBUM</a></li>
@@ -65,7 +65,7 @@
       </nav>
 
       <div class="header-tools">
-        <div class="memory-counter" title="集めた記憶の欠片">
+        <div class="memory-counter" title="集めた記憶の欠片" data-i18n-attr="title:common.memoryCounter.title">
           <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2 22 12 12 22 2 12Z"/>
           </svg>
@@ -81,9 +81,13 @@
             <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
           </svg>
         </button>
+
+        <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false" aria-label="英語表示にする">
+          <span data-lang-toggle-text>EN</span>
+        </button>
       </div>
 
-      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+      <button class="nav-toggle" type="button" aria-label="メニューを開く" data-i18n-attr="aria-label:common.navToggle"
               aria-expanded="false" aria-controls="global-nav">
         <span></span><span></span><span></span>
       </button>
@@ -99,7 +103,7 @@
     <section class="page-head container">
       <span class="section-label">Feature — KINGDOM HEARTS II FINAL MIX</span>
       <h1 class="page-head__title">MEMORY OF SUMMER</h1>
-      <p class="page-head__lead">ロクサスの、七日間</p>
+      <p class="page-head__lead" data-i18n="roxas.head.lead">ロクサスの、七日間</p>
     </section>
 
     <!-- ------------------------------------------------------------
@@ -108,8 +112,8 @@
     <section class="section section--tight container" id="prologue">
       <div class="reveal">
         <span class="section-label">Day 1</span>
-        <h2 class="section-title">夏休み、あと七日。</h2>
-        <p class="section-lead">
+        <h2 class="section-title" data-i18n="roxas.intro.title">夏休み、あと七日。</h2>
+        <p class="section-lead" data-i18n="roxas.intro.lead">
           トワイライトタウン。陽が沈みきらない、ずっと夕方のままの街。
           そこで暮らす少年 <strong>ロクサス</strong> の夏休みは、あと七日で終わります。
           仲間のハイネ、ピンス、オレットと落書きを消して回り、
@@ -144,8 +148,8 @@
     <section class="section section--tight container" id="gallery">
       <div class="reveal">
         <span class="section-label">Snapshots</span>
-        <h2 class="section-title">七日間の、ロクサス。</h2>
-        <p class="section-lead">
+        <h2 class="section-title" data-i18n="roxas.slides.title">七日間の、ロクサス。</h2>
+        <p class="section-lead" data-i18n="roxas.slides.lead">
           トワイライトタウンで過ごした、ありふれた——そして少しずつ歪んでいく日々の断片。
         </p>
       </div>
@@ -162,7 +166,7 @@
     <section class="section section--tight container" id="line">
       <div class="reveal">
         <span class="section-label">The Line</span>
-        <h2 class="section-title">シリーズ屈指の、ひとこと。</h2>
+        <h2 class="section-title" data-i18n="roxas.quote.title">シリーズ屈指の、ひとこと。</h2>
         <p class="section-lead">
           七日目の終わり。すべてを知ったロクサスは、眠りについた少年ソラのカプセルの前に立ち、
           静かにこう呟きます。
@@ -200,7 +204,7 @@
     <section class="section section--tight container" id="truth">
       <div class="reveal">
         <span class="section-label">The Truth</span>
-        <h2 class="section-title">その夏は、実在しない。</h2>
+        <h2 class="section-title" data-i18n="roxas.reality.title">その夏は、実在しない。</h2>
         <p class="section-lead">
           ロクサスが歩いた街も、隣で笑っていた仲間も、積み重ねてきたはずの思い出も、
           すべては数日ぶんだけ用意された <strong>仮想のトワイライトタウン</strong> でした。
@@ -238,7 +242,7 @@
     <section class="section section--tight container" id="appeal">
       <div class="reveal">
         <span class="section-label">Why II FINAL MIX</span>
-        <h2 class="section-title">七日間の、その先にあるもの。</h2>
+        <h2 class="section-title" data-i18n="roxas.legacy.title">七日間の、その先にあるもの。</h2>
         <p class="section-lead">
           ロクサスの夏はプロローグにすぎません。
           その扉の向こうには、シリーズでも屈指の完成度と言われる本編が広がっています。
@@ -294,7 +298,7 @@
     <section class="section section--tight container" id="more">
       <div class="panel reveal">
         <span class="section-label">Keep Going</span>
-        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">もっと辿るなら</h2>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);" data-i18n="roxas.more.title">もっと辿るなら</h2>
         <ul class="more-list">
           <li>
             <strong>遊ぶなら:</strong>
@@ -312,13 +316,13 @@
 
         <div class="hero__actions" style="margin-top:2rem;">
           <a href="music.html" class="btn btn--primary">
-            MEMORY THEMES へ
+            <span data-i18n="roxas.cta.music">MEMORY THEMES へ</span>
             <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </a>
-          <a href="album.html" class="btn">MEMORY ALBUM へ</a>
+          <a href="album.html" class="btn" data-i18n="roxas.cta.album">MEMORY ALBUM へ</a>
         </div>
       </div>
     </section>
@@ -356,10 +360,10 @@
       <div class="footer-inner">
         <div>
           <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
-          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+          <p class="footer-tagline" data-i18n="common.footer.tagline">記憶を辿る、光と闇の旅</p>
         </div>
 
-        <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <nav class="footer-nav" aria-label="フッターナビゲーション" data-i18n-attr="aria-label:common.footerNav.label">
           <a href="index.html">TOP</a>
           <a href="album.html">MEMORY ALBUM</a>
           <a href="timeline.html">TIMELINE</a>
@@ -370,7 +374,7 @@
         </nav>
       </div>
 
-      <p class="footer-copyright">
+      <p class="footer-copyright" data-i18n="common.footer.copyright">
         非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
       </p>
     </div>
@@ -380,6 +384,7 @@
   <script src="js/audio.js"></script>
   <script src="js/effects.js"></script>
   <script src="js/memory.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/roxas.js"></script>
 </body>

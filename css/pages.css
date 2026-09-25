@@ -328,6 +328,39 @@
 }
 
 /* ------------------------------------------------------------
+   公式トレイラー埋め込み(16:9 のレスポンシブ枠)
+   ------------------------------------------------------------ */
+.video-embed {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: var(--space-md) auto 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md, 14px);
+  overflow: hidden;
+  border: 1px solid var(--panel-border);
+  background: rgba(6, 12, 26, 0.6);
+  box-shadow: var(--glow-blue-lg);
+}
+
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-embed__caption {
+  max-width: 900px;
+  margin: 0.9rem auto 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--c-text-dim);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------
    各ページへの導線カード
    ------------------------------------------------------------ */
 .gateway-grid {

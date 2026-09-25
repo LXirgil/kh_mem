@@ -84,19 +84,22 @@
     const enabled = AudioEngine.init();
 
     const buttons = document.querySelectorAll(".audio-toggle");
+    let lastState = enabled;
 
     function syncButtons(state) {
+      lastState = state;
       buttons.forEach((btn) => {
         btn.classList.toggle("is-on", state);
         btn.setAttribute("aria-pressed", String(state));
         btn.setAttribute(
           "aria-label",
-          state ? "音声をオフにする" : "音声をオンにする"
+          KH_I18N.t(state ? "common.audio.on" : "common.audio.off")
         );
       });
     }
 
     syncButtons(enabled);
+    document.addEventListener("kh-lang-change", () => syncButtons(lastState));
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -115,6 +118,31 @@
       document.addEventListener("click", resume);
       document.addEventListener("keydown", resume);
     }
+  }
+
+  /* ------------------------------------------------------------
+     3b. 日本語 / 英語 の表示切り替えボタン
+     ------------------------------------------------------------ */
+  function initLangToggle() {
+    const buttons = document.querySelectorAll("[data-lang-toggle]");
+    if (buttons.length === 0 || typeof KH_I18N === "undefined") return;
+
+    function sync() {
+      const lang = KH_I18N.lang();
+      buttons.forEach((btn) => {
+        const label = btn.querySelector("[data-lang-toggle-text]") || btn;
+        label.textContent = lang === "en" ? "日本語" : "EN";
+        btn.setAttribute("aria-pressed", String(lang === "en"));
+        btn.setAttribute("aria-label", KH_I18N.t("common.lang.toEn"));
+      });
+    }
+
+    sync();
+    document.addEventListener("kh-lang-change", sync);
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => KH_I18N.toggle());
+    });
   }
 
   /* ------------------------------------------------------------
@@ -163,7 +191,10 @@
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "to-top";
-    btn.setAttribute("aria-label", "ページの先頭へ戻る");
+    btn.setAttribute("aria-label", KH_I18N.t("common.toTop"));
+    document.addEventListener("kh-lang-change", () => {
+      btn.setAttribute("aria-label", KH_I18N.t("common.toTop"));
+    });
     btn.innerHTML =
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
       'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -259,8 +290,9 @@
         }
         counts[f.page] += 1;
       });
+      const unit = KH_I18N.t("memoryLog.pageUnit");
       return order
-        .map((page) => (PAGE_HINT[page] || page) + " " + counts[page] + "個")
+        .map((page) => (PAGE_HINT[page] || page) + " " + counts[page] + unit)
         .join(" ・ ");
     }
 
@@ -274,12 +306,17 @@
     modal.setAttribute("aria-hidden", "true");
     modal.innerHTML =
       '<div class="modal__dialog">' +
-      '  <button class="modal__close" type="button" aria-label="閉じる">' +
+      '  <button class="modal__close" type="button" aria-label="' + KH_I18N.t("common.close") + '">' +
       '    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
       "  </button>" +
       '  <div id="memory-log-body"></div>' +
       "</div>";
     document.body.appendChild(modal);
+
+    document.addEventListener("kh-lang-change", () => {
+      modal.querySelector(".modal__close").setAttribute("aria-label", KH_I18N.t("common.close"));
+      if (modal.classList.contains("is-open")) render();
+    });
 
     const body = modal.querySelector("#memory-log-body");
     const closeBtn = modal.querySelector(".modal__close");
@@ -292,8 +329,8 @@
       const unlocked = MemorySystem.isUnlocked();
 
       const status = unlocked
-        ? "SECRET MEMORY は解放されています"
-        : "SECRET MEMORY 解放まで あと " + remaining + " 個";
+        ? KH_I18N.t("memoryLog.unlocked")
+        : KH_I18N.t("memoryLog.remaining", { n: remaining });
 
       const rows = MEMORY_CONFIG.fragments
         .map((f) => {
@@ -302,7 +339,7 @@
             "memory-log__item" +
             (found ? " is-found" : "") +
             (found && unlocked ? " is-gold" : "");
-          const name = found ? f.name : "？ ？ ？ ？ ？";
+          const name = found ? f.name : KH_I18N.t("memoryLog.hiddenName");
           const page = PAGE_HINT[f.page] || f.page;
           return (
             '<li class="' + cls + '">' +
@@ -315,12 +352,12 @@
         .join("");
 
       body.innerHTML =
-        '<span class="modal__label">Memory Fragments</span>' +
-        '<h2 class="modal__title" id="memory-log-title">記憶の欠片</h2>' +
+        '<span class="modal__label">' + KH_I18N.t("memoryLog.label") + '</span>' +
+        '<h2 class="modal__title" id="memory-log-title">' + KH_I18N.t("memoryLog.title") + '</h2>' +
         '<p class="modal__subtitle">' + count + " / " + total + " ―― " + status + "</p>" +
         '<ul class="memory-log__list">' + rows + "</ul>" +
         '<p class="memory-log__note">' + pageCountSummary() + "<br>" +
-        "作品やキャラクターの詳細を開いた先にも、まだ見ぬ光があるかもしれません。</p>";
+        KH_I18N.t("memoryLog.note") + "</p>";
     }
 
     function open() {
@@ -346,7 +383,10 @@
     counter.setAttribute("role", "button");
     counter.setAttribute("tabindex", "0");
     counter.setAttribute("aria-haspopup", "dialog");
-    counter.setAttribute("title", "集めた記憶の欠片を確認する");
+    counter.setAttribute("title", KH_I18N.t("common.memoryCounter.title"));
+    document.addEventListener("kh-lang-change", () => {
+      counter.setAttribute("title", KH_I18N.t("common.memoryCounter.title"));
+    });
 
     counter.addEventListener("click", open);
     counter.addEventListener("keydown", (e) => {
@@ -373,6 +413,7 @@
     markCurrentPage();
     initNavToggle();
     initAudioToggle();
+    initLangToggle();
     initHeaderScroll();
     initBackToTop();
     initHeroParallax();

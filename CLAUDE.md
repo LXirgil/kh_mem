@@ -38,7 +38,7 @@ python -m http.server 8000
 
 | ファイル | 役割 |
 | --- | --- |
-| `index.html` | TOP。初回のみ全画面イントロ(`#dive-gate` / `js/intro.js`)、ヒーロー、コンセプト、各ページへの導線(「六つの扉」= ALBUM/TIMELINE/THEMES/SUMMER/CROSSOVER/SECRET。ナビと同じ並び)。ヒーローの「記憶を辿りはじめる」は `#gateway`(六つの扉)へのアンカー |
+| `index.html` | TOP。初回のみ全画面イントロ(`#dive-gate` / `js/intro.js`)、ヒーロー、コンセプト、公式トレイラー埋め込み(`#trailer`。YouTube公式動画を1本、興味を引く導入として掲載)、各ページへの導線(「六つの扉」= ALBUM/TIMELINE/THEMES/SUMMER/CROSSOVER/SECRET。ナビと同じ並び)。ヒーローの「記憶を辿りはじめる」は `#gateway`(六つの扉)へのアンカー |
 | `album.html` | MEMORY ALBUM。作品年表(絞り込み付き)、ワールド、キャラクター、用語集、詳細モーダル |
 | `timeline.html` | TIMELINE。全作品を「発売日順」と「物語内の時系列順」の2表で整理。`js/timeline.js` が `WORKS`＋`KH_ERA` から生成 |
 | `music.html` | MEMORY THEMES。代表曲(主題歌・シリーズ音楽)の一覧と、音源を用意した曲の試聴 |
@@ -59,7 +59,9 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
 ナビの並びは TOP / ALBUM / TIMELINE / THEMES / SUMMER / CROSSOVER / SECRET。
 ハンバーガーへの切替は `css/layout.css` の `@media (max-width: 1120px)`
 (横並びは1121px以上でのみ表示。項目の字間・余白も横並びが収まるよう詰めてある)。
-`roxas.html` は共通5本(`data→audio→effects→memory→main`)＋ `js/roxas.js`(写真スライドショー)。
+ヘッダーの `.header-tools` には記憶カウンター・音声トグルに加えて、日本語/英語切り替えボタン
+(`.lang-toggle` / `data-lang-toggle`。`js/i18n.js`＋`js/main.js` の `initLangToggle()`)が全ページ共通で入っている。
+`roxas.html` は共通6本(`data→audio→effects→memory→i18n→main`)＋ `js/roxas.js`(写真スライドショー)。
 記憶の欠片(全12個)は配置しない。
 `roxas.html` の `<body>` だけ `class="page-summer"` を持ち、トワイライトタウンの夕景に合わせた
 暖色(オレンジ)テーマになる。`css/base.css` の青系トークン(`--c-blue*`・`--panel-border`・
@@ -75,7 +77,9 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
 
 ### CSS(役割ごとに4分割・全ページで4枚とも読み込む)
 
-- `css/base.css` — リセット、カラー変数などのデザイントークン、タイポグラフィ。**色や余白の値はここの `:root` に集約**
+- `css/base.css` — リセット、カラー変数などのデザイントークン、タイポグラフィ。**色や余白の値はここの `:root` に集約**。
+  文字の視認性向上のため `--c-text` / `--c-text-dim` / `--panel-bg` / `--panel-border` は標準よりやや明るめに調整済み
+  (背景の暗さ自体はコンセプト上あえて維持し、文字側の明度・本文フォントサイズ(17px)を上げて対応している)
 - `css/layout.css` — ヘッダー、ナビ、フッター、背景演出レイヤー、ページ遷移、`.reveal`。
   背景最奥の `body::before` で `assets/IMG_4388.png`(KH/ディズニーのアイコン柄)を低 opacity で敷いている
 - `css/components.css` — ボタン、パネル、モーダル、記憶の欠片、進捗バー、トースト
@@ -83,7 +87,7 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
 
 ### JavaScript(読み込み順に依存関係あり)
 
-全ページ共通で `data.js → audio.js → effects.js → memory.js → main.js` の順に読み込み、
+全ページ共通で `data.js → audio.js → effects.js → memory.js → i18n.js → main.js` の順に読み込み、
 その後にページ固有のスクリプトを読み込みます。この順序を崩すと動きません。
 
 - `js/data.js` — 作品(`WORKS`)、ワールド(`WORLDS`)、キャラクター(`CHARACTERS`)、用語集
@@ -103,12 +107,18 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
     (`album.js` の `worksTagsHtml`)は全12作品を発売順で固定表示し、`works` に含む作品だけを
     `category`(main=青 / side=金 / future=淡)で点灯させる。凡例は `album.html` の
     `.appears-legend`、スタイルは `css/pages.css` の `.appears` / `.appears__cell`
+  - `WORKS` の `subtitle` / `summary` には英語版(`subtitleEn` / `summaryEn`)を用意してあり、
+    `album.js` が `KH_I18N.pick(work, "subtitle")` のように言語に応じて出し分ける
+    (`detail` などその他のフィールドに英語版は無く、常に日本語のまま)
 - `js/audio.js` — `AudioEngine`。効果音は常にWeb Audio APIで合成。BGMは既定では合成音だが、
   `js/data.js` の `AUDIO_CONFIG.bgmSrc` にパスを書くと音源ファイル(mp3等)を再生する。
   `duckBgm()` / `unduckBgm()` で BGM を一時的に絞れる(THEMES ページの試聴中に使用)
 - `js/effects.js` — `Effects`。Canvasの光の粒子、カーソル追従光、スクロール連動、ページ遷移、`burst()`、
   スクロール連動(`initScrollReveal`)は同フレームで可視化した `.reveal` を上から順に時間差表示し、
   `.section-title` / `.page-head__title` を含む塊が現れたら `burst()` で光の粒を弾く。
+  `initClickEffects()`(`initAll()` から起動)は `a` / `button` / 各種カード(`.work-card` 等)を
+  押すたびに、押した座標へ光の輪(`spawnClickRing`)と小さな粒(`burst()`)を発生させる。
+  記憶の欠片(`[data-fragment]`)は `memory.js` 側で獲得時の `burst()` をすでに鳴らしているため対象外。
   背景を漂うKHモチーフ(`.drift-layer` を生成。王冠・キーブレード・鍵穴等のSVGシルエット)、
   左右ガターの装飾フレーム(`.side-frame` を生成。幅1240px未満では非表示。
   右側の欠片12個は `memory.js` の `updateCounter()` が `[data-fragment-dot]` を更新して同期)。
@@ -119,11 +129,22 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
   「ダイブ・トゥ・ザ・ハート」風演出。`#dive-gate` の中身を生成し、触れると本体へ。
   `prefers-reduced-motion` は静止表示。`index.html` の `#dive-gate` インラインに5秒の安全策
 - `js/memory.js` — `MemorySystem`。欠片の収集とlocalStorage保存、解放判定
-- `js/main.js` — 全ページ共通の初期化(ナビ、音声トグル、ホバー音、`initBackToTop` で
-  右下の「トップへ戻る」ボタン `.to-top` を body に生成、`initHeroParallax` で TOP の
-  `.hero__station`(目覚めの園風の台座)をカーソルに合わせて `--px/--py/--px2/--py2` で視差移動)。
+- `js/i18n.js` — `KH_I18N`。日本語/英語の表示切り替え(海外プレイヤー向け)。`localStorage["kh-lang"]`
+  に言語設定を保存し、`[data-i18n="キー"]` を持つ要素の中身、`[data-i18n-attr="属性名:キー"]` を
+  持つ要素の属性を、辞書(`STRINGS`)に基づいて書き換える。対象は共通UI文言(ヘッダー/フッター/
+  ボタン)と各ページの見出し・導入文・作品概要(WORKSの`subtitle`/`summary`)までで、
+  キャラクター解説や用語集・楽曲解説など分量の多い個別コンテンツは日本語のまま(この課題のscope外)。
+  `KH_I18N.pick(obj, "field")` で `data.js` 側のオブジェクトを言語別に出し分けられる
+  (英語版は `fieldEn` という名前で用意する。例:`work.subtitleEn`)。
+  言語を切り替えると `kh-lang-change` イベントが発火し、`album.js` など後から描画した
+  作品カードの再同期に使われる。**表示テキストを追加・変更したらこのファイルの `STRINGS` を
+  必ず更新すること**
+- `js/main.js` — 全ページ共通の初期化(ナビ、音声トグル、`initLangToggle` で日本語/英語切り替え
+  ボタンを配線、ホバー音、`initBackToTop` で右下の「トップへ戻る」ボタン `.to-top` を body に生成、
+  `initHeroParallax` で TOP の `.hero__station`(目覚めの園風の台座)をカーソルに合わせて
+  `--px/--py/--px2/--py2` で視差移動)。
   ヘッダーの記憶カウンター(`.memory-counter`)を押すと、欠片12個の一覧を `.modal` で開く
-  (`initMemoryLog`。未取得は名前を伏せ、隠れているページ名だけヒント表示)。
+  (`initMemoryLog`。未取得は名前を伏せ、隠れているページ名だけヒント表示。文言は `KH_I18N` 経由)。
   JS描画待ちのコンテナは `css/pages.css` の `:empty::after`(「読み込み中…」)で初期チラつきを抑える。
   データ由来の `<img>` は読み込み失敗時に鍵穴プレースホルダー(data URI)へ差し替わる
   (`album.js` の `IMG_ONERR` ほか各ページ script)
@@ -133,7 +154,9 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
   〔`.kh-table__badge`〕で作品ごとに色分けする。
   `crossover.js` は `CROSSOVERS` からジャンル別カードを描き、ページ下部で
   `CROSSOVER_SCENES` から名場面ギャラリー(`.xscene-*` = SECRET の `.secret-scene` と同じ見た目)も描く。
-  登場作品バーは `album.js` の `worksTagsHtml` と同じ見た目のものを内部に持つ)
+  登場作品バーは `album.js` の `worksTagsHtml` と同じ見た目のものを内部に持つ。
+  `album.js` の作品詳細モーダルには、YouTube検索へのリンク(直リンクではなく検索リンクなので
+  URL切れが起きない。`MUSIC_PLATFORMS` の検索リンクと同じ考え方)を1本添えている)
 - `js/music.js` — MEMORY THEMES ページ。`THEME_TRACKS` からカードを生成。各曲の `work`
   (WORKSのid。1作に紐付かない曲は `null`)から作品の `hue` を引いて、カード上端のライン・
   ホバー時の光・作品名バッジ〔`.theme-card__work`〕を色分けする(`work: null` は落ち着いた金色)。
@@ -169,6 +192,10 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
 音は、効果音を Web Audio API で合成し、BGM も既定では合成音です。
 公式のロゴ・キャラクターイラスト・パッケージ画像・スクリーンショット・楽曲は
 スクウェア・エニックスおよびディズニーの著作物なので、リポジトリには含めません。
+TOP の公式トレイラー(`#trailer`)も同じ方針で、動画ファイルはリポジトリに含めず
+YouTube(`youtube-nocookie.com`)の公式アップロードを `<iframe>` で参照しているだけ。
+差し替える場合は Web検索等で公式チャンネルのアップロードであることを確認してから
+`index.html` の `src`(動画ID)と `title`、`js/i18n.js` の `top.trailer.caption` を書き換える。
 
 「キングダムハーツらしさ」は以下で表現しています(いずれも自由に使える情報・
 オリジナルの図形):

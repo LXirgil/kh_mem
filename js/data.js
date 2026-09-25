@@ -270,6 +270,7 @@ const WORKS = [
     year: "2002",
     title: "KINGDOM HEARTS",
     subtitle: "扉をひらく、最初の記憶",
+    subtitleEn: "The first memory, and the door it opens",
     platform: "PlayStation 2",
     category: "main",
     hue: 205,
@@ -280,6 +281,8 @@ const WORKS = [
     music: "「光」宇多田ヒカル",
     summary:
       "デスティニーアイランドで暮らすソラが、闇に呑まれた世界を旅する物語。キーブレードを手に、離れ離れになったリクとカイリを探します。",
+    summaryEn:
+      "Sora, who lives on Destiny Islands, journeys through worlds swallowed by darkness. Keyblade in hand, he searches for his scattered friends Riku and Kairi.",
     detail: [
       "シリーズの原点となる作品です。日常だったはずの島が闇に呑まれ、ソラは見知らぬ世界へと放り出されます。そこで出会ったドナルドとグーフィーとともに、閉ざされた世界の鍵穴をひとつずつ封じていきます。",
       "「心」と「絆」という、シリーズを通して描かれ続けるテーマがここで提示されます。冒険の楽しさと、大切なものを失う痛みが同居する物語構成が特徴です。"
@@ -292,6 +295,7 @@ const WORKS = [
     year: "2004",
     title: "CHAIN OF MEMORIES",
     subtitle: "積み上げるほど、崩れてゆく",
+    subtitleEn: "The higher you climb, the more it crumbles",
     platform: "Game Boy Advance",
     category: "side",
     hue: 265,
@@ -302,6 +306,8 @@ const WORKS = [
     music: null,
     summary:
       "忘却の城を昇るごとに記憶が書き換えられていく物語。ソラが手にするはずだった思い出が、ナミネの力によって少しずつ形を変えていきます。",
+    summaryEn:
+      "As Sora climbs Castle Oblivion, his memories are rewritten floor by floor. The recollections he should have kept slowly change shape under Naminé's power.",
     detail: [
       "「忘却の城」を舞台に、階層を昇るたび記憶が組み替えられていく異色の作品です。カードを用いた戦闘システムが採用され、シリーズの中でも独特の手触りを持ちます。",
       "本作の主題はまさに『記憶』そのものです。思い出は本物なのか、それとも作られたものなのか——このサイトのテーマにも直結する一作です。リク編ではもうひとつの視点から城の物語が語られます。"
@@ -314,6 +320,7 @@ const WORKS = [
     year: "2005",
     title: "KINGDOM HEARTS II",
     subtitle: "眠りから覚める、もうひとりの物語",
+    subtitleEn: "Another story awakens from sleep",
     platform: "PlayStation 2",
     category: "main",
     hue: 215,
@@ -324,6 +331,8 @@ const WORKS = [
     music: "「Passion」宇多田ヒカル",
     summary:
       "トワイライトタウンで夏休みを過ごすロクサスの日常から幕を開ける続編。穏やかな日々の裏側で、失われた記憶が静かに動き出します。",
+    summaryEn:
+      "The sequel opens with Roxas's summer days in Twilight Town. Beneath the calm surface of ordinary life, lost memories quietly begin to stir.",
     detail: [
       "前作から時を経て描かれる正統続編です。冒頭で描かれるロクサスの数日間が、物語全体に深い影を落としていきます。",
       "アクション性が大きく進化し、シリーズの完成形のひとつとして高く評価されています。物語面ではXIII機関との対立が本格化します。"
@@ -336,6 +345,7 @@ const WORKS = [
     year: "2009",
     title: "358/2 DAYS",
     subtitle: "存在しないはずの、たしかな日々",
+    subtitleEn: "Days that shouldn't exist, yet were real",
     platform: "Nintendo DS",
     category: "side",
     hue: 25,
@@ -346,6 +356,8 @@ const WORKS = [
     music: null,
     summary:
       "XIII機関に属するロクサスが過ごした、記録に残らない日々の物語。アクセル、シオンと分け合った時間が、やがて大きな別れへと繋がります。",
+    summaryEn:
+      "The untold days Roxas spent as a member of Organization XIII. The time he shared with Axel and Xion leads, in the end, to a great parting.",
     detail: [
       "日付ごとに物語が進行する構成で、淡々とした日常の描写が積み重なっていきます。時計塔の上で三人が分け合ったシーソルトアイスの味が、シリーズ屈指の象徴的な場面として語り継がれています。",
       "「存在しない者たちの物語」でありながら、その日々は確かにあった——という切なさが全編を貫きます。"
@@ -358,6 +370,7 @@ const WORKS = [
     year: "2010",
     title: "BIRTH BY SLEEP",
     subtitle: "すべてが始まる、はるか以前",
+    subtitleEn: "Long before it all began",
     platform: "PlayStation Portable",
     category: "main",
     hue: 175,
@@ -368,6 +381,8 @@ const WORKS = [
     music: null,
     summary:
       "シリーズ第1作より約10年前を描く物語。テラ・アクア・ヴェントゥスの三人がそれぞれの旅路を辿り、やがて交わり、そして離れていきます。",
+    summaryEn:
+      "Set roughly ten years before the first game, this story follows Terra, Aqua, and Ventus as their separate journeys cross paths — and eventually pull them apart.",
     detail: [
       "三人の主人公それぞれの視点で同じ時間軸を辿る構成が採られています。三つの物語を通して初めて全体像が見えてくる、緻密なシナリオ設計が特徴です。",
       "アクアが作ったお守り「ウェイファインダー」に込められた、決して失われない繋がりという願いが、後の作品にまで長く響き続けます。"
@@ -380,6 +395,7 @@ const WORKS = [
     year: "2010",
     title: "Re:coded",
     subtitle: "データの海に沈む、傷の記録",
+    subtitleEn: "A record of wounds, sinking into a sea of data",
     platform: "Nintendo DS",
     category: "side",
     hue: 130,
@@ -390,6 +406,8 @@ const WORKS = [
     music: null,
     summary:
       "ジミニーの記録をデータ化した世界で起きる異変を追う物語。書かれた文字の隙間から、思わぬ真実が浮かび上がります。",
+    summaryEn:
+      "A story of strange anomalies inside a digitized version of Jiminy's Journal. Between the lines of written text, an unexpected truth begins to surface.",
     detail: [
       "デジタル空間を舞台とした実験的な作品です。バグとして現れる異常が、物語上の「傷」と重ね合わせて描かれます。",
       "終盤に明かされる内容が、以降の作品の展開を大きく方向づける重要な一作となっています。"
@@ -402,6 +420,7 @@ const WORKS = [
     year: "2012",
     title: "DREAM DROP DISTANCE",
     subtitle: "眠りの世界で、二人は落ちてゆく",
+    subtitleEn: "Two friends fall through a world of sleep",
     platform: "Nintendo 3DS",
     category: "main",
     hue: 285,
@@ -412,6 +431,8 @@ const WORKS = [
     music: null,
     summary:
       "眠りについたままの世界を巡る、キーブレードマスター承認試験の物語。ソラとリクが交互に落下しながら、それぞれの夢を渡り歩きます。",
+    summaryEn:
+      "The story of the Mark of Mastery exam, held across worlds locked in sleep. Sora and Riku fall in turn, wandering through each other's dreams.",
     detail: [
       "ソラとリクを切り替えながら進行する独特の構成です。「眠り」と「夢」という新しいモチーフが導入されました。",
       "シリーズ全体の時間軸に関わる大きな仕掛けが明かされ、次章への橋渡しとなる作品です。"
@@ -424,6 +445,7 @@ const WORKS = [
     year: "2013",
     title: "χ SERIES",
     subtitle: "最も古い記憶、最初の争い",
+    subtitleEn: "The oldest memory, the first conflict",
     platform: "Browser / Mobile",
     category: "side",
     hue: 45,
@@ -434,6 +456,8 @@ const WORKS = [
     music: null,
     summary:
       "シリーズで最も古い時代を描く物語。光を巡って人々が分かたれ、やがてキーブレード戦争へと向かっていきます。",
+    summaryEn:
+      "The earliest era in the series' timeline. People are divided over the light, and the world edges ever closer to the Keyblade War.",
     detail: [
       "ブラウザおよびスマートフォン向けに展開された作品群です。長期にわたって配信され、シリーズの根幹に関わる神話的な時代が語られました。",
       "後の作品で語られる出来事の「原因」が、この時代に置かれています。"
@@ -446,6 +470,7 @@ const WORKS = [
     year: "2017",
     title: "0.2 -A FRAGMENTARY PASSAGE-",
     subtitle: "闇の底で、ひとり歩き続ける",
+    subtitleEn: "Walking on alone, at the bottom of darkness",
     platform: "PlayStation 4",
     category: "side",
     hue: 240,
@@ -456,6 +481,8 @@ const WORKS = [
     music: null,
     summary:
       "闇の世界をひとり彷徨い続けるアクアの物語。長い孤独のなかで、彼女はテラとヴェントゥスとの約束を胸に歩き続けます。",
+    summaryEn:
+      "Aqua's story of wandering alone through the Realm of Darkness. Through years of solitude, she keeps walking, holding on to her promise to Terra and Ventus.",
     detail: [
       "短編ながら、最新世代の映像表現でシリーズの世界観を描き直した作品です。深い闇の中に差す一筋の光が印象的に演出されます。",
       "『KINGDOM HEARTS III』へと直接つながる、重要な前哨となる物語です。"
@@ -468,6 +495,7 @@ const WORKS = [
     year: "2019",
     title: "KINGDOM HEARTS III",
     subtitle: "長い旅路の、その果てへ",
+    subtitleEn: "To the end of a long journey",
     platform: "PlayStation 4 / Xbox One",
     category: "main",
     hue: 200,
@@ -478,6 +506,8 @@ const WORKS = [
     music: "「Face My Fears」「誓い」宇多田ヒカル",
     summary:
       "ダークシーカー編がひとつの結末へと向かう作品。散り散りになった仲間たちが、キーブレード墓場に再び集います。",
+    summaryEn:
+      "The Dark Seeker Saga heads toward its conclusion. Friends scattered across the years gather once more at the Keyblade Graveyard.",
     detail: [
       "シリーズの大きな区切りとなる作品です。歴代作品で積み重ねられてきた伏線が、次々と回収されていきます。",
       "映像表現が飛躍的に向上し、これまで語られてきた世界がより豊かに描かれました。"
@@ -490,6 +520,7 @@ const WORKS = [
     year: "2020",
     title: "MELODY OF MEMORY",
     subtitle: "音とともに辿る、これまでの道",
+    subtitleEn: "Retracing the journey, one melody at a time",
     platform: "Multi Platform",
     category: "side",
     hue: 320,
@@ -500,6 +531,8 @@ const WORKS = [
     music: null,
     summary:
       "下村陽子が手がけてきた楽曲とともに、これまでの旅路を辿り直す物語。音楽そのものが記憶の入口になります。",
+    summaryEn:
+      "A journey back through the series, set to the music Yoko Shimomura has composed along the way. The music itself becomes a doorway into memory.",
     detail: [
       "リズムアクションという形式で、シリーズの歴史を振り返る構成になっています。楽曲を聴きながら過去の場面が甦る演出が特徴です。",
       "本サイトの企画意図——「記憶を辿る」——に最も近い体験を持つ作品といえます。"
@@ -512,6 +545,7 @@ const WORKS = [
     year: "NEXT",
     title: "KINGDOM HEARTS IV",
     subtitle: "まだ語られていない、これからの記憶",
+    subtitleEn: "A memory not yet told, still to come",
     platform: "To Be Announced",
     category: "future",
     hue: 50,
@@ -522,6 +556,8 @@ const WORKS = [
     music: null,
     summary:
       "物語はまだ続いていきます。次に開かれる扉の向こうに、どんな記憶が待っているのかは誰にも分かりません。",
+    summaryEn:
+      "The story is still going. No one yet knows what memories wait beyond the next door to open.",
     detail: [
       "新章「ロストマスター編」の幕開けとなる作品として発表されました。クアドラトゥムという見慣れない街に立つソラの姿が公開されています。",
       "この空白のページこそが、旅がまだ終わっていないことの証しです。続報が出たら、この項目を書き足していきましょう。"

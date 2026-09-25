@@ -28,7 +28,7 @@
 </head>
 <body>
 
-  <a class="skip-link" href="#main">本文へスキップ</a>
+  <a class="skip-link" href="#main" data-i18n="common.skipLink">本文へスキップ</a>
 
   <canvas id="particle-field" aria-hidden="true"></canvas>
   <div id="cursor-glow" aria-hidden="true"></div>
@@ -51,7 +51,7 @@
         KH MEMORY
       </a>
 
-      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション" data-i18n-attr="aria-label:common.nav.label">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html">TOP</a></li>
           <li><a class="nav-link" href="album.html">ALBUM</a></li>
@@ -64,7 +64,7 @@
       </nav>
 
       <div class="header-tools">
-        <div class="memory-counter" title="集めた記憶の欠片">
+        <div class="memory-counter" title="集めた記憶の欠片" data-i18n-attr="title:common.memoryCounter.title">
           <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2 22 12 12 22 2 12Z"/>
           </svg>
@@ -80,9 +80,13 @@
             <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
           </svg>
         </button>
+
+        <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false" aria-label="英語表示にする">
+          <span data-lang-toggle-text>EN</span>
+        </button>
       </div>
 
-      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+      <button class="nav-toggle" type="button" aria-label="メニューを開く" data-i18n-attr="aria-label:common.navToggle"
               aria-expanded="false" aria-controls="global-nav">
         <span></span><span></span><span></span>
       </button>
@@ -107,22 +111,22 @@
         </svg>
 
         <span class="section-label">404 — Lost Memory</span>
-        <h1 class="secret-lock__title">この記憶は 見つからない</h1>
+        <h1 class="secret-lock__title" data-i18n="404.title">この記憶は 見つからない</h1>
 
-        <p class="secret-lock__text">
+        <p class="secret-lock__text" data-i18n="404.text">
           アドレスが間違っているか、そのページはもう存在しないか——<br>
           あるいは、まだ誰にも思い出されていないのかもしれません。
         </p>
 
         <div class="hero__actions">
           <a href="index.html" class="btn btn--primary">
-            TOP へ戻る
+            <span data-i18n="404.cta.home">TOP へ戻る</span>
             <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </a>
-          <a href="album.html" class="btn">MEMORY ALBUM を開く</a>
+          <a href="album.html" class="btn" data-i18n="404.cta.album">MEMORY ALBUM を開く</a>
         </div>
       </div>
     </section>
@@ -137,10 +141,10 @@
       <div class="footer-inner">
         <div>
           <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
-          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+          <p class="footer-tagline" data-i18n="common.footer.tagline">記憶を辿る、光と闇の旅</p>
         </div>
 
-        <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <nav class="footer-nav" aria-label="フッターナビゲーション" data-i18n-attr="aria-label:common.footerNav.label">
           <a href="index.html">TOP</a>
           <a href="album.html">MEMORY ALBUM</a>
           <a href="timeline.html">TIMELINE</a>
@@ -151,7 +155,7 @@
         </nav>
       </div>
 
-      <p class="footer-copyright">
+      <p class="footer-copyright" data-i18n="common.footer.copyright">
         非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
       </p>
     </div>
@@ -161,6 +165,7 @@
   <script src="js/audio.js"></script>
   <script src="js/effects.js"></script>
   <script src="js/memory.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

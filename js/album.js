@@ -486,8 +486,8 @@
         <div class="work-card__body">
           <p class="work-card__year">${escapeHtml(work.year)}</p>
           <h3 class="work-card__title">${escapeHtml(work.title)}</h3>
-          <p class="work-card__subtitle">${escapeHtml(work.subtitle)}</p>
-          <p class="work-card__desc">${escapeHtml(work.summary)}</p>
+          <p class="work-card__subtitle">${escapeHtml(KH_I18N.pick(work, "subtitle"))}</p>
+          <p class="work-card__desc">${escapeHtml(KH_I18N.pick(work, "summary"))}</p>
           <div class="work-card__tags">${tagsHtml}</div>
         </div>
       `;
@@ -788,10 +788,20 @@
            </div>`
         : "";
 
+    /* 公式PVをYouTubeで探すリンク(直リンクではなく検索リンクなので URL が古くならない) */
+    const trailerQuery = encodeURIComponent(work.title + " Kingdom Hearts trailer");
+    const trailerLink = `
+      <div class="theme-card__links">
+        <a class="theme-card__link" href="https://www.youtube.com/results?search_query=${trailerQuery}"
+           target="_blank" rel="noopener noreferrer">
+          ▶ ${escapeHtml(KH_I18N.t("album.trailer.link"))}
+        </a>
+      </div>`;
+
     return `
       <span class="modal__label">${escapeHtml(work.year)} — ${escapeHtml(work.platform)}</span>
       <h2 class="modal__title" id="modal-title">${escapeHtml(work.title)}</h2>
-      <p class="modal__subtitle">${escapeHtml(work.subtitle)}</p>
+      <p class="modal__subtitle">${escapeHtml(KH_I18N.pick(work, "subtitle"))}</p>
 
       <div class="modal__meta">
         ${work.tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
@@ -808,6 +818,8 @@
 
       <h3 class="modal__section-title">記憶のキーワード</h3>
       <div class="modal__meta">${keywords}</div>
+
+      ${trailerLink}
 
       ${secretShard}
     `;
@@ -898,5 +910,18 @@
     /* 後から作った要素にもスクロール演出と欠片の機能を適用する */
     Effects.refreshScrollReveal();
     MemorySystem.refresh();
+
+    /* 言語切り替え時、すでに描画済みの作品カードの副題/概要だけ差し替える
+       (カード自体を作り直すと欠片の再登録などが複雑になるため) */
+    document.addEventListener("kh-lang-change", () => {
+      document.querySelectorAll(".work-card").forEach((card) => {
+        const work = WORKS.find((w) => w.id === card.dataset.workId);
+        if (!work) return;
+        const subtitleEl = card.querySelector(".work-card__subtitle");
+        const descEl = card.querySelector(".work-card__desc");
+        if (subtitleEl) subtitleEl.textContent = KH_I18N.pick(work, "subtitle");
+        if (descEl) descEl.textContent = KH_I18N.pick(work, "summary");
+      });
+    });
   });
 })();

@@ -28,7 +28,7 @@
 </head>
 <body>
 
-  <a class="skip-link" href="#main">本文へスキップ</a>
+  <a class="skip-link" href="#main" data-i18n="common.skipLink">本文へスキップ</a>
 
   <canvas id="particle-field" aria-hidden="true"></canvas>
   <div id="cursor-glow" aria-hidden="true"></div>
@@ -52,7 +52,7 @@
         KH MEMORY
       </a>
 
-      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション" data-i18n-attr="aria-label:common.nav.label">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html">TOP</a></li>
           <li><a class="nav-link" href="album.html">ALBUM</a></li>
@@ -65,7 +65,7 @@
       </nav>
 
       <div class="header-tools">
-        <div class="memory-counter" title="集めた記憶の欠片">
+        <div class="memory-counter" title="集めた記憶の欠片" data-i18n-attr="title:common.memoryCounter.title">
           <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2 22 12 12 22 2 12Z"/>
           </svg>
@@ -81,9 +81,13 @@
             <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
           </svg>
         </button>
+
+        <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false" aria-label="英語表示にする">
+          <span data-lang-toggle-text>EN</span>
+        </button>
       </div>
 
-      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+      <button class="nav-toggle" type="button" aria-label="メニューを開く" data-i18n-attr="aria-label:common.navToggle"
               aria-expanded="false" aria-controls="global-nav">
         <span></span><span></span><span></span>
       </button>
@@ -99,7 +103,7 @@
     <section class="page-head container">
       <span class="section-label">Memory Themes</span>
       <h1 class="page-head__title">MEMORY THEMES</h1>
-      <p class="page-head__lead">旅の記憶に、いつも音楽が鳴っていた</p>
+      <p class="page-head__lead" data-i18n="music.head.lead">旅の記憶に、いつも音楽が鳴っていた</p>
     </section>
 
     <!-- ------------------------------------------------------------
@@ -108,12 +112,12 @@
     <section class="section section--tight container" id="themes">
       <div class="reveal">
         <span class="section-label">Playlist</span>
-        <h2 class="section-title">こんな曲があります</h2>
+        <h2 class="section-title" data-i18n="music.list.title">こんな曲があります</h2>
         <p class="section-lead">
-          宇多田ヒカルによる主題歌と、下村陽子によるシリーズ音楽から、
+          <span data-i18n="music.list.lead">宇多田ヒカルによる主題歌と、下村陽子によるシリーズ音楽から、
           特に語られることの多い曲を選びました。<strong>曲名・作曲/歌・どの作品で流れる曲か</strong>
           は事実として掲載し、場面のあとに続く解説はこのサイトの書き手による感想です。
-          各カードから Spotify・Apple Music・YouTube などで曲を探せます。
+          各カードから Spotify・Apple Music・YouTube などで曲を探せます。</span>
           <!-- 記憶の欠片 その1(導入文の余韻に紛れさせる) -->
           <span class="fragment" data-fragment="f04">
             <span class="fragment__shard"></span>
@@ -131,12 +135,12 @@
     <section class="section section--tight container">
       <div class="panel reveal" style="display:grid; gap:1.6rem; justify-items:center; text-align:center;">
         <span class="section-label">Keep Exploring</span>
-        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">記憶の間へ戻る</h2>
-        <p class="section-lead" style="text-align:center;">
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);" data-i18n="music.back.title">記憶の間へ戻る</h2>
+        <p class="section-lead" style="text-align:center;" data-i18n="music.back.lead">
           曲名や場面で気になる作品があれば、年表からその記憶を辿ってみてください。
         </p>
         <a href="album.html" class="btn btn--primary">
-          MEMORY ALBUM へ
+          <span data-i18n="music.cta.album">MEMORY ALBUM へ</span>
           <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6"/>
@@ -155,10 +159,10 @@
       <div class="footer-inner">
         <div>
           <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
-          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+          <p class="footer-tagline" data-i18n="common.footer.tagline">記憶を辿る、光と闇の旅</p>
         </div>
 
-        <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <nav class="footer-nav" aria-label="フッターナビゲーション" data-i18n-attr="aria-label:common.footerNav.label">
           <a href="index.html">TOP</a>
           <a href="album.html">MEMORY ALBUM</a>
           <a href="timeline.html">TIMELINE</a>
@@ -169,7 +173,7 @@
         </nav>
       </div>
 
-      <p class="footer-copyright">
+      <p class="footer-copyright" data-i18n="common.footer.copyright">
         非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
       </p>
     </div>
@@ -179,6 +183,7 @@
   <script src="js/audio.js"></script>
   <script src="js/effects.js"></script>
   <script src="js/memory.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/music.js"></script>
 </body>

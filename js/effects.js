@@ -379,6 +379,65 @@ const Effects = (() => {
   }
 
   /* ------------------------------------------------------------
+     5b. クリックした位置に光の輪を広げる(操作した実感を出す)
+     ボタン・カード・リンクなど押せる要素を押したときに発生させる。
+     記憶の欠片(data-fragment)は memory.js 側で専用の burst() を
+     すでに鳴らしているので、ここでは対象から外して二重に光らせない
+     ------------------------------------------------------------ */
+  function spawnClickRing(x, y, color) {
+    if (prefersReducedMotion) return;
+
+    const ring = document.createElement("span");
+    const size = 14;
+    ring.style.cssText = `
+      position: fixed;
+      left: ${x}px;
+      top: ${y}px;
+      width: ${size}px;
+      height: ${size}px;
+      margin: ${-size / 2}px 0 0 ${-size / 2}px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(${color}, 0.85);
+      box-shadow: 0 0 18px rgba(${color}, 0.5);
+      pointer-events: none;
+      z-index: 861;
+    `;
+    document.body.appendChild(ring);
+
+    const animation = ring.animate(
+      [
+        { transform: "scale(1)", opacity: 0.9 },
+        { transform: "scale(8)", opacity: 0 }
+      ],
+      { duration: 520, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+    );
+    animation.onfinish = () => ring.remove();
+  }
+
+  function initClickEffects() {
+    if (prefersReducedMotion) return;
+
+    const selector =
+      "a, button, .concept-card, .gateway, .work-card, .world-card, " +
+      ".character-card, .crossover-card, .xscene-card, .theme-card, " +
+      ".secret-scene, .glossary-item";
+
+    document.addEventListener("click", (e) => {
+      const target = e.target.closest(selector);
+      if (!target || target.closest("[data-fragment]")) return;
+
+      const color = document.body.classList.contains("page-summer")
+        ? "255, 176, 112"
+        : target.closest(".btn--gold")
+        ? "230, 213, 163"
+        : "154, 213, 255";
+
+      spawnClickRing(e.clientX, e.clientY, color);
+      burst(e.clientX, e.clientY, color, 6);
+    });
+  }
+
+  /* ------------------------------------------------------------
      6. 背景をゆっくり漂うキングダムハーツのモチーフ
      王冠・交差するキーブレード・鍵穴・パオプの実などのシルエットが
      下から上へ流れていく。奥行きのある動きで画面に引きをつくる
@@ -564,6 +623,7 @@ const Effects = (() => {
       initPageTransition();
       initDriftMotifs();
       initSideFrame();
+      initClickEffects();
     },
     /* ページ内で後から要素を追加したときに再監視する */
     refreshScrollReveal: initScrollReveal,

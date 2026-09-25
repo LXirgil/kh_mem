@@ -28,7 +28,7 @@
 </head>
 <body>
 
-  <a class="skip-link" href="#main">本文へスキップ</a>
+  <a class="skip-link" href="#main" data-i18n="common.skipLink">本文へスキップ</a>
 
   <canvas id="particle-field" aria-hidden="true"></canvas>
   <div id="cursor-glow" aria-hidden="true"></div>
@@ -51,7 +51,7 @@
         KH MEMORY
       </a>
 
-      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション" data-i18n-attr="aria-label:common.nav.label">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html">TOP</a></li>
           <li><a class="nav-link" href="album.html">ALBUM</a></li>
@@ -64,7 +64,7 @@
       </nav>
 
       <div class="header-tools">
-        <div class="memory-counter" title="集めた記憶の欠片">
+        <div class="memory-counter" title="集めた記憶の欠片" data-i18n-attr="title:common.memoryCounter.title">
           <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2 22 12 12 22 2 12Z"/>
           </svg>
@@ -80,9 +80,13 @@
             <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
           </svg>
         </button>
+
+        <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false" aria-label="英語表示にする">
+          <span data-lang-toggle-text>EN</span>
+        </button>
       </div>
 
-      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+      <button class="nav-toggle" type="button" aria-label="メニューを開く" data-i18n-attr="aria-label:common.navToggle"
               aria-expanded="false" aria-controls="global-nav">
         <span></span><span></span><span></span>
       </button>
@@ -98,16 +102,16 @@
     <section class="page-head container">
       <span class="section-label">Timeline</span>
       <h1 class="page-head__title">TIMELINE</h1>
-      <p class="page-head__lead">発売日順と、物語の時系列順</p>
+      <p class="page-head__lead" data-i18n="timeline.head.lead">発売日順と、物語の時系列順</p>
     </section>
 
     <!-- 導入 -->
     <section class="section section--tight container">
       <div class="reveal">
         <p class="section-lead">
-          キングダムハーツは、<strong>発売された順番</strong>と<strong>物語の中で起きた順番</strong>が
+          <span data-i18n="timeline.intro.lead">キングダムハーツは、<strong>発売された順番</strong>と<strong>物語の中で起きた順番</strong>が
           大きくずれています。作品ごとに時代を行き来しながら、少しずつ全体像が見えてくる構成です。
-          初めて追うなら発売日順が基本。物語のつながりを整理したいときは時系列順が役に立ちます。
+          初めて追うなら発売日順が基本。物語のつながりを整理したいときは時系列順が役に立ちます。</span>
           <!-- 記憶の欠片 その1(導入文の余韻に紛れさせる) -->
           <span class="fragment" data-fragment="f03">
             <span class="fragment__shard"></span>
@@ -120,8 +124,8 @@
     <section class="section section--tight container" id="release">
       <div class="reveal">
         <span class="section-label">Release Order</span>
-        <h2 class="section-title">発売日順</h2>
-        <p class="section-lead">
+        <h2 class="section-title" data-i18n="timeline.release.title">発売日順</h2>
+        <p class="section-lead" data-i18n="timeline.release.lead">
           真相が段階的に明かされていく、シリーズが想定している“出会う順番”です。
         </p>
       </div>
@@ -131,10 +135,10 @@
           <thead>
             <tr>
               <th class="kh-table__num">#</th>
-              <th>発売</th>
-              <th>タイトル</th>
-              <th>機種</th>
-              <th>物語のどこを描くか</th>
+              <th data-i18n="timeline.th.release">発売</th>
+              <th data-i18n="timeline.th.title">タイトル</th>
+              <th data-i18n="timeline.th.platform">機種</th>
+              <th data-i18n="timeline.th.scene">物語のどこを描くか</th>
             </tr>
           </thead>
           <tbody id="release-body"></tbody>
@@ -148,8 +152,8 @@
     <section class="section section--tight container" id="chrono">
       <div class="reveal">
         <span class="section-label">Chronological Order</span>
-        <h2 class="section-title">物語内の時系列順</h2>
-        <p class="section-lead">
+        <h2 class="section-title" data-i18n="timeline.chrono.title">物語内の時系列順</h2>
+        <p class="section-lead" data-i18n="timeline.chrono.lead">
           作中の出来事を古い順に並べ替えたものです(番号は時系列上の順番)。
         </p>
       </div>
@@ -158,10 +162,10 @@
         <table class="kh-table">
           <thead>
             <tr>
-              <th class="kh-table__num">順</th>
-              <th>タイトル</th>
-              <th>物語のどこを描くか</th>
-              <th>発売</th>
+              <th class="kh-table__num" data-i18n="timeline.th.order">順</th>
+              <th data-i18n="timeline.th.title">タイトル</th>
+              <th data-i18n="timeline.th.scene">物語のどこを描くか</th>
+              <th data-i18n="timeline.th.release">発売</th>
             </tr>
           </thead>
           <tbody id="chrono-body"></tbody>
@@ -175,7 +179,7 @@
     <section class="section section--tight container">
       <div class="panel reveal">
         <span class="section-label">Notes</span>
-        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">読むときの注意</h2>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);" data-i18n="timeline.notes.title">読むときの注意</h2>
         <ul class="more-list">
           <li>
             <strong>CHAIN OF MEMORIES と 358/2 DAYS は同じ時期の出来事。</strong>
@@ -203,12 +207,12 @@
     <section class="section section--tight container">
       <div class="panel reveal" style="display:grid; gap:1.6rem; justify-items:center; text-align:center;">
         <span class="section-label">Keep Exploring</span>
-        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">各作品をくわしく</h2>
-        <p class="section-lead" style="text-align:center;">
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);" data-i18n="timeline.detail.title">各作品をくわしく</h2>
+        <p class="section-lead" style="text-align:center;" data-i18n="timeline.detail.lead">
           年表・あらすじ・キーワードは MEMORY ALBUM に、シリーズの根幹と相関図は SECRET MEMORY にあります。
         </p>
         <a href="album.html" class="btn btn--primary">
-          MEMORY ALBUM へ
+          <span data-i18n="timeline.cta.album">MEMORY ALBUM へ</span>
           <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6"/>
@@ -227,10 +231,10 @@
       <div class="footer-inner">
         <div>
           <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
-          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+          <p class="footer-tagline" data-i18n="common.footer.tagline">記憶を辿る、光と闇の旅</p>
         </div>
 
-        <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <nav class="footer-nav" aria-label="フッターナビゲーション" data-i18n-attr="aria-label:common.footerNav.label">
           <a href="index.html">TOP</a>
           <a href="album.html">MEMORY ALBUM</a>
           <a href="timeline.html">TIMELINE</a>
@@ -241,7 +245,7 @@
         </nav>
       </div>
 
-      <p class="footer-copyright">
+      <p class="footer-copyright" data-i18n="common.footer.copyright">
         非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
       </p>
     </div>
@@ -251,6 +255,7 @@
   <script src="js/audio.js"></script>
   <script src="js/effects.js"></script>
   <script src="js/memory.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/timeline.js"></script>
 </body>

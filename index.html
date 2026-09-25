@@ -30,7 +30,7 @@
 </head>
 <body>
 
-  <a class="skip-link" href="#main">本文へスキップ</a>
+  <a class="skip-link" href="#main" data-i18n="common.skipLink">本文へスキップ</a>
 
   <!-- ============================================================
        初回イントロ「ダイブ・トゥ・ザ・ハート」風ゲート
@@ -80,7 +80,7 @@
         KH MEMORY
       </a>
 
-      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション">
+      <nav class="global-nav" id="global-nav" aria-label="メインナビゲーション" data-i18n-attr="aria-label:common.nav.label">
         <ul class="nav-list">
           <li><a class="nav-link" href="index.html">TOP</a></li>
           <li><a class="nav-link" href="album.html">ALBUM</a></li>
@@ -94,7 +94,7 @@
 
       <div class="header-tools">
         <!-- 集めた記憶の欠片の数 -->
-        <div class="memory-counter" title="集めた記憶の欠片">
+        <div class="memory-counter" title="集めた記憶の欠片" data-i18n-attr="title:common.memoryCounter.title">
           <svg class="memory-counter__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2 22 12 12 22 2 12Z"/>
           </svg>
@@ -111,10 +111,15 @@
             <line class="icon-off-slash" x1="2" y1="2" x2="22" y2="22"/>
           </svg>
         </button>
+
+        <!-- 日本語 / 英語 の表示切り替え -->
+        <button class="lang-toggle" type="button" data-lang-toggle aria-pressed="false" aria-label="英語表示にする">
+          <span data-lang-toggle-text>EN</span>
+        </button>
       </div>
 
       <!-- スマートフォン用メニューボタン -->
-      <button class="nav-toggle" type="button" aria-label="メニューを開く"
+      <button class="nav-toggle" type="button" aria-label="メニューを開く" data-i18n-attr="aria-label:common.navToggle"
               aria-expanded="false" aria-controls="global-nav">
         <span></span><span></span><span></span>
       </button>
@@ -181,17 +186,17 @@
           <span>— MEMORY —</span>
         </h1>
 
-        <p class="hero__lead">記憶を辿る、光と闇の旅へ</p>
+        <p class="hero__lead" data-i18n="top.hero.lead">記憶を辿る、光と闇の旅へ</p>
 
         <div class="hero__actions">
           <a href="#gateway" class="btn btn--primary">
-            記憶を辿りはじめる
+            <span data-i18n="top.hero.cta.explore">記憶を辿りはじめる</span>
             <svg class="btn__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M13 6l6 6-6 6"/>
             </svg>
           </a>
-          <a href="album.html" class="btn">アルバムを見る</a>
+          <a href="album.html" class="btn" data-i18n="top.hero.cta.album">アルバムを見る</a>
         </div>
       </div>
 
@@ -214,8 +219,8 @@
     <section class="section container" id="concept">
       <div class="reveal">
         <span class="section-label">Concept</span>
-        <h2 class="section-title">読むサイトではなく、<br>辿るサイトへ。</h2>
-        <p class="section-lead">
+        <h2 class="section-title" data-i18n="top.concept.title">読むサイトではなく、<br>辿るサイトへ。</h2>
+        <p class="section-lead" data-i18n="top.concept.lead">
           このサイトは、キングダムハーツシリーズの世界観から着想を得たオリジナルの体験型Webサイトです。
           情報をただ並べるのではなく、訪れた人が自分の手で光を見つけ、記憶を集めながら
           シリーズの歩みを辿っていく——そんな体験そのものを設計しました。
@@ -231,8 +236,8 @@
             <circle cx="12" cy="10" r="2"/>
           </svg>
           <span class="concept-card__en">HEART</span>
-          <h3 class="concept-card__title">こころ</h3>
-          <p class="concept-card__text">
+          <h3 class="concept-card__title" data-i18n="top.concept.card1.title">こころ</h3>
+          <p class="concept-card__text" data-i18n="top.concept.card1.text">
             シリーズが一貫して描いてきたのは「心のつながり」でした。
             そのテーマを、画面に触れたときの反応や光の揺らぎとして表現しています。
           </p>
@@ -246,8 +251,8 @@
             <path d="M12 7.5 16.5 12 12 16.5 7.5 12Z"/>
           </svg>
           <span class="concept-card__en">MEMORY</span>
-          <h3 class="concept-card__title">記憶</h3>
-          <p class="concept-card__text">
+          <h3 class="concept-card__title" data-i18n="top.concept.card2.title">記憶</h3>
+          <p class="concept-card__text" data-i18n="top.concept.card2.text">
             サイトの各所には「記憶の欠片」が隠されています。
             集めた記録はブラウザに保存され、次に訪れたときも引き継がれます。
           </p>
@@ -261,8 +266,8 @@
             <path d="M12 3a9 9 0 0 0 0 18Z" fill="currentColor" stroke="none" opacity="0.55"/>
           </svg>
           <span class="concept-card__en">LIGHT &amp; DARK</span>
-          <h3 class="concept-card__title">光と闇</h3>
-          <p class="concept-card__text">
+          <h3 class="concept-card__title" data-i18n="top.concept.card3.title">光と闇</h3>
+          <p class="concept-card__text" data-i18n="top.concept.card3.text">
             深い闇を背景に、青白い光だけを頼りに進む構成です。
             余白と暗さを活かすことで、ひとつひとつの光が意味を持ちます。
           </p>
@@ -277,12 +282,41 @@
          ------------------------------------------------------------ -->
     <section class="section container">
       <p class="statement reveal">
-        記憶は 薄れても、<br>
-        <em>つながりは 消えない。</em>
+        <span data-i18n="top.statement.line1">記憶は 薄れても、</span><br>
+        <em data-i18n="top.statement.line2">つながりは 消えない。</em>
         <!-- 記憶の欠片 その2(文章の余韻に紛れさせる) -->
         <span class="fragment" data-fragment="f02">
           <span class="fragment__shard"></span>
         </span>
+      </p>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         映像で見る:興味を引くための公式トレイラー埋め込み
+         シリーズを知らない人にも雰囲気が伝わるよう、
+         スクウェア・エニックス公式のトレイラーを1本だけ載せている
+         ------------------------------------------------------------ -->
+    <section class="section container" id="trailer">
+      <div class="reveal">
+        <span class="section-label" data-i18n="top.trailer.label">Play It</span>
+        <h2 class="section-title" data-i18n="top.trailer.title">映像で見る、記憶の始まり。</h2>
+        <p class="section-lead" data-i18n="top.trailer.lead">
+          シリーズを知らない人にも雰囲気が伝わるように、スクウェア・エニックス公式のトレイラー映像を1本だけ埋め込んでいます。
+          ほかの作品の映像も見たい場合は MEMORY ALBUM の各作品からYouTubeで探せます。
+        </p>
+      </div>
+
+      <div class="video-embed reveal" data-delay="1">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/2VawSnaxtSI"
+          title="KINGDOM HEARTS III — Opening Movie Trailer(Square Enix 公式)"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
+      <p class="video-embed__caption" data-i18n="top.trailer.caption">
+        KINGDOM HEARTS III — Opening Movie Trailer(Square Enix 公式)
       </p>
     </section>
 
@@ -292,9 +326,9 @@
     <section class="section container" id="gateway">
       <div class="reveal">
         <span class="section-label">Explore</span>
-        <h2 class="section-title">六つの扉</h2>
+        <h2 class="section-title" data-i18n="top.gateway.title">六つの扉</h2>
         <p class="section-lead">
-          それぞれの扉が、異なる記憶へと通じています。順に辿っても、気になるところから開いても構いません。
+          <span data-i18n="top.gateway.lead">それぞれの扉が、異なる記憶へと通じています。順に辿っても、気になるところから開いても構いません。</span>
           <!-- 記憶の欠片 その6(扉を選ぶ前に、そっと置く) -->
           <span class="fragment" data-fragment="f06">
             <span class="fragment__shard"></span>
@@ -308,7 +342,7 @@
           <span class="gateway__orb" aria-hidden="true"></span>
           <span class="gateway__num">01</span>
           <h3 class="gateway__title">MEMORY ALBUM</h3>
-          <p class="gateway__text">
+          <p class="gateway__text" data-i18n="top.gateway.album.text">
             シリーズ各作品を年代順に辿る記録の間。
             作品とキャラクターの記憶がここに収められています。
           </p>
@@ -326,7 +360,7 @@
           <span class="gateway__orb" aria-hidden="true"></span>
           <span class="gateway__num">02</span>
           <h3 class="gateway__title">TIMELINE</h3>
-          <p class="gateway__text">
+          <p class="gateway__text" data-i18n="top.gateway.timeline.text">
             全作品を「発売日順」と「物語内の時系列順」の
             2つの表で整理。ずれた時間軸を見渡せます。
           </p>
@@ -344,7 +378,7 @@
           <span class="gateway__orb" aria-hidden="true"></span>
           <span class="gateway__num">03</span>
           <h3 class="gateway__title">MEMORY THEMES</h3>
-          <p class="gateway__text">
+          <p class="gateway__text" data-i18n="top.gateway.music.text">
             シリーズを彩ってきた代表曲の紹介。
             曲名・作曲・流れる場面を辿り、各配信サービスへ。
           </p>
@@ -362,7 +396,7 @@
           <span class="gateway__orb" aria-hidden="true"></span>
           <span class="gateway__num">04</span>
           <h3 class="gateway__title">MEMORY OF SUMMER</h3>
-          <p class="gateway__text">
+          <p class="gateway__text" data-i18n="top.gateway.summer.text">
             『KINGDOM HEARTS II FINAL MIX』特集。
             ロクサスの七日間から、作品の魅力を辿ります。
           </p>
@@ -380,7 +414,7 @@
           <span class="gateway__orb" aria-hidden="true"></span>
           <span class="gateway__num">05</span>
           <h3 class="gateway__title">MEMORY CROSSOVER</h3>
-          <p class="gateway__text">
+          <p class="gateway__text" data-i18n="top.gateway.crossover.text">
             ファイナルファンタジー、すばらしきこのせかい、
             ディズニー——KHと縁のある作品の一覧。
           </p>
@@ -399,8 +433,8 @@
           <span class="gateway__num" data-secret-status>LOCKED</span>
           <h3 class="gateway__title">SECRET MEMORY</h3>
           <p class="gateway__text">
-            記憶の欠片をあと<strong class="gold-text" data-memory-remaining>8</strong>個集めると開かれる、
-            隠された記録。まだ語られていない言葉が眠っています。
+            <span data-i18n="top.gateway.secret.text.pre">記憶の欠片をあと</span><strong class="gold-text" data-memory-remaining>8</strong><span data-i18n="top.gateway.secret.text.post">個集めると開かれる、
+            隠された記録。まだ語られていない言葉が眠っています。</span>
           </p>
           <span class="gateway__enter">
             ENTER
@@ -419,11 +453,11 @@
     <section class="section section--tight container">
       <div class="panel reveal">
         <span class="section-label">Collect</span>
-        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);">記憶の欠片を集める</h2>
+        <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);" data-i18n="top.collect.title">記憶の欠片を集める</h2>
         <p class="section-lead" style="margin-bottom:2rem;">
-          サイトのあちこちに、青白く光る小さな欠片が隠れています。
-          見つけてクリックすると集めることができ、
-          <strong data-memory-remaining>8</strong>個以上集めると SECRET MEMORY が開かれます。
+          <span data-i18n="top.collect.lead.pre">サイトのあちこちに、青白く光る小さな欠片が隠れています。
+          見つけてクリックすると集めることができ、</span>
+          <strong data-memory-remaining>8</strong><span data-i18n="top.collect.lead.post">個以上集めると SECRET MEMORY が開かれます。</span>
         </p>
 
         <!-- 進捗バー -->
@@ -449,10 +483,10 @@
       <div class="footer-inner">
         <div>
           <p class="footer-title">KINGDOM HEARTS — MEMORY</p>
-          <p class="footer-tagline">記憶を辿る、光と闇の旅</p>
+          <p class="footer-tagline" data-i18n="common.footer.tagline">記憶を辿る、光と闇の旅</p>
         </div>
 
-        <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <nav class="footer-nav" aria-label="フッターナビゲーション" data-i18n-attr="aria-label:common.footerNav.label">
           <a href="index.html">TOP</a>
           <a href="album.html">MEMORY ALBUM</a>
           <a href="timeline.html">TIMELINE</a>
@@ -463,7 +497,7 @@
         </nav>
       </div>
 
-      <p class="footer-copyright">
+      <p class="footer-copyright" data-i18n="common.footer.copyright">
         非公式ファンサイト / Web Design Practice Work — HTML・CSS・JavaScript
       </p>
     </div>
@@ -476,6 +510,7 @@
   <script src="js/audio.js"></script>
   <script src="js/effects.js"></script>
   <script src="js/memory.js"></script>
+  <script src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/intro.js"></script>
 </body>
