@@ -38,7 +38,7 @@ python -m http.server 8000
 
 | ファイル | 役割 |
 | --- | --- |
-| `index.html` | TOP。初回のみ全画面イントロ(`#dive-gate` / `js/intro.js`)、ヒーロー、コンセプト、公式トレイラー埋め込み(`#trailer`。YouTube公式動画を1本、興味を引く導入として掲載)、各ページへの導線(「六つの扉」= ALBUM/TIMELINE/THEMES/SUMMER/CROSSOVER/SECRET。ナビと同じ並び)。ヒーローの「記憶を辿りはじめる」は `#gateway`(六つの扉)へのアンカー |
+| `index.html` | TOP。初回のみ全画面イントロ(`#dive-gate` / `js/intro.js`)、ヒーロー、コンセプト、公式プレイ映像埋め込み(`#trailer`。「KINGDOM HEARTS」公式チャンネルの`KINGDOM HEARTS II FINAL MIX`新要素紹介トレイラーを1本、興味を引く導入として掲載。SUMMERページと内容が繋がる)、各ページへの導線(「六つの扉」= ALBUM/TIMELINE/THEMES/SUMMER/CROSSOVER/SECRET。ナビと同じ並び)。ヒーローの「記憶を辿りはじめる」は `#gateway`(六つの扉)へのアンカー |
 | `album.html` | MEMORY ALBUM。作品年表(絞り込み付き)、ワールド、キャラクター、用語集、詳細モーダル |
 | `timeline.html` | TIMELINE。全作品を「発売日順」と「物語内の時系列順」の2表で整理。`js/timeline.js` が `WORKS`＋`KH_ERA` から生成 |
 | `music.html` | MEMORY THEMES。代表曲(主題歌・シリーズ音楽)の一覧と、音源を用意した曲の試聴 |
@@ -116,7 +116,8 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
   スクロール連動(`initScrollReveal`)は同フレームで可視化した `.reveal` を上から順に時間差表示し、
   `.section-title` / `.page-head__title` を含む塊が現れたら `burst()` で光の粒を弾く。
   `initClickEffects()`(`initAll()` から起動)は `a` / `button` / 各種カード(`.work-card` 等)を
-  押すたびに、押した座標へ光の輪(`spawnClickRing`)と小さな粒(`burst()`)を発生させる。
+  押すたびに、押した座標へ中心のグロー(`spawnClickGlow`)・時間差の二重リング(`spawnClickRings`)・
+  飛び散る光の粒(`burst()`)を重ねて発生させる。
   記憶の欠片(`[data-fragment]`)は `memory.js` 側で獲得時の `burst()` をすでに鳴らしているため対象外。
   背景を漂うKHモチーフ(`.drift-layer` を生成。王冠・キーブレード・鍵穴等のSVGシルエット)、
   左右ガターの装飾フレーム(`.side-frame` を生成。幅1240px未満では非表示。

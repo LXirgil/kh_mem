@@ -339,7 +339,7 @@
             "memory-log__item" +
             (found ? " is-found" : "") +
             (found && unlocked ? " is-gold" : "");
-          const name = found ? f.name : KH_I18N.t("memoryLog.hiddenName");
+          const name = found ? KH_I18N.pick(f, "name") : KH_I18N.t("memoryLog.hiddenName");
           const page = PAGE_HINT[f.page] || f.page;
           return (
             '<li class="' + cls + '">' +

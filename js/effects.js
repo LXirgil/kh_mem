@@ -379,17 +379,20 @@ const Effects = (() => {
   }
 
   /* ------------------------------------------------------------
-     5b. クリックした位置に光の輪を広げる(操作した実感を出す)
+     5b. クリックした位置に光を弾けさせる(操作した実感を出す)
      ボタン・カード・リンクなど押せる要素を押したときに発生させる。
+     中心に一瞬だけ灯る柔らかいグロー、追いかけるように広がる二重の
+     輪、そして飛び散る光の粒(burst)を重ねて、鍵穴に光が灯るような
+     ワンテンポの「押した実感」を作る。
      記憶の欠片(data-fragment)は memory.js 側で専用の burst() を
      すでに鳴らしているので、ここでは対象から外して二重に光らせない
      ------------------------------------------------------------ */
-  function spawnClickRing(x, y, color) {
-    if (prefersReducedMotion) return;
-
-    const ring = document.createElement("span");
-    const size = 14;
-    ring.style.cssText = `
+  function spawnClickGlow(x, y, color) {
+    /* 中心は白熱させて、テーマ色よりコントラストの強い「灯った瞬間」を作る。
+       screen合成にして、暗い背景の上でも埋もれずくっきり発光させる */
+    const size = 54;
+    const glow = document.createElement("span");
+    glow.style.cssText = `
       position: fixed;
       left: ${x}px;
       top: ${y}px;
@@ -397,21 +400,61 @@ const Effects = (() => {
       height: ${size}px;
       margin: ${-size / 2}px 0 0 ${-size / 2}px;
       border-radius: 50%;
-      border: 1.5px solid rgba(${color}, 0.85);
-      box-shadow: 0 0 18px rgba(${color}, 0.5);
+      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(${color}, 0.95) 28%, rgba(${color}, 0.35) 55%, rgba(${color}, 0) 75%);
+      mix-blend-mode: screen;
       pointer-events: none;
-      z-index: 861;
+      z-index: 860;
     `;
-    document.body.appendChild(ring);
+    document.body.appendChild(glow);
 
-    const animation = ring.animate(
+    const animation = glow.animate(
       [
-        { transform: "scale(1)", opacity: 0.9 },
-        { transform: "scale(8)", opacity: 0 }
+        { transform: "scale(0.15)", opacity: 1 },
+        { transform: "scale(1)", opacity: 1, offset: 0.25 },
+        { transform: "scale(2.8)", opacity: 0 }
       ],
-      { duration: 520, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
+      { duration: 480, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }
     );
-    animation.onfinish = () => ring.remove();
+    animation.onfinish = () => glow.remove();
+  }
+
+  function spawnClickRings(x, y, color) {
+    /* 内側の輪(速く・くっきり)と外側の輪(少し遅れて・大きく広がる)の
+       二重構成。screen合成で暗い背景に埋もれない発光にする */
+    const layers = [
+      { scale: 7, duration: 560, delay: 0, opacity: 1, width: 2.4 },
+      { scale: 12, duration: 680, delay: 90, opacity: 0.7, width: 1.6 }
+    ];
+
+    layers.forEach(({ scale, duration, delay, opacity, width }) => {
+      const size = 16;
+      const ring = document.createElement("span");
+      ring.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        width: ${size}px;
+        height: ${size}px;
+        margin: ${-size / 2}px 0 0 ${-size / 2}px;
+        border-radius: 50%;
+        border: ${width}px solid rgba(${color}, ${opacity});
+        box-shadow: 0 0 22px rgba(${color}, ${opacity * 0.8}), 0 0 3px rgba(255,255,255,0.8);
+        mix-blend-mode: screen;
+        pointer-events: none;
+        z-index: 861;
+        opacity: 0;
+      `;
+      document.body.appendChild(ring);
+
+      const animation = ring.animate(
+        [
+          { transform: "scale(1)", opacity },
+          { transform: `scale(${scale})`, opacity: 0 }
+        ],
+        { duration, delay, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
+      );
+      animation.onfinish = () => ring.remove();
+    });
   }
 
   function initClickEffects() {
@@ -432,8 +475,9 @@ const Effects = (() => {
         ? "230, 213, 163"
         : "154, 213, 255";
 
-      spawnClickRing(e.clientX, e.clientY, color);
-      burst(e.clientX, e.clientY, color, 6);
+      spawnClickGlow(e.clientX, e.clientY, color);
+      spawnClickRings(e.clientX, e.clientY, color);
+      burst(e.clientX, e.clientY, color, 9);
     });
   }
 

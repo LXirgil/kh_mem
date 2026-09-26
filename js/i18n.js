@@ -61,6 +61,8 @@ const KH_I18N = (function () {
       en: "More light may be waiting inside the works and character details you haven't opened yet."
     },
     "memoryLog.pageUnit": { ja: "個", en: "" },
+    "memoryLog.foundToast": { ja: "記憶の欠片を見つけた —— 「{name}」", en: "You found a memory fragment — \"{name}\"" },
+    "memoryLog.unlockedToast": { ja: "SECRET MEMORY が解放されました", en: "SECRET MEMORY has been unlocked" },
 
     /* ---------- TOP(index.html) ---------- */
     "top.hero.eyebrow": { ja: "AN INTERACTIVE TRIBUTE", en: "AN INTERACTIVE TRIBUTE" },
@@ -93,12 +95,12 @@ const KH_I18N = (function () {
     "top.trailer.label": { ja: "Play It", en: "Play It" },
     "top.trailer.title": { ja: "映像で見る、記憶の始まり。", en: "See where the memory begins." },
     "top.trailer.lead": {
-      ja: "シリーズを知らない人にも雰囲気が伝わるように、スクウェア・エニックス公式のトレイラー映像を1本だけ埋め込んでいます。ほかの作品の映像も見たい場合は MEMORY ALBUM の各作品からYouTubeで探せます。",
-      en: "For anyone new to the series, here's one official trailer from Square Enix to set the mood. You can search YouTube for other games' trailers from each work's page in MEMORY ALBUM."
+      ja: "シリーズを知らない人にも雰囲気が伝わるように、「KINGDOM HEARTS」公式チャンネルのプレイ映像を1本だけ埋め込んでいます。ほかの作品の映像も見たい場合は MEMORY ALBUM の各作品からYouTubeで探せます。",
+      en: "For anyone new to the series, here's one official gameplay video from the KINGDOM HEARTS channel to set the mood. You can search YouTube for other games' trailers from each work's page in MEMORY ALBUM."
     },
     "top.trailer.caption": {
-      ja: "KINGDOM HEARTS III — Opening Movie Trailer(Square Enix 公式)",
-      en: "KINGDOM HEARTS III — Opening Movie Trailer (Official / Square Enix)"
+      ja: "KINGDOM HEARTS II FINAL MIX — New Features Trailer(KINGDOM HEARTS 公式)",
+      en: "KINGDOM HEARTS II FINAL MIX — New Features Trailer (Official / KINGDOM HEARTS)"
     },
     "top.gateway.label": { ja: "Explore", en: "Explore" },
     "top.gateway.title": { ja: "六つの扉", en: "Six Doors" },

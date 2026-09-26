@@ -38,7 +38,7 @@
       .map((fragment) => {
         const owned = MemorySystem.has(fragment.id);
         /* 未取得のものは名前を伏せる */
-        const name = owned ? fragment.name : "？？？";
+        const name = owned ? KH_I18N.pick(fragment, "name") : "？？？";
 
         return `
           <div class="shard-cell ${owned ? "is-owned" : ""}">

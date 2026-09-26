@@ -194,13 +194,13 @@ const MemorySystem = (() => {
     updateCounter(true);
     updateSecretLinks();
 
-    showToast(`記憶の欠片を見つけた —— 「${fragment.name}」`);
+    showToast(KH_I18N.t("memoryLog.foundToast", { name: KH_I18N.pick(fragment, "name") }));
 
     /* この獲得で条件を満たしたら解放を知らせる */
     if (!wasUnlocked && isUnlocked()) {
       setTimeout(() => {
         AudioEngine.play("unlock");
-        showToast("SECRET MEMORY が解放されました", "gold");
+        showToast(KH_I18N.t("memoryLog.unlockedToast"), "gold");
       }, 1200);
     }
 

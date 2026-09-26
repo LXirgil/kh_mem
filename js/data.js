@@ -277,18 +277,18 @@ const MEMORY_CONFIG = {
 
   /* 欠片の一覧。id は HTML の data-fragment 属性と対応させる */
   fragments: [
-    { id: "f01", page: "TOP",       name: "デスティニーアイランドの潮騒" },
-    { id: "f02", page: "TOP",       name: "パオプの実" },
-    { id: "f03", page: "TIMELINE",  name: "扉の在り処" },
-    { id: "f04", page: "THEMES",    name: "ダイブ・トゥ・ザ・ハート" },
-    { id: "f05", page: "CROSSOVER", name: "縁のはじまり" },
-    { id: "f06", page: "TOP",       name: "キーブレードの継承" },
-    { id: "f07", page: "ALBUM",     name: "最初の冒険" },
-    { id: "f08", page: "TIMELINE",  name: "忘却の城の記憶" },
-    { id: "f09", page: "ALBUM",     name: "失われた名前" },
-    { id: "f10", page: "THEMES",    name: "シーソルトアイスの味" },
-    { id: "f11", page: "ALBUM",     name: "還る場所" },
-    { id: "f12", page: "SECRET",    name: "こころのかたち" }
+    { id: "f01", page: "TOP",       name: "デスティニーアイランドの潮騒", nameEn: "The Tide of Destiny Islands" },
+    { id: "f02", page: "TOP",       name: "パオプの実", nameEn: "Paopu Fruit" },
+    { id: "f03", page: "TIMELINE",  name: "扉の在り処", nameEn: "Where the Door Lies" },
+    { id: "f04", page: "THEMES",    name: "ダイブ・トゥ・ザ・ハート", nameEn: "Dive to the Heart" },
+    { id: "f05", page: "CROSSOVER", name: "縁のはじまり", nameEn: "Where the Bonds Begin" },
+    { id: "f06", page: "TOP",       name: "キーブレードの継承", nameEn: "The Keyblade Passed On" },
+    { id: "f07", page: "ALBUM",     name: "最初の冒険", nameEn: "The First Adventure" },
+    { id: "f08", page: "TIMELINE",  name: "忘却の城の記憶", nameEn: "A Memory of Castle Oblivion" },
+    { id: "f09", page: "ALBUM",     name: "失われた名前", nameEn: "A Name Lost" },
+    { id: "f10", page: "THEMES",    name: "シーソルトアイスの味", nameEn: "The Taste of Sea-Salt Ice Cream" },
+    { id: "f11", page: "ALBUM",     name: "還る場所", nameEn: "A Place to Return To" },
+    { id: "f12", page: "SECRET",    name: "こころのかたち", nameEn: "The Shape of a Heart" }
   ]
 };
 
