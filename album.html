@@ -206,7 +206,7 @@
       <div class="timeline" id="timeline"></div>
 
       <!-- 絞り込み結果が0件のときの案内 -->
-      <p id="no-result" style="display:none; text-align:center; color:var(--c-text-dim);">
+      <p id="no-result" style="display:none; text-align:center; color:var(--c-text-dim);" data-i18n="album.noResult">
         該当する記憶が見つかりませんでした。
       </p>
     </section>
@@ -225,11 +225,11 @@
           キーブレードで繋がるディズニーの世界まで、それぞれの場所に固有の記憶が刻まれています。
         </p>
         <p class="appears-legend">
-          各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、そのワールドが登場する作品を示します。
-          <i class="appears__cell is-in" data-cat="main">II</i>本編に登場
-          <i class="appears__cell is-in" data-cat="side">χ</i>外伝に登場
-          <i class="appears__cell">—</i>未登場。
-          記号にカーソルを合わせると作品名が出ます(I=KH / CoM / II / Days / BbS / coded / 3D / χ / 0.2 / III / MoM / IV)。
+          <span data-i18n="album.legend.worlds.pre">各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、そのワールドが登場する作品を示します。</span>
+          <i class="appears__cell is-in" data-cat="main">II</i><span data-i18n="album.legend.main">本編に登場</span>
+          <i class="appears__cell is-in" data-cat="side">χ</i><span data-i18n="album.legend.side">外伝に登場</span>
+          <i class="appears__cell">—</i><span data-i18n="album.legend.none">未登場。</span>
+          <span data-i18n="album.legend.worlds.post">記号にカーソルを合わせると作品名が出ます(I=KH / CoM / II / Days / BbS / coded / 3D / χ / 0.2 / III / MoM / IV)。</span>
         </p>
       </div>
 
@@ -250,26 +250,26 @@
           ディズニーの仲間たちも含めて紹介しています。カードを選ぶと、詳しい記録が開きます。
         </p>
         <p class="appears-legend">
-          各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その人物が登場する作品を示します。
-          <i class="appears__cell is-in" data-cat="main">II</i>本編に登場
-          <i class="appears__cell is-in" data-cat="side">χ</i>外伝に登場
-          <i class="appears__cell">—</i>未登場。カメオ出演までは網羅していません。
-          記号にカーソルを合わせると作品名が出ます。
+          <span data-i18n="album.legend.characters.pre">各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その人物が登場する作品を示します。</span>
+          <i class="appears__cell is-in" data-cat="main">II</i><span data-i18n="album.legend.main">本編に登場</span>
+          <i class="appears__cell is-in" data-cat="side">χ</i><span data-i18n="album.legend.side">外伝に登場</span>
+          <i class="appears__cell">—</i><span data-i18n="album.legend.characters.none">未登場。カメオ出演までは網羅していません。</span>
+          <span data-i18n="crossover.legend.post">記号にカーソルを合わせると作品名が出ます。</span>
         </p>
       </div>
 
       <!-- キャラクターの絞り込み -->
       <div class="filter-bar" id="character-filter-bar" role="group" aria-label="キャラクターの絞り込み">
         <button class="filter-btn is-active" type="button" data-filter="all">ALL</button>
-        <button class="filter-btn" type="button" data-filter="guardian">主人公たち</button>
-        <button class="filter-btn" type="button" data-filter="org13">XIII機関</button>
-        <button class="filter-btn" type="button" data-filter="wayfinder">ウェイファインダー</button>
-        <button class="filter-btn" type="button" data-filter="chi">χの世代</button>
+        <button class="filter-btn" type="button" data-filter="guardian" data-i18n="album.charFilter.guardian">主人公たち</button>
+        <button class="filter-btn" type="button" data-filter="org13" data-i18n="album.charFilter.org13">XIII機関</button>
+        <button class="filter-btn" type="button" data-filter="wayfinder" data-i18n="album.charFilter.wayfinder">ウェイファインダー</button>
+        <button class="filter-btn" type="button" data-filter="chi" data-i18n="album.charFilter.chi">χの世代</button>
         <button class="filter-btn" type="button" data-filter="darkroad">Dark Road</button>
-        <button class="filter-btn" type="button" data-filter="origin-other">その他</button>
-        <button class="filter-btn" type="button" data-filter="companion">王様と仲間</button>
-        <button class="filter-btn" type="button" data-filter="villain">敵対者</button>
-        <button class="filter-btn" type="button" data-filter="disney">ディズニー</button>
+        <button class="filter-btn" type="button" data-filter="origin-other" data-i18n="album.charFilter.other">その他</button>
+        <button class="filter-btn" type="button" data-filter="companion" data-i18n="album.charFilter.companion">王様と仲間</button>
+        <button class="filter-btn" type="button" data-filter="villain" data-i18n="album.charFilter.villain">敵対者</button>
+        <button class="filter-btn" type="button" data-filter="disney" data-i18n="album.charFilter.disney">ディズニー</button>
       </div>
 
       <div class="character-grid" id="character-grid"></div>

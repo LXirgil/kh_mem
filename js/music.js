@@ -146,10 +146,10 @@
       <dl class="theme-card__meta">
         <div><dt>作曲・歌</dt><dd>${escapeHtml(track.credit || "")}</dd></div>
         <div><dt>登場作品</dt><dd>${escapeHtml(track.games || "")}</dd></div>
-        <div><dt>場面</dt><dd>${escapeHtml(track.scene || "")}</dd></div>
+        <div><dt>場面</dt><dd class="theme-card__scene">${escapeHtml(KH_I18N.pick(track, "scene"))}</dd></div>
       </dl>
 
-      <p class="theme-card__note">${escapeHtml(track.note || "")}</p>
+      <p class="theme-card__note">${escapeHtml(KH_I18N.pick(track, "note"))}</p>
 
       <div class="theme-card__tags">${motifs}</div>
 
@@ -341,5 +341,18 @@
     Effects.refreshScrollReveal();
     /* カードの中に紛れ込ませた記憶の欠片(f04/f10)を有効化する */
     if (typeof MemorySystem !== "undefined") MemorySystem.refresh();
+
+    /* 言語切り替え時、各カードの「場面」「解説」だけ差し替える
+       (再生中の試聴プレイヤーを壊さないよう、カード自体は作り直さない) */
+    document.addEventListener("kh-lang-change", () => {
+      THEME_TRACKS.forEach((track) => {
+        const card = cardsById[track.id];
+        if (!card) return;
+        const sceneEl = card.querySelector(".theme-card__scene");
+        const noteEl = card.querySelector(".theme-card__note");
+        if (sceneEl) sceneEl.textContent = KH_I18N.pick(track, "scene");
+        if (noteEl) noteEl.textContent = KH_I18N.pick(track, "note");
+      });
+    });
   });
 })();

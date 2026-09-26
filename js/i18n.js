@@ -4,12 +4,13 @@
    キングダムハーツは海外でも人気の高いシリーズのため、
    ヘッダーの切り替えボタンで英語表示に対応する。
 
-   対象は「サイト共通のUI文言」と「各ページの見出し・導入文」、
-   および作品(WORKS)の副題・概要(subtitle / summary)まで。
-   キャラクター個別の解説・用語集・楽曲解説・作品の詳細本文
-   (WORKS の detail)など分量の多い個別コンテンツは、この課題の
-   scope外として日本語のまま表示する(英語版が無いだけで、
-   情報が消えるわけではない)。
+   対象は「サイト共通のUI文言」「各ページの手書き本文」に加えて、
+   data.js側のほぼ全コンテンツ(WORKS/CHARACTERS/WORLDS/GLOSSARY/
+   THEME_TRACKS/CROSSOVERS/CROSSOVER_SCENES/SECRET_SCENES/
+   ROXAS_SHOTS/KH_CORE/KH_ERA/RELATION_MAP)まで英訳している。
+   固有名詞・短いラベルの羅列(tags/keywords/worlds/music、
+   CROSSOVERSのtitle/origin/guests/stageなど)は英字表記のままで
+   通じるため日本語表記を維持している。
 
    使い方:
      <span data-i18n="common.cta.explore">記憶を辿りはじめる</span>
@@ -185,6 +186,31 @@ const KH_I18N = (function () {
       ja: "シリーズを通して繰り返し登場する言葉たち。意味を知ってから物語を辿り直すと、見える景色が変わります。",
       en: "Terms that recur throughout the series. Knowing what they mean changes how the story looks when you trace it again."
     },
+    "album.legend.main": { ja: "本編に登場", en: "Appears in a main title" },
+    "album.legend.side": { ja: "外伝に登場", en: "Appears in a side title" },
+    "album.legend.none": { ja: "未登場。", en: "Doesn't appear." },
+    "album.legend.worlds.pre": {
+      ja: "各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、そのワールドが登場する作品を示します。",
+      en: "The bar under each card <strong>always lists all 12 titles, in release order</strong>, and lights up the ones that world appears in."
+    },
+    "album.legend.worlds.post": {
+      ja: "記号にカーソルを合わせると作品名が出ます(I=KH / CoM / II / Days / BbS / coded / 3D / χ / 0.2 / III / MoM / IV)。",
+      en: "Hover over a mark to see the title's name (I=KH / CoM / II / Days / BbS / coded / 3D / χ / 0.2 / III / MoM / IV)."
+    },
+    "album.legend.characters.pre": {
+      ja: "各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その人物が登場する作品を示します。",
+      en: "The bar under each card <strong>always lists all 12 titles, in release order</strong>, and lights up the ones that character appears in."
+    },
+    "album.legend.characters.none": { ja: "未登場。カメオ出演までは網羅していません。", en: "Doesn't appear. Cameo appearances aren't fully covered." },
+    "album.charFilter.guardian": { ja: "主人公たち", en: "The Guardians" },
+    "album.charFilter.org13": { ja: "XIII機関", en: "Organization XIII" },
+    "album.charFilter.wayfinder": { ja: "ウェイファインダー", en: "Wayfinder" },
+    "album.charFilter.chi": { ja: "χの世代", en: "Age of χ" },
+    "album.charFilter.other": { ja: "その他", en: "Other" },
+    "album.charFilter.companion": { ja: "王様と仲間", en: "King & Friends" },
+    "album.charFilter.villain": { ja: "敵対者", en: "Villains" },
+    "album.charFilter.disney": { ja: "ディズニー", en: "Disney" },
+    "album.noResult": { ja: "該当する記憶が見つかりませんでした。", en: "No matching memories found." },
     "album.progress.pre": { ja: "あと", en: "" },
     "album.progress.post": { ja: "個の欠片で SECRET MEMORY が開かれます。", en: "more fragments will unlock SECRET MEMORY." },
     "album.cta.secret": { ja: "SECRET MEMORY へ", en: "To SECRET MEMORY" },
@@ -212,6 +238,7 @@ const KH_I18N = (function () {
     "timeline.th.platform": { ja: "機種", en: "Platform" },
     "timeline.th.scene": { ja: "物語のどこを描くか", en: "Where it falls in the story" },
     "timeline.th.order": { ja: "順", en: "#" },
+    "timeline.yearTbd": { ja: "発売未定", en: "TBA" },
     "timeline.notes.title": { ja: "読むときの注意", en: "How to read this" },
     "timeline.detail.title": { ja: "各作品をくわしく", en: "More about each title" },
     "timeline.detail.lead": {
@@ -219,6 +246,22 @@ const KH_I18N = (function () {
       en: "Timelines, synopses, and keywords live in MEMORY ALBUM; the series' core mythology and relationship map live in SECRET MEMORY."
     },
     "timeline.cta.album": { ja: "MEMORY ALBUM へ", en: "To MEMORY ALBUM" },
+    "timeline.notes.item1": {
+      ja: "<strong>CHAIN OF MEMORIES と 358/2 DAYS は同じ時期の出来事。</strong>片方はソラ、もう片方はロクサスの視点で、並行して進みます。",
+      en: "<strong>CHAIN OF MEMORIES and 358/2 DAYS take place during the same period.</strong> One follows Sora's perspective, the other Roxas's, running in parallel."
+    },
+    "timeline.notes.item2": {
+      ja: "<strong>0.2 -A FRAGMENTARY PASSAGE- は BbS の直後から始まり</strong>、終盤でそのまま『III』の直前へと繋がります。表では便宜上 BbS の次に置いています。",
+      en: "<strong>0.2 -A FRAGMENTARY PASSAGE- begins right after BIRTH BY SLEEP</strong>, and its ending connects directly into the moment before III. For convenience, the table places it right after BbS."
+    },
+    "timeline.notes.item3": {
+      ja: "<strong>χ SERIES は複数タイトルの総称</strong>です ――<code>χ[chi]</code>(2013・ブラウザ)、<code>Unchained χ</code>／<code>Union χ[Cross]</code>(スマホ)、そしてマスター・ゼアノートの若き日を描く <code>Dark Road</code>。",
+      en: "<strong>χ SERIES is an umbrella term for several titles</strong> — <code>χ[chi]</code> (2013, browser), <code>Unchained χ</code> / <code>Union χ[Cross]</code> (mobile), and <code>Dark Road</code>, which depicts a young Master Xehanort."
+    },
+    "timeline.notes.item4": {
+      ja: "<strong>多くはHDコレクションに収録</strong>されています ――『1.5 ReMIX』『2.5 ReMIX』『2.8 Final Chapter Prologue』(のちに『1.5＋2.5 ReMIX』へ統合)。『III』は単体(のちに追加DLC『Re Mind』)。",
+      en: "<strong>Most titles are collected in HD releases</strong> — 1.5 ReMIX, 2.5 ReMIX, and 2.8 Final Chapter Prologue (later combined into 1.5+2.5 ReMIX). III stands alone (later given the Re Mind DLC)."
+    },
 
     /* ---------- MEMORY THEMES(music.html) ---------- */
     "music.head.title": { ja: "MEMORY THEMES", en: "MEMORY THEMES" },
@@ -254,6 +297,75 @@ const KH_I18N = (function () {
     "roxas.more.title": { ja: "もっと辿るなら", en: "Want to explore more?" },
     "roxas.cta.music": { ja: "MEMORY THEMES へ", en: "To MEMORY THEMES" },
     "roxas.cta.album": { ja: "MEMORY ALBUM へ", en: "To MEMORY ALBUM" },
+    "roxas.omen.lead": { ja: "けれど、七日間のあいだ、小さな綻びが少しずつ増えていきます。", en: "But over those seven days, small cracks begin to show, one by one." },
+    "roxas.omen.item1": { ja: "白くて、音のない化け物が、なぜかロクサスだけを狙って現れる。", en: "A white, silent creature appears, seemingly hunting Roxas alone." },
+    "roxas.omen.item2": { ja: "ときどき、街の時間がぴたりと止まる。", en: "Sometimes, time in the town stops dead." },
+    "roxas.omen.item3": { ja: "見たこともない少年と、赤い髪の男が出てくる夢を、毎晩見る。", en: "Every night, he dreams of a boy he's never seen, and a man with red hair." },
+    "roxas.omen.item4": { ja: "誰かが「ロクサス」と、自分の名前を呼んでいる気がする。", en: "He feels like someone is calling his name — Roxas." },
+    "roxas.omen.closing": {
+      ja: "プレイヤーはこの七日間、シリーズの主人公ソラをまだ動かせません。『KINGDOM HEARTS II』は、<strong>名前も知らない少年の、平凡で、少しずつ歪んでいく夏</strong>から静かに幕を開けます。",
+      en: "For these seven days, the player still can't control Sora, the series' hero. KINGDOM HEARTS II quietly opens with <strong>the ordinary, slowly warping summer of a boy whose name you don't yet know</strong>."
+    },
+    "roxas.quote.lead": {
+      ja: "七日目の終わり。すべてを知ったロクサスは、眠りについた少年ソラのカプセルの前に立ち、静かにこう呟きます。",
+      en: "At the end of the seventh day, having learned everything, Roxas stands before the pod holding the sleeping Sora and quietly murmurs:"
+    },
+    "roxas.quote.text": { ja: "「俺の夏休み――　終わっちゃった」", en: "\"My summer vacation... is over.\"" },
+    "roxas.quote.commentary": {
+      ja: "電撃オンラインはこの一言を <strong>「シリーズ屈指の名言」</strong> と評し、「『キングダム ハーツ』はよく“ストーリーが泣ける”と言われるが、その要因のひとつは間違いなくこのロクサスの夏休み」と書いています。このとき流れているのは、彼のためだけに書かれたテーマ曲<strong>「Roxas」</strong>。美しくも哀愁の漂うトワイライトタウンの音楽と、シナリオと、この曲が一体になって——プレイヤーの涙腺を容赦なく刺激する、と。",
+      en: "Dengeki Online calls this line <strong>\"one of the series' finest lines,\"</strong> writing that KINGDOM HEARTS is often praised for its tear-jerking story, and Roxas's summer is undoubtedly one of the reasons why. Playing at that moment is a theme written just for him: <strong>\"Roxas.\"</strong> Together, the beautiful, wistful music of Twilight Town, the scenario, and this track mercilessly go straight for the player's tear ducts."
+    },
+    "roxas.spoiler": { ja: "ここから先は、ロクサスの七日間の「正体」に触れます", en: "From here on, this page discusses the truth behind Roxas's seven days" },
+    "roxas.truth.lead": {
+      ja: "ロクサスが歩いた街も、隣で笑っていた仲間も、積み重ねてきたはずの思い出も、すべては数日ぶんだけ用意された <strong>仮想のトワイライトタウン</strong> でした。",
+      en: "The town Roxas walked through, the friends laughing beside him, the memories he thought he'd built up — all of it was a <strong>simulated Twilight Town</strong>, prepared for just a few days."
+    },
+    "roxas.truth.p1": {
+      ja: "作ったのは、賢者アンセム——通称 <strong>ディズ</strong>。目的は、長い眠りについた主人公ソラを目覚めさせることでした。そのためには、ソラから分かたれて生まれた存在であるロクサスが、ソラのもとへ「還る」必要があった。ディズは、ロクサスを留めておくための箱として、この偽物の夏を用意したのです。",
+      en: "It was built by Ansem the Wise — known as <strong>DiZ</strong>. His goal was to wake Sora, the hero, from his long sleep. For that, Roxas, a being split off from Sora, needed to \"return\" to him. DiZ prepared this false summer as a box to keep Roxas contained until then."
+    },
+    "roxas.truth.p2": {
+      ja: "ロクサスは <strong>ノーバディ</strong>——心を失った者から生まれた、本来は心を持たないはずの存在です。それでも彼は、消えていく間際に、悔しさや寂しさや、名前を呼びたい誰かへの想いのような感情を見せます。「心が無い」という設定そのものへの、静かな反証として。",
+      en: "Roxas is a <strong>Nobody</strong> — born from someone who lost their heart, and by definition someone who shouldn't have a heart of his own. And yet, as he fades away, he shows frustration, loneliness, something like longing for someone whose name he wants to call — a quiet rebuttal to the very premise that he has no heart at all."
+    },
+    "roxas.truth.p3": {
+      ja: "その先で目を覚ましたソラの物語は、書き換えられた記憶(『Re:Chain of Memories』)を辿り直し、XIII機関との対立の中心へと進んでいきます。ロクサスの七日間は、その長い旅の、いちばん静かな入口です。",
+      en: "From there, the story of Sora waking up retraces his rewritten memories (in Re:Chain of Memories) and moves toward the center of the conflict with Organization XIII. Roxas's seven days are the quietest entrance into that long journey."
+    },
+    "roxas.appeal.lead": {
+      ja: "ロクサスの夏はプロローグにすぎません。その扉の向こうには、シリーズでも屈指の完成度と言われる本編が広がっています。",
+      en: "Roxas's summer is only a prologue. Beyond that door lies a full game often called one of the most polished entries in the entire series."
+    },
+    "roxas.appeal.card1.title": { ja: "物語のスケール", en: "The scale of the story" },
+    "roxas.appeal.card1.text": {
+      ja: "ダークシーカー編の折り返し地点。書き換えられた記憶、XIII機関、ノーバディ、そしてロクサスとシオン——後の全作品へ伸びる伏線が、ここでいっきに動き出します。",
+      en: "The midpoint of the Dark Seeker Saga. Rewritten memories, Organization XIII, Nobodies, and Roxas and Xion — threads that stretch into every later game all start moving at once here."
+    },
+    "roxas.appeal.card2.title": { ja: "進化したアクション", en: "Evolved action" },
+    "roxas.appeal.card2.text": {
+      ja: "状況に応じて発動する「リアクションコマンド」、仲間の力で姿を変える「ドライブフォーム」。爽快さと戦略性を両立したバトルは、電撃オンライン評で「いま遊んでもシリーズ全体でトップクラスの完成度」。",
+      en: "Context-sensitive Reaction Commands, and Drive Forms that let Sora transform using his allies' strength. Combat that balances exhilaration with strategy — Dengeki Online called it \"top-tier polish for the whole series, even played today.\""
+    },
+    "roxas.appeal.card3.title": { ja: "追加された手応え", en: "What Final Mix adds" },
+    "roxas.appeal.card3.text": {
+      ja: "新ダンジョン「追憶の洞」、XIII機関の影(アブセント・シルエット)やデータ戦、新フォーム「リミットフォーム」、追加カットシーン。そして——ムービー主体だったロクサスとの戦いが、「The Other Promise」を背負う本格的なボス戦として遊べるように。高難度のクリティカルモードも本作から。",
+      en: "A new dungeon, the Cavern of Remembrance; Absent Silhouettes and data battles tied to Organization XIII; a new Limit Form; extra cutscenes. And the once cutscene-only battle with Roxas becomes a full boss fight set to \"The Other Promise.\" The high-difficulty Critical Mode also debuts here."
+    },
+    "roxas.appeal.card4.title": { ja: "泣きの半分は音楽", en: "Half the tears come from the music" },
+    "roxas.appeal.card4.text": {
+      ja: "下村陽子によるスコア。ロクサスのテーマ「Roxas」、その短調アレンジ「The Other Promise」、宇多田ヒカルの主題歌「Passion(英題 Sanctuary)」。哀愁のトワイライトタウンBGM群も含め、この作品の“泣ける”をかたちづくっています。",
+      en: "A score by Yoko Shimomura: Roxas's theme \"Roxas,\" its minor-key arrangement \"The Other Promise,\" and Hikaru Utada's theme song \"Passion\" (\"Sanctuary\" in English). Together with the wistful Twilight Town BGM, they shape everything that makes this game so tear-jerking."
+    },
+    "roxas.more.item1": {
+      ja: "<strong>遊ぶなら:</strong>『KINGDOM HEARTS HD 1.5＋2.5 リミックス』に『II FINAL MIX』が収録されています(PS4 ほか)。同じ集の映像作品『358/2 Days』では、ロクサスがXIII機関で過ごした日々が描かれ、「『II FINAL MIX』では語られなかった重要なキャラクターが登場し、ロクサスにより感情移入できる」(電撃オンライン)。",
+      en: "<strong>To play it:</strong> II FINAL MIX is included in KINGDOM HEARTS HD 1.5+2.5 ReMIX (PS4 and others). The same collection's cinematic, 358/2 DAYS, depicts the days Roxas spent in Organization XIII — Dengeki Online notes it introduces an important character left untold in II FINAL MIX, making it easier to empathize with Roxas."
+    },
+    "roxas.more.item2.label": { ja: "このサイトで:", en: "On this site:" },
+    "roxas.closing.line1": { ja: "偽物の夏だったとしても、", en: "Even if it was a fake summer," },
+    "roxas.closing.line2": {
+      ja: "時計塔の上で分け合った あの味は、たしかにそこにあった。",
+      en: "the taste they shared atop the clock tower was, without question, real."
+    },
 
     /* ---------- MEMORY CROSSOVER ---------- */
     "crossover.head.title": { ja: "MEMORY CROSSOVER", en: "MEMORY CROSSOVER" },
@@ -262,7 +374,33 @@ const KH_I18N = (function () {
       ja: "キングダムハーツは、<strong>スクウェア・エニックスのゲーム</strong>と<strong>ディズニー / ピクサーの物語</strong>が交わって生まれたシリーズです。ファイナルファンタジーの英雄たち、『すばらしきこのせかい』の少年少女、そして数多くのディズニー作品が、ひとつの「記憶」の中で出会います。ここでは、その顔ぶれを作品ごとに一覧にしました。",
       en: "KINGDOM HEARTS was born where <strong>Square Enix games</strong> meet <strong>Disney and Pixar stories</strong>. Heroes from FINAL FANTASY, the teens of The World Ends with You, and countless Disney works all meet within a single memory. Here, that cast is listed work by work."
     },
+    "crossover.legend.pre": {
+      ja: "各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その作品の要素が登場する KINGDOM HEARTS タイトルを示します。",
+      en: "The bar under each card <strong>always lists all 12 titles, in release order</strong>, and lights up the KINGDOM HEARTS titles that feature elements of that work."
+    },
+    "crossover.legend.post": { ja: "記号にカーソルを合わせると作品名が出ます。", en: "Hover over a mark to see the title's name." },
+    "crossover.filter.ff": { ja: "ファイナルファンタジー", en: "FINAL FANTASY" },
+    "crossover.filter.twewy": { ja: "すばらしきこのせかい", en: "The World Ends with You" },
+    "crossover.filter.disney": { ja: "ディズニー / ピクサー", en: "Disney / Pixar" },
+    "crossover.filter.disneyExtra": { ja: "短編・楽曲・召喚", en: "Shorts, music, summons" },
+    "crossover.noResult": { ja: "該当する作品がありません。", en: "No matching works found." },
     "crossover.notes.title": { ja: "見るときの注意", en: "Before you look" },
+    "crossover.notes.item1": {
+      ja: "<strong>「登場する場所」はワールド名(またはメニュー機能)</strong>です。同じ作品が複数のキングダムハーツ作品にまたがって登場することもあります。",
+      en: "<strong>\"Where it appears\" names a world (or a menu feature).</strong> The same work sometimes appears across multiple KINGDOM HEARTS titles."
+    },
+    "crossover.notes.item2": {
+      ja: "<strong>ファイナルファンタジー勢は「レイディアントガーデン復興委員会」</strong>として一括りに動く場面が多く、出身タイトルはFFVII・FFVIII・FFXなどに分かれています。",
+      en: "<strong>The FINAL FANTASY cast often act together as the Radiant Garden Restoration Committee,</strong> though individually they come from FFVII, FFVIII, FFX, and others."
+    },
+    "crossover.notes.item3": {
+      ja: "<strong>権利や制作の都合で一作限りのワールドもあります</strong>(『ターザン』のディープジャングルなど)。",
+      en: "<strong>Some worlds appear only once</strong> due to licensing or production reasons (Deep Jungle from Tarzan, for example)."
+    },
+    "crossover.notes.item4": {
+      ja: "固有名詞はすべて各シリーズの実在のもの。イラストやロゴなどの画像素材は権利者(スクウェア・エニックス / ディズニー)に帰属するため、このサイトには含めていません。",
+      en: "All proper nouns belong to their respective real series. Illustrations, logos, and other image assets belong to their rights holders (Square Enix / Disney) and are not included on this site."
+    },
     "crossover.scenes.title": { ja: "クロスオーバーの、名場面", en: "Memorable crossover scenes" },
     "crossover.characters.title": { ja: "キャラクターをくわしく", en: "More about the characters" },
     "crossover.characters.lead": {
@@ -270,6 +408,8 @@ const KH_I18N = (function () {
       en: "Individual character profiles live in MEMORY ALBUM; the flow of the whole series lives in TIMELINE."
     },
     "crossover.cta.album": { ja: "MEMORY ALBUM へ", en: "To MEMORY ALBUM" },
+    "crossover.card.stageLabel": { ja: "登場する場所", en: "Where it appears" },
+    "crossover.card.guestsLabel": { ja: "おもな顔ぶれ", en: "Featured cast" },
 
     /* ---------- SECRET MEMORY(未解放時の施錠画面) ---------- */
     "secret.lock.text": {
@@ -282,6 +422,60 @@ const KH_I18N = (function () {
       en: "more to unlock.<br>Fragments are hidden across TOP and MEMORY ALBUM. More light may be waiting inside the works and character details you haven't opened yet."
     },
     "secret.lock.cta": { ja: "MEMORY ALBUM を探す", en: "Search MEMORY ALBUM" },
+
+    /* ---------- SECRET MEMORY(解放後のページ本体。secret.js が生成) ---------- */
+    "secret.unlocked.lead": { ja: "閉ざされていた記録が、いま開かれました", en: "The sealed record has now been opened" },
+    "secret.core.title": { ja: "キングダムハーツの、根幹", en: "The core of KINGDOM HEARTS" },
+    "secret.core.lead": {
+      ja: "ここまで辿り着いた人に、この長い物語の芯を四つだけ。",
+      en: "For those who've made it this far — four ideas at the heart of this long story."
+    },
+    "secret.relations.title": { ja: "こころの、相関図", en: "A map of hearts" },
+    "secret.relations.lead": {
+      ja: "「誰が誰の“もう一人の自分”なのか」——この繋がりこそ、シリーズの背骨です。(図は横にスクロールできます)",
+      en: "Who is whose \"other self\"? These connections are the series' backbone. (The diagram scrolls horizontally.)"
+    },
+    "secret.relations.legend.bond": { ja: "相互の絆・協力", en: "Mutual bond / cooperation" },
+    "secret.relations.legend.origin": { ja: "生まれた・由来する / 心が宿る(矢印の向き)", en: "Born from / originates from — or a heart residing within (arrow direction)" },
+    "secret.relations.legend.clash": { ja: "敵対・干渉", en: "Conflict / interference" },
+    "secret.relations.legend.axis": { ja: "物語の主対立", en: "The story's central conflict" },
+    "secret.relations.note1.title": { ja: "心を失うと、二つに分かれる", en: "Lose your heart, and you split in two" },
+    "secret.relations.note1.text": {
+      ja: "ゼアノートは ハートレス「アンセム」と ノーバディ「ゼムナス」に分かれた。ソラのノーバディが ロクサス、カイリのノーバディが ナミネ。",
+      en: "Xehanort split into the Heartless Ansem and the Nobody Xemnas. Sora's Nobody is Roxas; Kairi's Nobody is Naminé."
+    },
+    "secret.relations.note2.title": { ja: "心と、姿", en: "Hearts and forms" },
+    "secret.relations.note2.text": {
+      ja: "ヴェントゥスの心はソラの中で眠り、その影響でロクサスはヴェントゥスと同じ姿で生まれた。シオンはソラの記憶から作られたレプリカ。ヴァニタスはヴェントゥスから切り離された闇。",
+      en: "Ventus's heart sleeps within Sora, and under its influence Roxas was born wearing Ventus's own face. Xion is a replica made from Sora's memories. Vanitas is the darkness split away from Ventus."
+    },
+    "secret.relations.note3.title": { ja: "絆で結ばれた者たち", en: "Those bound by connection" },
+    "secret.relations.note3.text": {
+      ja: "ソラ・リク・カイリ / テラ・アクア・ヴェントゥス(師エラクゥスのもとで修行) / ロクサス・アクセル・シオン。ソラの旅にはドナルドとグーフィー、そして王様ミッキーが並ぶ。",
+      en: "Sora, Riku, and Kairi. Terra, Aqua, and Ventus, trained under Master Eraqus. Roxas, Axel, and Xion. Donald, Goofy, and King Mickey walk alongside Sora on his journey."
+    },
+    "secret.relations.note4.title": { ja: "対立の軸", en: "The central conflict" },
+    "secret.relations.note4.text": {
+      ja: "ソラたち「光の守護者」と、ゼアノート。ゼアノートはテラの身体を奪い、アンセムとしてリクに憑依し、あらゆる時代に自らの分身を配した。",
+      en: "Sora and the other Guardians of Light, against Xehanort. Xehanort steals Terra's body, possesses Riku as Ansem, and places copies of himself throughout every era."
+    },
+    "secret.collected.title": { ja: "集めた記憶の欠片", en: "Memory fragments collected" },
+    "secret.scenes.title": { ja: "記憶に残る、場面", en: "Scenes worth remembering" },
+    "secret.scenes.lead": {
+      ja: "長い旅のなかで、とりわけ胸に残っている場面を並べました。",
+      en: "A selection of scenes from this long journey that leave a lasting impression."
+    },
+    "secret.last.title": { ja: "最後のひとかけら", en: "The last fragment" },
+    "secret.last.text": {
+      ja: "旅の終わりに、ひとつだけ欠片を残しておきました。これを受け取れば、あなたの記憶は満ちることになります。",
+      en: "One fragment was saved for the end of the journey. Take it, and your memory will be complete."
+    },
+    "secret.reset.button": { ja: "収集記録をリセットする", en: "Reset collection progress" },
+    "secret.reset.confirm": {
+      ja: "集めた記憶の欠片をすべて消去します。よろしいですか?",
+      en: "This will erase every memory fragment you've collected. Are you sure?"
+    },
+    "secret.toast.unlocked": { ja: "隠された記録が開かれました", en: "The hidden record has been unlocked" },
 
     /* ---------- 404 ---------- */
     "404.title": { ja: "この記憶は 見つからない", en: "This memory can't be found" },

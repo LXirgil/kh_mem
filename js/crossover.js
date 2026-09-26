@@ -47,13 +47,15 @@
   }
 
   function cardHtml(item, index) {
+    const stageLabel = KH_I18N.t("crossover.card.stageLabel");
+    const guestsLabel = KH_I18N.t("crossover.card.guestsLabel");
     return `
       <article class="crossover-card reveal" data-cat="${esc(item.cat)}" data-delay="${(index % 4) + 1}">
         <p class="crossover-card__origin">${esc(item.origin || "")}</p>
         <h3 class="crossover-card__title">${esc(item.title)}</h3>
-        ${item.stage ? `<p class="crossover-card__stage"><span>登場する場所</span>${esc(item.stage)}</p>` : ""}
-        ${item.guests ? `<p class="crossover-card__guests"><span>おもな顔ぶれ</span>${esc(item.guests)}</p>` : ""}
-        ${item.note ? `<p class="crossover-card__note">${esc(item.note)}</p>` : ""}
+        ${item.stage ? `<p class="crossover-card__stage"><span>${esc(stageLabel)}</span>${esc(item.stage)}</p>` : ""}
+        ${item.guests ? `<p class="crossover-card__guests"><span>${esc(guestsLabel)}</span>${esc(item.guests)}</p>` : ""}
+        ${item.note ? `<p class="crossover-card__note">${esc(KH_I18N.pick(item, "note"))}</p>` : ""}
         <div class="crossover-card__appears">${worksBar(item.works)}</div>
       </article>`;
   }
@@ -69,7 +71,7 @@
       const members = CROSSOVERS.filter((c) => c.cat === group.key);
       if (!members.length) return;
 
-      html += `<h3 class="crossover-group-heading reveal" data-cat="${esc(group.key)}">${esc(group.label)}<span>${members.length}</span></h3>`;
+      html += `<h3 class="crossover-group-heading reveal" data-cat="${esc(group.key)}">${esc(KH_I18N.pick(group, "label"))}<span>${members.length}</span></h3>`;
       members.forEach((item) => {
         html += cardHtml(item, cardIndex);
         cardIndex += 1;
@@ -96,11 +98,12 @@
       ? `<img class="xscene-card__img" src="${esc(s.image)}" alt="${esc(s.title || s.id)}" loading="lazy" ${IMG_ONERR}>`
       : `<span class="xscene-card__ph">画像を <code>assets/crossover/${esc(s.id)}.jpg</code> に置くと表示されます</span>`;
     const work = sceneWorkTitle(s.work);
-    const title = s.title || (s.image ? "(この場面の説明を追記します)" : "");
+    const title = KH_I18N.pick(s, "title") || (s.image ? "(この場面の説明を追記します)" : "");
+    const caption = KH_I18N.pick(s, "caption");
     const cap = title
       ? `${work ? `<span class="xscene-card__work">${esc(work)}</span>` : ""}` +
         `<span class="xscene-card__title">${esc(title)}</span>` +
-        `${s.caption ? `<span class="xscene-card__note">${esc(s.caption)}</span>` : ""}`
+        `${caption ? `<span class="xscene-card__note">${esc(caption)}</span>` : ""}`
       : `<span class="xscene-card__note">${esc(s.id)}</span>`;
     return `
       <figure class="xscene-card reveal${s.image ? "" : " is-empty"}" data-delay="${(index % 3) + 1}">
@@ -141,6 +144,24 @@
     });
   }
 
+  /* 現在の絞り込み状態を保ったまま、絞り込み結果の表示/非表示を反映する */
+  function applyCurrentFilter() {
+    const bar = document.getElementById("crossover-filter-bar");
+    const grid = document.getElementById("crossover-grid");
+    const empty = document.getElementById("crossover-no-result");
+    if (!bar || !grid) return;
+
+    const activeBtn = bar.querySelector(".filter-btn.is-active");
+    const filter = activeBtn ? activeBtn.dataset.filter : "all";
+    let visible = 0;
+    grid.querySelectorAll(".crossover-card, .crossover-group-heading").forEach((el) => {
+      const match = filter === "all" || el.dataset.cat === filter;
+      el.classList.toggle("is-filtered-out", !match);
+      if (match && el.classList.contains("crossover-card")) visible += 1;
+    });
+    if (empty) empty.style.display = visible === 0 ? "block" : "none";
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     render();
     renderScenes();
@@ -148,5 +169,15 @@
     if (typeof Effects !== "undefined" && Effects.refreshScrollReveal) {
       Effects.refreshScrollReveal();
     }
+
+    /* 言語切り替え時は一覧を描き直し、絞り込み状態だけ引き継ぐ */
+    document.addEventListener("kh-lang-change", () => {
+      render();
+      renderScenes();
+      applyCurrentFilter();
+      if (typeof Effects !== "undefined" && Effects.refreshScrollReveal) {
+        Effects.refreshScrollReveal();
+      }
+    });
   });
 })();

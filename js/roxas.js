@@ -31,8 +31,9 @@
         ? `<img class="roxas-slide__img" src="${esc(shot.image)}" alt="ロクサス ${i + 1}" loading="lazy"` +
           ` onerror="this.onerror=null;this.src='${IMG_FALLBACK}'">`
         : `<span class="roxas-slide__ph">画像を <code>assets/roxas/${shot.id}.jpg</code> に置くと表示されます</span>`;
-      const cap = shot.caption
-        ? `<figcaption class="roxas-slide__cap">${esc(shot.caption)}</figcaption>`
+      const caption = KH_I18N.pick(shot, "caption");
+      const cap = caption
+        ? `<figcaption class="roxas-slide__cap">${esc(caption)}</figcaption>`
         : "";
       return (
         `<figure class="roxas-slide${i === 0 ? " is-active" : ""}"${shot.image ? "" : ' data-empty'}` +
@@ -113,6 +114,14 @@
     });
 
     start();
+
+    /* 言語切り替え時、キャプションだけ差し替える(自動送りやスライド位置は保つ) */
+    document.addEventListener("kh-lang-change", () => {
+      slideEls.forEach((el, i) => {
+        const capEl = el.querySelector(".roxas-slide__cap");
+        if (capEl) capEl.textContent = KH_I18N.pick(ROXAS_SHOTS[i], "caption");
+      });
+    });
   }
 
   document.addEventListener("DOMContentLoaded", () => {

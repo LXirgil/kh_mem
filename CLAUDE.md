@@ -107,9 +107,8 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
     (`album.js` の `worksTagsHtml`)は全12作品を発売順で固定表示し、`works` に含む作品だけを
     `category`(main=青 / side=金 / future=淡)で点灯させる。凡例は `album.html` の
     `.appears-legend`、スタイルは `css/pages.css` の `.appears` / `.appears__cell`
-  - `WORKS` の `subtitle` / `summary` には英語版(`subtitleEn` / `summaryEn`)を用意してあり、
-    `album.js` が `KH_I18N.pick(work, "subtitle")` のように言語に応じて出し分ける
-    (`detail` などその他のフィールドに英語版は無く、常に日本語のまま)
+  - `WORKS` の `subtitle` / `summary` / `detail` には英語版(`subtitleEn` / `summaryEn` / `detailEn`)
+    を用意してあり、`album.js` が `KH_I18N.pick(work, "subtitle")` のように言語に応じて出し分ける
 - `js/audio.js` — `AudioEngine`。効果音は常にWeb Audio APIで合成。BGMは既定では合成音だが、
   `js/data.js` の `AUDIO_CONFIG.bgmSrc` にパスを書くと音源ファイル(mp3等)を再生する。
   `duckBgm()` / `unduckBgm()` で BGM を一時的に絞れる(THEMES ページの試聴中に使用)
@@ -131,14 +130,21 @@ OGP/Twitter カードの meta を入れています。`<body>` 直後に「本�
 - `js/memory.js` — `MemorySystem`。欠片の収集とlocalStorage保存、解放判定
 - `js/i18n.js` — `KH_I18N`。日本語/英語の表示切り替え(海外プレイヤー向け)。`localStorage["kh-lang"]`
   に言語設定を保存し、`[data-i18n="キー"]` を持つ要素の中身、`[data-i18n-attr="属性名:キー"]` を
-  持つ要素の属性を、辞書(`STRINGS`)に基づいて書き換える。対象は共通UI文言(ヘッダー/フッター/
-  ボタン)と各ページの見出し・導入文・作品概要(WORKSの`subtitle`/`summary`)までで、
-  キャラクター解説や用語集・楽曲解説など分量の多い個別コンテンツは日本語のまま(この課題のscope外)。
+  持つ要素の属性を、辞書(`STRINGS`)に基づいて書き換える。共通UI文言(ヘッダー/フッター/ボタン)、
+  各ページの手書き本文(見出し・導入文・注意書き・リストなど)に加えて、data.js側のほぼ全コンテンツ
+  ―― `WORKS`(`subtitle`/`summary`/`detail`)、`CHARACTERS`(`role`/`detail`)、`WORLDS`(`text`)、
+  `GLOSSARY`(`text`)、`THEME_TRACKS`(`scene`/`note`)、`CROSSOVERS`(`note`)・`CROSSOVER_CATEGORIES`、
+  `CROSSOVER_SCENES`/`SECRET_SCENES`(`title`/`caption`)、`ROXAS_SHOTS`(`caption`)、`KH_CORE`、
+  `KH_ERA`(`era`)、`RELATION_MAP`(ノード/リンクの `label`)―― まで英訳している。
+  `WORKS` の `tags`/`keywords`/`worlds`/`music`、`CROSSOVERS` の `title`/`origin`/`guests`/`stage`
+  など固有名詞・短いラベルの羅列は日本語のまま(英字表記がそのまま通じるため)。
   `KH_I18N.pick(obj, "field")` で `data.js` 側のオブジェクトを言語別に出し分けられる
-  (英語版は `fieldEn` という名前で用意する。例:`work.subtitleEn`)。
-  言語を切り替えると `kh-lang-change` イベントが発火し、`album.js` など後から描画した
-  作品カードの再同期に使われる。**表示テキストを追加・変更したらこのファイルの `STRINGS` を
-  必ず更新すること**
+  (英語版は `fieldEn` という名前で用意する。例:`work.subtitleEn`、配列フィールドも同様に
+  `work.detailEn` のような配列で用意する)。
+  言語を切り替えると `kh-lang-change` イベントが発火し、`album.js`・`crossover.js`・`music.js`・
+  `timeline.js`・`roxas.js`・`secret.js` がそれぞれ描画済みの文言やカードを再同期する
+  (`secret.js` は解放後のページ本体をまるごと描き直す)。
+  **表示テキストを追加・変更したらこのファイルの `STRINGS` を必ず更新すること**
 - `js/main.js` — 全ページ共通の初期化(ナビ、音声トグル、`initLangToggle` で日本語/英語切り替え
   ボタンを配線、ホバー音、`initBackToTop` で右下の「トップへ戻る」ボタン `.to-top` を body に生成、
   `initHeroParallax` で TOP の `.hero__station`(目覚めの園風の台座)をカーソルに合わせて

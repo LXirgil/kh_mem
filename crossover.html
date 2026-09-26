@@ -120,27 +120,27 @@
           </span>
         </p>
         <p class="appears-legend">
-          各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その作品の要素が登場する KINGDOM HEARTS タイトルを示します。
-          <i class="appears__cell is-in" data-cat="main">II</i>本編に登場
-          <i class="appears__cell is-in" data-cat="side">χ</i>外伝に登場
-          <i class="appears__cell">—</i>未登場。
-          記号にカーソルを合わせると作品名が出ます。
+          <span data-i18n="crossover.legend.pre">各カード下の<strong>バーは全12作品(発売順で固定)</strong>のうち、その作品の要素が登場する KINGDOM HEARTS タイトルを示します。</span>
+          <i class="appears__cell is-in" data-cat="main">II</i><span data-i18n="album.legend.main">本編に登場</span>
+          <i class="appears__cell is-in" data-cat="side">χ</i><span data-i18n="album.legend.side">外伝に登場</span>
+          <i class="appears__cell">—</i><span data-i18n="album.legend.none">未登場。</span>
+          <span data-i18n="crossover.legend.post">記号にカーソルを合わせると作品名が出ます。</span>
         </p>
       </div>
 
       <!-- 絞り込み -->
       <div class="filter-bar" id="crossover-filter-bar" role="group" aria-label="ジャンルの絞り込み">
         <button class="filter-btn is-active" type="button" data-filter="all">ALL</button>
-        <button class="filter-btn" type="button" data-filter="ff">ファイナルファンタジー</button>
-        <button class="filter-btn" type="button" data-filter="twewy">すばらしきこのせかい</button>
-        <button class="filter-btn" type="button" data-filter="disney">ディズニー / ピクサー</button>
-        <button class="filter-btn" type="button" data-filter="disney-extra">短編・楽曲・召喚</button>
+        <button class="filter-btn" type="button" data-filter="ff" data-i18n="crossover.filter.ff">ファイナルファンタジー</button>
+        <button class="filter-btn" type="button" data-filter="twewy" data-i18n="crossover.filter.twewy">すばらしきこのせかい</button>
+        <button class="filter-btn" type="button" data-filter="disney" data-i18n="crossover.filter.disney">ディズニー / ピクサー</button>
+        <button class="filter-btn" type="button" data-filter="disney-extra" data-i18n="crossover.filter.disneyExtra">短編・楽曲・召喚</button>
       </div>
 
       <div class="crossover-grid" id="crossover-grid"></div>
 
       <!-- 絞り込み結果が0件のときの案内 -->
-      <p id="crossover-no-result" style="display:none; text-align:center; color:var(--c-text-dim); margin-top:2rem;">
+      <p id="crossover-no-result" style="display:none; text-align:center; color:var(--c-text-dim); margin-top:2rem;" data-i18n="crossover.noResult">
         該当する作品がありません。
       </p>
     </section>
@@ -153,18 +153,18 @@
         <span class="section-label">Notes</span>
         <h2 class="section-title" style="font-size:clamp(1.3rem,3vw,1.8rem);" data-i18n="crossover.notes.title">見るときの注意</h2>
         <ul class="more-list">
-          <li>
+          <li data-i18n="crossover.notes.item1">
             <strong>「登場する場所」はワールド名(またはメニュー機能)</strong>です。
             同じ作品が複数のキングダムハーツ作品にまたがって登場することもあります。
           </li>
-          <li>
+          <li data-i18n="crossover.notes.item2">
             <strong>ファイナルファンタジー勢は「レイディアントガーデン復興委員会」</strong>として
             一括りに動く場面が多く、出身タイトルはFFVII・FFVIII・FFXなどに分かれています。
           </li>
-          <li>
+          <li data-i18n="crossover.notes.item3">
             <strong>権利や制作の都合で一作限りのワールドもあります</strong>(『ターザン』のディープジャングルなど)。
           </li>
-          <li>
+          <li data-i18n="crossover.notes.item4">
             固有名詞はすべて各シリーズの実在のもの。イラストやロゴなどの画像素材は権利者(スクウェア・エニックス / ディズニー)に帰属するため、このサイトには含めていません。
           </li>
         </ul>

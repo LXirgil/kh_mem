@@ -569,6 +569,7 @@
       const card = document.createElement("article");
       card.className = "world-card reveal";
       card.dataset.delay = String((index % 4) + 1);
+      card.dataset.worldIndex = String(index);
       card.style.setProperty("--hue", world.hue);
 
       // ゲーム内のワールド名タイトルカードのスクリーンショット(.jpg)は
@@ -589,7 +590,7 @@
         <div class="world-card__body">
           <p class="world-card__en">${escapeHtml(world.en)}</p>
           <h3 class="world-card__name">${escapeHtml(world.name)}</h3>
-          <p class="world-card__text">${escapeHtml(world.text)}</p>
+          <p class="world-card__text">${escapeHtml(KH_I18N.pick(world, "text"))}</p>
           <div class="world-card__tags">${worksTagsHtml(world.works)}</div>
         </div>
       `;
@@ -600,16 +601,16 @@
 
   /* キャラクターの group フィールド → 見出しラベル・絞り込みボタンの表示名 */
   const CHARACTER_GROUPS = [
-    { key: "guardian", label: "主人公たち" },
-    { key: "org13", label: "XIII機関" },
-    { key: "related", label: "機関に関わる二人" },
-    { key: "wayfinder", label: "ウェイファインダーの仲間" },
-    { key: "chi", label: "χの世代 ― 予知者とダンデライオン" },
-    { key: "darkroad", label: "Dark Road ― ゼアノートの過去" },
-    { key: "origin-other", label: "その他の重要人物" },
-    { key: "companion", label: "王様と旅の仲間" },
-    { key: "villain", label: "敵対者" },
-    { key: "disney", label: "ディズニーの仲間たち" }
+    { key: "guardian", label: "主人公たち", labelEn: "The Guardians" },
+    { key: "org13", label: "XIII機関", labelEn: "Organization XIII" },
+    { key: "related", label: "機関に関わる二人", labelEn: "Two Bound to the Organization" },
+    { key: "wayfinder", label: "ウェイファインダーの仲間", labelEn: "The Wayfinder Trio" },
+    { key: "chi", label: "χの世代 ― 予知者とダンデライオン", labelEn: "The Age of χ — Foretellers & Dandelions" },
+    { key: "darkroad", label: "Dark Road ― ゼアノートの過去", labelEn: "Dark Road — Xehanort's Past" },
+    { key: "origin-other", label: "その他の重要人物", labelEn: "Other Key Figures" },
+    { key: "companion", label: "王様と旅の仲間", labelEn: "The King & Traveling Companions" },
+    { key: "villain", label: "敵対者", labelEn: "Villains" },
+    { key: "disney", label: "ディズニーの仲間たち", labelEn: "Disney Friends" }
   ];
 
   /* ------------------------------------------------------------
@@ -629,7 +630,7 @@
       const heading = document.createElement("h3");
       heading.className = "character-group-heading reveal";
       heading.dataset.group = group.key;
-      heading.textContent = group.label;
+      heading.textContent = KH_I18N.pick(group, "label");
       grid.appendChild(heading);
 
       members.forEach((chara) => {
@@ -659,7 +660,7 @@
           <div class="character-card__aura">${face}</div>
           <h3 class="character-card__name">${escapeHtml(chara.name)}</h3>
           <p class="character-card__en">${escapeHtml(chara.en)}</p>
-          <p class="character-card__role">${escapeHtml(chara.role)}</p>
+          <p class="character-card__role">${escapeHtml(KH_I18N.pick(chara, "role"))}</p>
           <div class="character-card__tags">${worksTagsHtml(chara.works)}</div>
         `;
 
@@ -679,13 +680,14 @@
       const item = document.createElement("div");
       item.className = "glossary-item reveal";
       item.dataset.delay = String((index % 4) + 1);
+      item.dataset.glossaryIndex = String(index);
 
       item.innerHTML = `
         <div class="glossary-item__head">
           <h3 class="glossary-item__term">${escapeHtml(entry.term)}</h3>
           <span class="glossary-item__en">${escapeHtml(entry.en)}</span>
         </div>
-        <p class="glossary-item__text">${escapeHtml(entry.text)}</p>
+        <p class="glossary-item__text">${escapeHtml(KH_I18N.pick(entry, "text"))}</p>
       `;
 
       list.appendChild(item);
@@ -760,7 +762,7 @@
 
   /* 作品の詳細 */
   function buildWorkDetail(work) {
-    const paragraphs = work.detail
+    const paragraphs = KH_I18N.pick(work, "detail")
       .map((p) => `<p>${escapeHtml(p)}</p>`)
       .join("");
 
@@ -832,8 +834,8 @@
       <h2 class="modal__title" id="modal-title">${escapeHtml(chara.name)}</h2>
 
       <div class="modal__body">
-        <p>${escapeHtml(chara.role)}</p>
-        <p>${escapeHtml(chara.detail)}</p>
+        <p>${escapeHtml(KH_I18N.pick(chara, "role"))}</p>
+        <p>${escapeHtml(KH_I18N.pick(chara, "detail"))}</p>
       </div>
 
       <div class="modal__tags">${worksTagsHtml(chara.works)}</div>
@@ -911,7 +913,7 @@
     Effects.refreshScrollReveal();
     MemorySystem.refresh();
 
-    /* 言語切り替え時、すでに描画済みの作品カードの副題/概要だけ差し替える
+    /* 言語切り替え時、すでに描画済みのカード類のテキストだけ差し替える
        (カード自体を作り直すと欠片の再登録などが複雑になるため) */
     document.addEventListener("kh-lang-change", () => {
       document.querySelectorAll(".work-card").forEach((card) => {
@@ -921,6 +923,32 @@
         const descEl = card.querySelector(".work-card__desc");
         if (subtitleEl) subtitleEl.textContent = KH_I18N.pick(work, "subtitle");
         if (descEl) descEl.textContent = KH_I18N.pick(work, "summary");
+      });
+
+      document.querySelectorAll(".world-card").forEach((card) => {
+        const world = WORLDS[Number(card.dataset.worldIndex)];
+        if (!world) return;
+        const textEl = card.querySelector(".world-card__text");
+        if (textEl) textEl.textContent = KH_I18N.pick(world, "text");
+      });
+
+      document.querySelectorAll(".character-card").forEach((card) => {
+        const chara = CHARACTERS[Number(card.dataset.characterIndex)];
+        if (!chara) return;
+        const roleEl = card.querySelector(".character-card__role");
+        if (roleEl) roleEl.textContent = KH_I18N.pick(chara, "role");
+      });
+
+      document.querySelectorAll(".glossary-item").forEach((item) => {
+        const entry = GLOSSARY[Number(item.dataset.glossaryIndex)];
+        if (!entry) return;
+        const textEl = item.querySelector(".glossary-item__text");
+        if (textEl) textEl.textContent = KH_I18N.pick(entry, "text");
+      });
+
+      document.querySelectorAll(".character-group-heading").forEach((heading) => {
+        const group = CHARACTER_GROUPS.find((g) => g.key === heading.dataset.group);
+        if (group) heading.textContent = KH_I18N.pick(group, "label");
       });
     });
   });

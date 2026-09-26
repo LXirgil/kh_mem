@@ -138,14 +138,15 @@
           "M " + r(x1) + " " + r(y1) +
           " Q " + r(cx) + " " + r(cy) + " " + r(x2) + " " + r(y2);
 
-        if (lk.label) {
+        const linkLabel = KH_I18N.pick(lk, "label");
+        if (linkLabel) {
           /* 曲線の中点(t=0.5)。弧の膨らむ向きへ少しずらして線からも離す */
           const sign = bow >= 0 ? 1 : -1;
           labelParts.push({
-            text: lk.label,
+            text: linkLabel,
             lx: 0.25 * x1 + 0.5 * cx + 0.25 * x2 + nx * sign * 9,
             ly: 0.25 * y1 + 0.5 * cy + 0.25 * y2 + ny * sign * 9,
-            w: lk.label.length * 12 + 14
+            w: linkLabel.length * 12 + 14
           });
         }
 
@@ -191,20 +192,21 @@
       .map((n) => {
         const cls =
           "rmap-node rmap-node--" + n.side + (n.hub ? " is-hub" : "");
-        const lw = n.label.length * 13 + 16;
+        const label = KH_I18N.pick(n, "label");
+        const lw = label.length * 13 + 16;
         const face = n.img
           ? `<image href="${n.img}" x="${n.x - AV_R}" y="${n.y - AV_R}" ` +
             `width="${AV_R * 2}" height="${AV_R * 2}" ` +
             `clip-path="url(#rmap-avatar-clip)" preserveAspectRatio="xMidYMid slice"/>` +
             `<circle class="rmap-node__edge" cx="${n.x}" cy="${n.y}" r="${AV_R}"/>`
           : `<circle class="rmap-node__edge is-blank" cx="${n.x}" cy="${n.y}" r="${AV_R}"/>` +
-            `<text class="rmap-node__ini" x="${n.x}" y="${n.y + 1}">${n.label.slice(0, 1)}</text>`;
+            `<text class="rmap-node__ini" x="${n.x}" y="${n.y + 1}">${label.slice(0, 1)}</text>`;
         return (
           `<g class="${cls}">` +
           `<circle class="rmap-node__plate" cx="${n.x}" cy="${n.y}" r="${AV_R + 2}"/>` +
           face +
           `<rect class="rmap-node__labelbg" x="${r(n.x - lw / 2)}" y="${n.y + AV_R + 5}" width="${lw}" height="20" rx="10"/>` +
-          `<text class="rmap-node__label" x="${n.x}" y="${n.y + AV_R + 19}">${n.label}</text>` +
+          `<text class="rmap-node__label" x="${n.x}" y="${n.y + AV_R + 19}">${label}</text>` +
           "</g>"
         );
       })
@@ -223,10 +225,10 @@
         </svg>
       </div>
       <div class="relation-legend" aria-hidden="true">
-        <span><i class="rl rl--bond"></i>相互の絆・協力</span>
-        <span><i class="rl rl--origin"></i>生まれた・由来する / 心が宿る(矢印の向き)</span>
-        <span><i class="rl rl--clash"></i>敵対・干渉</span>
-        <span><i class="rl rl--axis"></i>物語の主対立</span>
+        <span><i class="rl rl--bond"></i>${KH_I18N.t("secret.relations.legend.bond")}</span>
+        <span><i class="rl rl--origin"></i>${KH_I18N.t("secret.relations.legend.origin")}</span>
+        <span><i class="rl rl--clash"></i>${KH_I18N.t("secret.relations.legend.clash")}</span>
+        <span><i class="rl rl--axis"></i>${KH_I18N.t("secret.relations.legend.axis")}</span>
       </div>`;
   }
 
@@ -238,10 +240,10 @@
   /* 相関の要点を文章でも添える */
   function buildRelationNotes() {
     const notes = [
-      ["心を失うと、二つに分かれる", "ゼアノートは ハートレス「アンセム」と ノーバディ「ゼムナス」に分かれた。ソラのノーバディが ロクサス、カイリのノーバディが ナミネ。"],
-      ["心と、姿", "ヴェントゥスの心はソラの中で眠り、その影響でロクサスはヴェントゥスと同じ姿で生まれた。シオンはソラの記憶から作られたレプリカ。ヴァニタスはヴェントゥスから切り離された闇。"],
-      ["絆で結ばれた者たち", "ソラ・リク・カイリ / テラ・アクア・ヴェントゥス(師エラクゥスのもとで修行) / ロクサス・アクセル・シオン。ソラの旅にはドナルドとグーフィー、そして王様ミッキーが並ぶ。"],
-      ["対立の軸", "ソラたち「光の守護者」と、ゼアノート。ゼアノートはテラの身体を奪い、アンセムとしてリクに憑依し、あらゆる時代に自らの分身を配した。"]
+      [KH_I18N.t("secret.relations.note1.title"), KH_I18N.t("secret.relations.note1.text")],
+      [KH_I18N.t("secret.relations.note2.title"), KH_I18N.t("secret.relations.note2.text")],
+      [KH_I18N.t("secret.relations.note3.title"), KH_I18N.t("secret.relations.note3.text")],
+      [KH_I18N.t("secret.relations.note4.title"), KH_I18N.t("secret.relations.note4.text")]
     ];
     return (
       '<ul class="relation-notes">' +
@@ -271,12 +273,13 @@
           ` onerror="this.onerror=null;this.src='${SCENE_IMG_FALLBACK}'">`
         : `<span class="secret-scene__ph">画像を <code>assets/scenes/${s.id}.jpg</code> に置くと表示されます</span>`;
       const work = sceneWorkTitle(s.work);
-      const title = s.title || (s.image ? "(この場面の説明を追記します)" : "");
+      const title = KH_I18N.pick(s, "title") || (s.image ? "(この場面の説明を追記します)" : "");
+      const caption = KH_I18N.pick(s, "caption");
       const cap = title
         ? `
             ${work ? `<span class="secret-scene__work">${work}</span>` : ""}
             <span class="secret-scene__title">${title}</span>
-            ${s.caption ? `<span class="secret-scene__note">${s.caption}</span>` : ""}`
+            ${caption ? `<span class="secret-scene__note">${caption}</span>` : ""}`
         : `<span class="secret-scene__note">${s.id}</span>`;
       return `
         <figure class="secret-scene reveal${s.image ? "" : " is-empty"}" data-delay="${(i % 3) + 1}">
@@ -296,8 +299,8 @@
       (item, index) => `
         <article class="secret-panel reveal" data-delay="${(index % 4) + 1}">
           <span class="secret-panel__label">${item.label}</span>
-          <h3 class="secret-panel__title">${item.title}</h3>
-          <p class="secret-panel__text">${item.text}</p>
+          <h3 class="secret-panel__title">${KH_I18N.pick(item, "title")}</h3>
+          <p class="secret-panel__text">${KH_I18N.pick(item, "text")}</p>
         </article>
       `
     ).join("");
@@ -307,16 +310,16 @@
       <div class="page-head" style="padding-block:0 var(--space-lg);">
         <span class="section-label">Secret Memory</span>
         <h1 class="page-head__title gold-text">SECRET MEMORY</h1>
-        <p class="page-head__lead">閉ざされていた記録が、いま開かれました</p>
+        <p class="page-head__lead">${KH_I18N.t("secret.unlocked.lead")}</p>
       </div>
 
       <!-- シリーズの根幹 -->
       <div class="secret-block">
         <div class="reveal">
           <span class="section-label">The Core</span>
-          <h2 class="section-title">キングダムハーツの、根幹</h2>
+          <h2 class="section-title">${KH_I18N.t("secret.core.title")}</h2>
           <p class="section-lead">
-            ここまで辿り着いた人に、この長い物語の芯を四つだけ。
+            ${KH_I18N.t("secret.core.lead")}
           </p>
         </div>
         ${core}
@@ -328,10 +331,9 @@
       <div class="secret-block reveal">
         <div>
           <span class="section-label">Relations</span>
-          <h2 class="section-title">こころの、相関図</h2>
+          <h2 class="section-title">${KH_I18N.t("secret.relations.title")}</h2>
           <p class="section-lead">
-            「誰が誰の“もう一人の自分”なのか」——この繋がりこそ、シリーズの背骨です。
-            (図は横にスクロールできます)
+            ${KH_I18N.t("secret.relations.lead")}
           </p>
         </div>
         ${buildRelationMap()}
@@ -344,7 +346,7 @@
       <section class="panel reveal">
         <span class="section-label">Collected Fragments</span>
         <h2 class="section-title" style="font-size:clamp(1.2rem,3vw,1.6rem);">
-          集めた記憶の欠片
+          ${KH_I18N.t("secret.collected.title")}
         </h2>
 
         <div class="progress" style="max-width:100%;">
@@ -368,9 +370,9 @@
       <div class="secret-block reveal">
         <div>
           <span class="section-label">Scenes</span>
-          <h2 class="section-title">記憶に残る、場面</h2>
+          <h2 class="section-title">${KH_I18N.t("secret.scenes.title")}</h2>
           <p class="section-lead">
-            長い旅のなかで、とりわけ胸に残っている場面を並べました。
+            ${KH_I18N.t("secret.scenes.lead")}
           </p>
         </div>
         ${buildSceneGallery()}
@@ -379,10 +381,9 @@
       <!-- 最後の欠片(ここまで辿り着いた人への一片) -->
       <section class="secret-panel reveal" style="text-align:center;">
         <span class="secret-panel__label">The Last Fragment</span>
-        <h2 class="secret-panel__title">最後のひとかけら</h2>
+        <h2 class="secret-panel__title">${KH_I18N.t("secret.last.title")}</h2>
         <p class="secret-panel__text" style="max-width:34em; margin-inline:auto;">
-          旅の終わりに、ひとつだけ欠片を残しておきました。
-          これを受け取れば、あなたの記憶は満ちることになります。
+          ${KH_I18N.t("secret.last.text")}
         </p>
         <div style="display:flex; justify-content:center; margin-top:2rem;">
           <div class="fragment" data-fragment="f12">
@@ -394,7 +395,7 @@
       <!-- 記録のリセット -->
       <div class="reset-row">
         <button class="reset-btn" type="button" id="reset-memory">
-          収集記録をリセットする
+          ${KH_I18N.t("secret.reset.button")}
         </button>
       </div>
     `;
@@ -408,9 +409,7 @@
     if (!btn) return;
 
     btn.addEventListener("click", () => {
-      const ok = window.confirm(
-        "集めた記憶の欠片をすべて消去します。よろしいですか?"
-      );
+      const ok = window.confirm(KH_I18N.t("secret.reset.confirm"));
       if (!ok) return;
 
       MemorySystem.reset();
@@ -467,8 +466,18 @@
       AudioEngine.play("unlock");
 
       setTimeout(() => {
-        MemorySystem.showToast("隠された記録が開かれました", "gold");
+        MemorySystem.showToast(KH_I18N.t("secret.toast.unlocked"), "gold");
       }, 900);
     }
+
+    /* 言語切り替え時は解放済みページを描き直す(解放前ロック画面の文言は
+       [data-i18n] で main.js 側から処理されるので対象外) */
+    document.addEventListener("kh-lang-change", () => {
+      renderContent(content);
+      Effects.refreshScrollReveal();
+      /* 描き直した進捗バー・欠片一覧・記憶の欠片クリック判定をまとめて再適用する */
+      MemorySystem.init();
+      initReset();
+    });
   });
 })();
